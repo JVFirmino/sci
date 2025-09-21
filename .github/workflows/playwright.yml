@@ -30,8 +30,7 @@ jobs:
         REPORT_PATH=playwright-report/index.html
         if [ -f "$REPORT_PATH" ]; then
           curl -X POST \
-            -H "Content-Type: application/json" \
-            -d '{"content": "Relatório Playwright em anexo:", "username": "Playwright Bot"}' \
+            -F "payload_json={\"content\": \"Relatório Playwright em anexo:\", \"username\": \"Playwright Bot\"}" \
             -F "file1=@$REPORT_PATH" \
             https://discord.com/api/webhooks/1419117028324806676/ywfFe7ZDo6ef7_gxrcX1VLpbluSTNUJTv3_WXzJvmLh01oW-MuSkZCeoGz6M5pip7LQQ
         else
