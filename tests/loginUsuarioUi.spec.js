@@ -29,7 +29,6 @@ test.describe("login de usuário", { tag: ["@LOGIN"] }, () => {
         const usuario = await loginDados.getLoginUnico()
         await authPage.realizarLogin(usuario);
         await uiActionsUtils.verificarUrlPagina(ROTAS.modulo.url);
-        
     });
 
     test("realizar login com dados inválidos", { tag: "@LOGIN_FALHA" }, async({ page }) => {

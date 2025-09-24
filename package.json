@@ -5,7 +5,8 @@
   "scripts": {
     "test": "npx playwright test",
     "report": "npx playwright show-report",
-    "login": "npx playwright test --grep @LOGIN --reporter html"
+    "login": "npx playwright test --grep @LOGIN --reporter html",
+    "admissaoPreliminar": "npx playwright test --grep @ADMISSAO_PRELIMINAR --reporter html"
   },
   "author": "João",
   "license": "ISC",

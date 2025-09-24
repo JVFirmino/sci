@@ -20,11 +20,19 @@ export class UiActionsUtils {
         await this.page.getByTestId(valorAtributo).fill(valor);
     }
 
-    async clicarBotao(valorAtributo){
+    async clicarAtributo(valorAtributo){
         await this.page.getByTestId(valorAtributo).click();
+    }
+
+    async clicarRole(rolename, texto){
+        await this.page.getByRole(rolename, { name: texto }).click();
     }
 
     async verificarTextoVisivel(texto){
         await expect(this.page.getByText(texto)).toBeVisible();
+    }
+
+    async passarMousePorCima(valorAtributo){
+        await this.page.getByTestId(valorAtributo).hover();
     }
 }

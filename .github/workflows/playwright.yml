@@ -50,7 +50,7 @@ jobs:
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
     - name: Run Playwright tests
-      run: npm run login 
+      run: npm run admissaoPreliminar 
     - uses: actions/upload-artifact@v5
       if: ${{ !cancelled() }}
       with:
