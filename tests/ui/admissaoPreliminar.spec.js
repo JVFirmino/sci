@@ -28,7 +28,7 @@ test.describe("Admissão Preliminar", { tag: ["@ADMISSAO_PRELIMINAR"] }, () => {
 
     test("realizar admissão preliminar com sucesso", { tag: "@ADMISSAO_PRELIMINAR_SUCESSO" }, async({ page }) => {
         
-        const usuario = await loginDados.getLoginUnico()
+        const usuario = await loginDados.getLoginPratice()
         await authPage.realizarLogin(usuario);
         await admissaoPage.realizarAdmissaoPreliminar();
         await page.pause();
