@@ -1,5 +1,6 @@
 // @ts-check
 import { defineConfig, devices } from '@playwright/test';
+import { BASE_URL } from './fixture/rotaFixture';
 
 /**
  * Read environment variables from file.
@@ -26,6 +27,14 @@ export default defineConfig({
   reporter: 'html',
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
+
+    headless: false,
+
+    // URL base para a aplicação
+    baseURL: BASE_URL,
+
+    testIdAttribute: 'id',
+
     /* Base URL to use in actions like `await page.goto('/')`. */
     // baseURL: 'http://localhost:3000',
 
