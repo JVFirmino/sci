@@ -2,7 +2,11 @@
   "name": "sci",
   "version": "1.0.0",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "test": "npx playwright test",
+    "report": "npx playwright show-report",
+    "login": "npx playwright test --grep @LOGIN --reporter html"
+  },
   "author": "João",
   "license": "ISC",
   "description": "",
