@@ -21,7 +21,7 @@ jobs:
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
       with:
-        name: playwright-report
+        name: playwright-report-test1
         path: playwright-report/
         retention-days: 30
     - name: Send Playwright report to Discord
@@ -54,7 +54,7 @@ jobs:
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
       with:
-        name: playwright-report
+        name: playwright-report-test2
         path: playwright-report/
         retention-days: 30
     - name: Send Playwright report to Discord
