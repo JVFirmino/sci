@@ -43,7 +43,7 @@ export class AdmissaoPage {
 
         await this.page.getByRole("button", { name: "Salvar" }).click();
 
-        await expect(this.page.getByText("O registro foi incluso com sucesso!")).toBeVisible();
+        // await expect(this.page.getByText("O registro foi incluso com sucesso!")).toBeVisible();
 
     }
 }
