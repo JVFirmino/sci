@@ -5,7 +5,7 @@ import { AdmissaoPage } from "../../pages/admissao";
 import { LoginDados } from "../../utils/dados/loginDados";
 import { ROTAS } from "../../fixture/rotaFixture";
 
-test.describe("Admissão Preliminar", { tag: ["@ADMISSÃO_PRELIMINAR"] }, () => {
+test.describe("Admissão Preliminar", { tag: ["@ADMISSAO_PRELIMINAR"] }, () => {
     let uiActionsUtils;
     let authPage;
     let loginDados;
@@ -26,7 +26,7 @@ test.describe("Admissão Preliminar", { tag: ["@ADMISSÃO_PRELIMINAR"] }, () => 
         console.log(`Finalizando o teste: ${test.info().title}`);
     });
 
-    test("realizar admissão preliminar com sucesso", { tag: "@ADMISSÃO_PRELIMINAR_SUCESSO" }, async({ page }) => {
+    test("realizar admissão preliminar com sucesso", { tag: "@ADMISSAO_PRELIMINAR_SUCESSO" }, async({ page }) => {
         
         const usuario = await loginDados.getLoginUnico()
         await authPage.realizarLogin(usuario);
