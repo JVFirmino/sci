@@ -59,7 +59,7 @@ let content = `📋 **Relatório Diário dos Testes Playwright**
 ✅ Passaram: ${summary.passed}
 ❌ Falharam: ${summary.failed}
 ⏭️ Ignorados: ${summary.skipped}
-🕖 Horário: ${new Date().toLocaleString('pt-BR')}
+🕖 Horário: ${new Date().toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' })}
 `;
 
 if (LIST_FAILED && failedTests.length > 0) {
