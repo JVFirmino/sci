@@ -27,30 +27,32 @@ const LIST_FAILED = true;
 const LIST_SKIPPED = true;
 
 report.suites.forEach(suite => {
-    suite.specs.forEach(spec => {
-        summary.total++;
+    suite.suites.forEach(subSuite => {
+        subSuite.specs.forEach(spec => {
+            const test = spec.tests[0];
+            const result = test?.results?.at(-1);
 
-        const test = spec.tests[0];
-        const result = test?.results?.at(-1);
+            const testName = `${spec.title} (${subSuite.title})`;
 
-        const testName = `${spec.title} (${suite.title})`;
+            if (!result) {
+                summary.skipped++;
+                skippedTests.push(`⏭️ ${testName}`);
+                return;
+            }
 
-        if (!result) {
-            summary.skipped++;
-            skippedTests.push(`⏭️ ${testName}`);
-            return;
-        }
+            summary.total++;
 
-        if (result.status === 'passed') {
-            summary.passed++;
-            passedTests.push(`✅ ${testName}`);
-        } else if (result.status === 'failed') {
-            summary.failed++;
-            failedTests.push(`❌ ${testName}`);
-        } else {
-            summary.skipped++;
-            skippedTests.push(`⏭️ ${testName}`);
-        }
+            if (result.status === 'passed') {
+                summary.passed++;
+                passedTests.push(`✅ ${testName}`);
+            } else if (result.status === 'failed') {
+                summary.failed++;
+                failedTests.push(`❌ ${testName}`);
+            } else {
+                summary.skipped++;
+                skippedTests.push(`⏭️ ${testName}`);
+            }
+        });
     });
 });
 
@@ -82,8 +84,8 @@ const payload = {
 };
 
 axios.post(webhookURL, payload).then(() => {
-        console.log('✅ Mensagem enviada para o Discord com sucesso.');
+        console.log('Mensagem enviada para o Discord com sucesso.');
     })
     .catch(error => {
-        console.error('❌ Erro ao enviar para o Discord:', error.message);
+        console.error('Erro ao enviar para o Discord:', error.message);
     });
