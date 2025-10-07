@@ -1,11 +1,10 @@
-import { expect } from "@playwright/test";
-import { UiActionsUtils } from "../utils/uiActionsUtils";
+import { UiActionsHelpers } from "../src/helpers/uiActionsHelpers";
 
-export class AuthPage{
+export class LoginPage{
 
     constructor(page){
         this.page = page;
-        this.utils = new UiActionsUtils(page);
+        this.utils = new UiActionsHelpers(page);
         this.elementoUsuario = "usuario";
         this.elementoSenha = "senha";
         this.elementoBotaoLogin = "btLoginPrincipal";

@@ -1,6 +1,6 @@
 import { expect } from "@playwright/test";
 
-export class UiActionsUtils {
+export class UiActionsHelpers {
 
     constructor(page){
         this.page = page;
@@ -26,6 +26,10 @@ export class UiActionsUtils {
 
     async clicarRole(rolename, texto){
         await this.page.getByRole(rolename, { name: texto }).click();
+    }
+
+    async selecionarOpcao(){
+        await this.page.locator("#select2-drop ul li").nth(2).click()
     }
 
     async verificarTextoVisivel(texto){
