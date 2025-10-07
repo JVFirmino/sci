@@ -78,7 +78,7 @@ if (LIST_SKIPPED && skippedTests.length > 0) {
 
 
 const payload = {
-    username: 'Playwright Bot 🤖', 
+    username: 'SCI Report 🤖', 
     avatar_url: 'https://raichu-uploads.s3.amazonaws.com/logo_null_amIShh.jpg',
     content, 
 };
