@@ -79,7 +79,7 @@ if (LIST_SKIPPED && skippedTests.length > 0) {
 
 const payload = {
     username: 'Playwright Bot 🤖', 
-    avatar_url: 'https://avatars.githubusercontent.com/u/67073427?s=280&v=4',
+    avatar_url: 'https://raichu-uploads.s3.amazonaws.com/logo_null_amIShh.jpg',
     content, 
 };
 
