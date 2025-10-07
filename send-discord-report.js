@@ -79,7 +79,7 @@ if (LIST_SKIPPED && skippedTests.length > 0) {
 
 const payload = {
     username: 'Playwright Bot 🤖', 
-    avatar_url: 'https://playwright.dev/img/playwright-logo.svg',
+    avatar_url: 'https://sci.com.br/arquivo/banner/76/92335878.png',
     content, 
 };
 
