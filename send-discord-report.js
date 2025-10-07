@@ -79,7 +79,7 @@ if (LIST_SKIPPED && skippedTests.length > 0) {
 
 const payload = {
     username: 'Playwright Bot 🤖', 
-    avatar_url: 'https://sci.com.br/arquivo/banner/76/92335878.png',
+    avatar_url: 'https://media.licdn.com/dms/image/v2/C560BAQGDL7mUpHo9xg/company-logo_200_200/company-logo_200_200/0/1663177304713/sci_sistemas_contabeis_logo?e=1762992000&v=beta&t=nDCp3q1G8RcLbo36llSTxr0Mvg3Kjt5pgqAfATJxcPg',
     content, 
 };
 
