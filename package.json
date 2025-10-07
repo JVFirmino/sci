@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "test": "npx playwright test",
-    "test:report": "npx playwright test --reporter=json",
+    "test:report": "npx playwright test --reporter json > report.json",
     "login": "npx playwright test --grep @LOGIN --reporter html",
     "admissaoPreliminar": "npx playwright test --grep @ADMISSAO_PRELIMINAR --reporter html"
   },

@@ -23,9 +23,6 @@ jobs:
       - name: Rodar testes e gerar relatório JSON
         run: npm run test:report
 
-      - name: Mover relatório JSON para a raiz
-        run: mv playwright-report/report.json report.json
-
       - name: Enviar resultado para o Discord
         run: node send-discord-report.js
         env:
