@@ -65,23 +65,23 @@ let content = `📋 **Relatório Diário dos Testes RH NET Social**
 `;
 
 if (LIST_FAILED && failedTests.length > 0) {
-    content += `\n\n**⛔ Testes que falharam:**\n${failedTests.join('\n')}`;
+    content += `\n\n**❌ Testes que falharam:**\n${failedTests.join('\n')}`;
 }
 else{
-    content += `\n\n**⛔ Testes que falharam:** Nenhum`;
+    content += `\n\n**❌ Testes que falharam:**\n - nenhum`;
 }
 
 if (LIST_PASSED && passedTests.length > 0) {
     content += `\n\n**✅ Testes que passaram:**\n${passedTests.join('\n')}`;
 }
 else{
-    content += `\n\n**✅ Testes que passaram:** Nenhum`;
+    content += `\n\n**✅ Testes que passaram:**\n - nenhum`;
 }
 
 if (LIST_SKIPPED && skippedTests.length > 0) {
     content += `\n\n**⏭️ Testes ignorados:**\n${skippedTests.join('\n')}`;
 }else{
-    content += `\n\n**⏭️ Testes ignorados:** Nenhum`;
+    content += `\n\n**⏭️ Testes ignorados:**\n - nenhum`;
 }
 
 
