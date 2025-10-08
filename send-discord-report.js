@@ -57,6 +57,7 @@ report.suites.forEach(suite => {
 });
 
 let content = `📋 **Relatório Diário dos Testes RH NET Social**
+
 🧪 Total: ${summary.total}
 ✅ Passaram: ${summary.passed}
 ❌ Falharam: ${summary.failed}
