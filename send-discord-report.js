@@ -76,7 +76,7 @@ if (LIST_SKIPPED && skippedTests.length > 0) {
     content += `\n**🚫 Testes ignorados:**\n${skippedTests.join('\n')}`;
 }
 
-content += `\n🕖 Horário: ${new Date().toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' })}`;
+content += `\n\n🕖 Horário: ${new Date().toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' })}`;
 
 const payload = {
     username: 'SCI Report 🤖', 
