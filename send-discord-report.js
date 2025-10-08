@@ -57,26 +57,25 @@ report.suites.forEach(suite => {
 });
 
 let content = `📋 **Relatório Diário dos Testes RH NET Social**
-> **Total:** 🔎${summary.total}
-> **Passaram:** ✅${summary.passed}
-> **Falharam:** ❌${summary.failed}
-> **Skipped:** 🚫${summary.skipped}
+🧪 Total: ${summary.total}
+✅ Passaram: ${summary.passed}
+❌ Falharam: ${summary.failed}
+🚫 Ignorados: ${summary.skipped}
 `;
 
 if (LIST_FAILED && failedTests.length > 0) {
-    content += `> **❌ Testes que falharam:**\n${failedTests.join('\n')}`;
+    content += `\n**❌ Testes que falharam:**\n${failedTests.join('\n')}`;
 }
 
 if (LIST_PASSED && passedTests.length > 0) {
-    content += `> **✅ Testes que passaram:**\n${passedTests.join('\n')}`;
+    content += `\n**✅ Testes que passaram:**\n${passedTests.join('\n')}`;
 }
 
 if (LIST_SKIPPED && skippedTests.length > 0) {
-    content += `> **🚫 Testes ignorados:**\n${skippedTests.join('\n')}`;
+    content += `\n**🚫 Testes ignorados:**\n${skippedTests.join('\n')}`;
 }
 
-content += `> **Horário:** 🕖${new Date().toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' })}`;
-
+content += `\n🕖 Horário: ${new Date().toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' })}`;
 
 const payload = {
     username: 'SCI Report 🤖', 
