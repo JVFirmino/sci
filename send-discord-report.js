@@ -56,33 +56,33 @@ report.suites.forEach(suite => {
     });
 });
 
-let content = `📋 **Relatório Diário dos Testes RH NET Social**
-> 🧪 **Total:** ${summary.total}
-> ✅ **Passaram:** ${summary.passed}
-> ❌ **Falharam:** ${summary.failed}
-> ⏭️ **Ignorados:** ${summary.skipped}
-> 🕖 **Horário:** ${new Date().toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' })}
-`;
+let content = `📋 **Relatório Diário dos Testes RH NET Social**\n\n`;
+
+content += `**🔹 Resumo Geral:**\n`;
+content += `> 🧪 **Total de Testes:** ${summary.total}\n`;
+content += `> ✅ **Passaram:** ${summary.passed}\n`;
+content += `> ❌ **Falharam:** ${summary.failed}\n`;
+content += `> ⏭️ **Ignorados:** ${summary.skipped}\n\n`;
 
 if (LIST_FAILED && failedTests.length > 0) {
-    content += `\n\n**❌ Testes que falharam:**\n${failedTests.join('\n')}`;
-}
-else{
-    content += `\n\n**❌ Testes que falharam:**\n - nenhum`;
+    content += `**⛔ Testes que falharam:**\n${failedTests.join('\n')}\n\n`;
+} else {
+    content += `**⛔ Testes que falharam:** Nenhum\n\n`;
 }
 
 if (LIST_PASSED && passedTests.length > 0) {
-    content += `\n\n**✅ Testes que passaram:**\n${passedTests.join('\n')}`;
-}
-else{
-    content += `\n\n**✅ Testes que passaram:**\n - nenhum`;
+    content += `**✅ Testes que passaram:**\n${passedTests.join('\n')}\n\n`;
+} else {
+    content += `**✅ Testes que passaram:** Nenhum\n\n`;
 }
 
 if (LIST_SKIPPED && skippedTests.length > 0) {
-    content += `\n\n**⏭️ Testes ignorados:**\n${skippedTests.join('\n')}`;
-}else{
-    content += `\n\n**⏭️ Testes ignorados:**\n - nenhum`;
+    content += `**⏭️ Testes ignorados:**\n${skippedTests.join('\n')}\n\n`;
+} else {
+    content += `**⏭️ Testes ignorados:** Nenhum\n\n`;
 }
+
+content += `**🕖 Horário do Relatório:** ${new Date().toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' })}\n`;
 
 
 const payload = {
