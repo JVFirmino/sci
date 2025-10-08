@@ -1,11 +1,14 @@
 name: Playwright Tests
+
 on:
   schedule:
-    - cron: '30 2 * * 1-5'
+    - cron: '30 2 * * 1-5'  # Executa de segunda a sexta às 2:30
   workflow_dispatch:
+
 jobs:
   test:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
 
@@ -23,7 +26,15 @@ jobs:
       - name: Rodar testes e gerar relatório JSON
         run: npm run test:report
 
+      - name: Salvar relatório como artefato
+        uses: actions/upload-artifact@v4
+        with:
+          name: report-json
+          path: report.json
+
       - name: Enviar resultado para o Discord
         run: node send-discord-report.js
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+          GITHUB_RUN_ID: ${{ github.run_id }}
+          GITHUB_REPOSITORY: ${{ github.repository }}

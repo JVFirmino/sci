@@ -2,6 +2,9 @@ const fs = require('fs');
 const axios = require('axios');
 
 const webhookURL = process.env.DISCORD_WEBHOOK;
+const runId = process.env.GITHUB_RUN_ID;
+const repo = process.env.GITHUB_REPOSITORY;
+const artifactURL = `https://github.com/${repo}/actions/runs/${runId}`;
 
 if (!webhookURL) {
     console.error('DISCORD_WEBHOOK não definido!');
@@ -65,26 +68,29 @@ let content = `📋 **Relatório Diário dos Testes RH NET Social**
 `;
 
 if (LIST_FAILED && failedTests.length > 0) {
-    content += `\n**❌ Testes que falharam:**\n${failedTests.join('\n')}`;
+    content += `\n**❌ Testes que falharam**\n${failedTests.join('\n')}`;
 }
 
 if (LIST_PASSED && passedTests.length > 0) {
-    content += `\n**✅ Testes que passaram:**\n${passedTests.join('\n')}`;
+    content += `\n**✅ Testes que passaram**\n${passedTests.join('\n')}`;
 }
 
 if (LIST_SKIPPED && skippedTests.length > 0) {
-    content += `\n**🚫 Testes ignorados:**\n${skippedTests.join('\n')}`;
+    content += `\n**🚫 Testes ignorados**\n${skippedTests.join('\n')}`;
 }
+
+content += `\n\n📎 [Clique aqui para acessar o relatório completo do teste](${artifactURL})`;
 
 content += `\n\n🕖 Horário: ${new Date().toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' })}`;
 
 const payload = {
-    username: 'SCI Report 🤖', 
+    username: 'SCI Report 🤖',
     avatar_url: 'https://raichu-uploads.s3.amazonaws.com/logo_null_amIShh.jpg',
-    content, 
+    content,
 };
 
-axios.post(webhookURL, payload).then(() => {
+axios.post(webhookURL, payload)
+    .then(() => {
         console.log('Mensagem enviada para o Discord com sucesso.');
     })
     .catch(error => {
