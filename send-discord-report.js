@@ -4,15 +4,27 @@ const axios = require('axios');
 const webhookURL = process.env.DISCORD_WEBHOOK;
 const runId = process.env.GITHUB_RUN_ID;
 const repo = process.env.GITHUB_REPOSITORY;
-const artifactURL = `https://github.com/${repo}/actions/runs/${runId}`;
 
 if (!webhookURL) {
     console.error('DISCORD_WEBHOOK não definido!');
     process.exit(1);
 }
 
-const rawData = fs.readFileSync('report.json', 'utf-8');
-const report = JSON.parse(rawData);
+let rawData;
+try {
+    rawData = fs.readFileSync('report.json', 'utf-8');
+} catch (error) {
+    console.error('Erro ao ler o arquivo report.json:', error.message);
+    process.exit(1);
+}
+
+let report;
+try {
+    report = JSON.parse(rawData);
+} catch (error) {
+    console.error('Erro ao fazer parse do report.json:', error.message);
+    process.exit(1);
+}
 
 const summary = {
     total: 0,
@@ -79,7 +91,10 @@ if (LIST_SKIPPED && skippedTests.length > 0) {
     content += `\n**🚫 Testes ignorados**\n${skippedTests.join('\n')}`;
 }
 
-content += `\n\n📎 [Clique aqui para acessar o relatório completo do teste](${artifactURL})`;
+if (runId && repo) {
+    const artifactLink = `https://github.com/${repo}/actions/runs/${runId}`;
+    content += `\n📎 [Clique aqui para ver o artefato (report.json)](${artifactLink})`;
+}
 
 content += `\n\n🕖 Horário: ${new Date().toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' })}`;
 
