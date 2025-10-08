@@ -44,36 +44,44 @@ report.suites.forEach(suite => {
 
             if (result.status === 'passed') {
                 summary.passed++;
-                passedTests.push(`✅ ${testName}`);
+                passedTests.push(`- ${testName}`);
             } else if (result.status === 'failed') {
                 summary.failed++;
-                failedTests.push(`❌ ${testName}`);
+                failedTests.push(`- ${testName}`);
             } else {
                 summary.skipped++;
-                skippedTests.push(`⏭️ ${testName}`);
+                skippedTests.push(`- ${testName}`);
             }
         });
     });
 });
 
 let content = `📋 **Relatório Diário dos Testes RH NET Social**
-> 🧪 Total: ${summary.total}
-> ✅ Passaram: ${summary.passed}
-> ❌ Falharam: ${summary.failed}
-> ⏭️ Ignorados: ${summary.skipped}
-> 🕖 Horário: ${new Date().toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' })}
+> 🧪 **Total:** ${summary.total}
+> ✅ **Passaram:** ${summary.passed}
+> ❌ **Falharam:** ${summary.failed}
+> ⏭️ **Ignorados:** ${summary.skipped}
+> 🕖 **Horário:** ${new Date().toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' })}
 `;
 
 if (LIST_FAILED && failedTests.length > 0) {
     content += `\n\n**⛔ Testes que falharam:**\n${failedTests.join('\n')}`;
 }
+else{
+    content += `\n\n**⛔ Testes que falharam:** Nenhum`;
+}
 
 if (LIST_PASSED && passedTests.length > 0) {
     content += `\n\n**✅ Testes que passaram:**\n${passedTests.join('\n')}`;
 }
+else{
+    content += `\n\n**✅ Testes que passaram:** Nenhum`;
+}
 
 if (LIST_SKIPPED && skippedTests.length > 0) {
     content += `\n\n**⏭️ Testes ignorados:**\n${skippedTests.join('\n')}`;
+}else{
+    content += `\n\n**⏭️ Testes ignorados:** Nenhum`;
 }
 
 
