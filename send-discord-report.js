@@ -93,10 +93,8 @@ if (LIST_SKIPPED && skippedTests.length > 0) {
 
 if (runId && repo) {
     const baseLink = `https://github.com/${repo}/actions/runs/${runId}`;
-    content += `\n🗂️ [Relatório HTML interativo](${baseLink})`;
+    content += `\n\n🗂️ [Relatório HTML interativo](${baseLink})`;
 }
-
-content += `\n\n🕖 Horário: ${new Date().toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' })}`;
 
 const payload = {
     username: 'SCI Report 🤖',
