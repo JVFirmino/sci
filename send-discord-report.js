@@ -92,8 +92,8 @@ if (LIST_SKIPPED && skippedTests.length > 0) {
 }
 
 if (runId && repo) {
-    const artifactLink = `https://github.com/${repo}/actions/runs/${runId}`;
-    content += `\n📎 [Clique aqui para ver o artefato (report.json)](${artifactLink})`;
+    const baseLink = `https://github.com/${repo}/actions/runs/${runId}`;
+    content += `\n🗂️ [Relatório HTML interativo](${baseLink})`;
 }
 
 content += `\n\n🕖 Horário: ${new Date().toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' })}`;
