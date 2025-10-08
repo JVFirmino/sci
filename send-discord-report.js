@@ -57,11 +57,11 @@ report.suites.forEach(suite => {
 });
 
 let content = `📋 **Relatório Diário dos Testes Playwright**
-🧪 Total: ${summary.total}
-✅ Passaram: ${summary.passed}
-❌ Falharam: ${summary.failed}
-⏭️ Ignorados: ${summary.skipped}
-🕖 Horário: ${new Date().toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' })}
+>🧪 Total: ${summary.total}
+>✅ Passaram: ${summary.passed}
+>❌ Falharam: ${summary.failed}
+>⏭️ Ignorados: ${summary.skipped}
+>🕖 Horário: ${new Date().toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' })}
 `;
 
 if (LIST_FAILED && failedTests.length > 0) {
