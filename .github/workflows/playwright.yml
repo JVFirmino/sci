@@ -24,6 +24,7 @@ jobs:
 
       - name: Rodar testes e gerar relatório JSON e HTML
         run: npm run test:report
+        continue-on-error: true
 
       - name: Enviar resultado para o Discord
         run: node send-discord-report.js
