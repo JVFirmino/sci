@@ -1,11 +1,15 @@
-export const USUARIO_UNICO = {
-    
-    login: 'joaoteste2@sci.com.br',
-    senha: 'Mudar@12'
-};
-
-export const USUARIO_PRATICE = {
-    
-    login: 'joao.firmino',
-    senha: 'Mudar@12'
+// Usuários de teste para diferentes cenários
+export const USUARIOS = {
+    valido: {
+        login: 'joaoteste2@sci.com.br',
+        senha: 'Mudar@12',
+    },
+    invalido: {
+        login: 'fake@teste.com',
+        senha: 'senhaerrada',
+    },
+    vazio: {
+        login: '',
+        senha: '',
+    },
 };

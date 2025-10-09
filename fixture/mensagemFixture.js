@@ -1,3 +1,10 @@
-export const MENSAGEM_LOGIN_EMAIL_SENHA_INVALIDOS = "Usuário e/ou senha incorretos.";
-
-export const MENSAGEM_LOGIN_EMAIL_SENHA_VAZIOS = "Usuário e/ou senha não preenchidos.";
+// Mensagens para validação
+export const MENSAGENS = {
+    login: {
+        erroCredenciaisInvalidas: "Usuário e/ou senha incorretos.",
+        erroCamposVazios: "Usuário e/ou senha não preenchidos.",
+    },
+    admissao: {
+        sucessoAdmissao: "O registro foi incluso com sucesso!"
+    }
+};

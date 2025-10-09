@@ -5,16 +5,32 @@ export class UsuarioHelpers {
 
     constructor(){}
 
+    /**
+     * Gera uma data de nascimento formatada no padrão brasileiro (dd/mm/aaaa).
+     * 
+     * @returns {string} Data de nascimento formatada.
+     */
     gerarDataNascimentoFormatada() {
         const nascimento = faker.date.birthdate({ min: 18, mode: 'age' });
         return nascimento.toLocaleDateString('pt-BR');
     }
 
+    /**
+     * Gera um CPF válido formatado com máscara.
+     * 
+     * @returns {string} CPF formatado.
+     */
     gerarCpfComMascara() {
         const cpfValido = cpf.generate();
         return cpf.format(cpfValido);
     }
 
+    /**
+     * Gera uma data de admissão formatada no padrão brasileiro (dd/mm/aaaa).
+     * A data é gerada entre um ano atrás e um mês à frente da data atual.  
+     * 
+     * @returns {string} Data de admissão formatada.
+     */
     gerarDataAdmissaoFormatada() {
         const hoje = new Date();
         const umAnoAtras = new Date();
@@ -25,23 +41,14 @@ export class UsuarioHelpers {
         return dataAdmissao.toLocaleDateString('pt-BR');
     }
 
-    async gerarUsuarioContribuinteSindical(){
+    /**
+     * Gera um objeto de usuário com dados.
+     * 
+     * @returns {{nome: string, dataNascimento: string, cpf: string, dataAdmissao: string, salario: number}} Objeto contendo os dados do usuário.
+     */
+    async gerarUsuario(){
         return {
-            tipoCadastro: "Contribuinte",
-            classe:"Dirigente Sindical",
-            nome: faker.person.fullName(),
-            dataNascimento: this.gerarDataNascimentoFormatada(),
-            cpf: this.gerarCpfComMascara(),
-            dataAdmissao: this.gerarDataAdmissaoFormatada(),
-            salario: faker.number.int({ min: 1, max: 10 })
-        }
-    }
-
-    async gerarUsuarioEmpregadoAposentado(){
-        return {
-            tipoCadastro: "Empregado",
-            classe:"Aposentado",
-            nome: faker.person.fullName(),
+            nome: faker.person.firstName(),
             dataNascimento: this.gerarDataNascimentoFormatada(),
             cpf: this.gerarCpfComMascara(),
             dataAdmissao: this.gerarDataAdmissaoFormatada(),
