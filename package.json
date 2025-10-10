@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "test": "npx playwright test",
-    "test:report": "npx playwright test --reporter=json,html --retries=3 > report.json",
+    "test:report": "npx playwright test --reporter=json,html --retries=1 > report.json",
     "report": "npx playwright show-report",
     "login": "npx playwright test --grep @LOGIN --reporter html",
     "admissaoPreliminar": "npx playwright test --grep @ADMISSAO_PRELIMINAR --reporter html"
