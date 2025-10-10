@@ -2,6 +2,7 @@
   "name": "sci",
   "version": "1.0.0",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "npx playwright test",
     "test:report": "npx playwright test --reporter=json,html > report.json",

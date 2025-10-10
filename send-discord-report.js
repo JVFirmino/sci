@@ -1,5 +1,5 @@
-const fs = require('fs');
-const axios = require('axios');
+import fs from 'fs';
+import axios from 'axios';
 
 const webhookURL = process.env.DISCORD_WEBHOOK;
 const runId = process.env.GITHUB_RUN_ID;
