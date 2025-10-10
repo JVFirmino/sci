@@ -1,33 +1,33 @@
-// import { test, expect } from "@playwright/test";
-// import { LoginPage } from "../../pages/loginPage";
-// import { AdmissaoPage } from "../../pages/admissaoPage";
-// import { ROTAS } from "../../fixture/rotaFixture";
-// import { UiActionsHelpers } from "../../src/helpers/uiActionsHelpers";
-// import { USUARIOS } from "../../fixture/usuarioFixture";
-// import { UsuarioHelpers }  from "../../src/helpers/usuarioHelpers";
-// import { MENSAGENS } from "../../fixture/mensagemFixture";
+import { test, expect } from "@playwright/test";
+import { LoginPage } from "../../pages/loginPage";
+import { AdmissaoPage } from "../../pages/admissaoPage";
+import { ROTAS } from "../../fixture/rotaFixture";
+import { UiActionsHelpers } from "../../src/helpers/uiActionsHelpers";
+import { USUARIOS } from "../../fixture/usuarioFixture";
+import { UsuarioHelpers }  from "../../src/helpers/usuarioHelpers";
+import { MENSAGENS } from "../../fixture/mensagemFixture";
 
-// test.describe("Admissão Preliminar", { tag: ["@ADMISSAO_PRELIMINAR"] }, () => {
-//     let uiActionsHelpers;
-//     let loginPage;
-//     let admissaoPage;
-//     let usuarioHelpers;
+test.describe("Admissão Preliminar", { tag: ["@ADMISSAO_PRELIMINAR"] }, () => {
+    let uiActionsHelpers;
+    let loginPage;
+    let admissaoPage;
+    let usuarioHelpers;
 
-//     test.beforeEach(async ({ page }) => {
-//         console.log(`Iniciando o teste: ${test.info().title}`);
+    test.beforeEach(async ({ page }) => {
+        console.log(`Iniciando o teste: ${test.info().title}`);
 
-//         uiActionsHelpers = new UiActionsHelpers(page);
-//         loginPage = new LoginPage(page);
-//         admissaoPage = new AdmissaoPage(page);
-//         usuarioHelpers = new UsuarioHelpers();
+        uiActionsHelpers = new UiActionsHelpers(page);
+        loginPage = new LoginPage(page);
+        admissaoPage = new AdmissaoPage(page);
+        usuarioHelpers = new UsuarioHelpers();
 
-//         // Acessar a página de login e verificar o título
-//         await uiActionsHelpers.navegarEVerificarTituloPagina(ROTAS.login.url, ROTAS.login.titulo);
-//     });
+        // Acessar a página de login e verificar o título
+        await uiActionsHelpers.navegarEVerificarTituloPagina(ROTAS.login.url, ROTAS.login.titulo);
+    });
 
-//     test.afterEach(async ({ page }) => {
-//         console.log(`Finalizando o teste: ${test.info().title}`);
-//     });
+    test.afterEach(async ({ page }) => {
+        console.log(`Finalizando o teste: ${test.info().title}`);
+    });
 
     /*
     Cenário 1: Realizar admissão preliminar com sucesso - Contribuinte Dirigente sindical
@@ -48,22 +48,22 @@
     Criticidade:
     - Alta. A admissão preliminar é uma etapa essencial no cadastro de vínculos no sistema e deve funcionar corretamente para todos os tipos e categorias.
     */
-    // test("realizar admissão preliminar com sucesso contribuinte dirigente sindical", { tag: "@ADMISSAO_PRELIMINAR_SUCESSO" }, async({ page }) => {
-    //     // Gerar um usuário
-    //     const usuario = await usuarioHelpers.gerarUsuario();
+    test("realizar admissão preliminar com sucesso contribuinte dirigente sindical", { tag: "@ADMISSAO_PRELIMINAR_SUCESSO" }, async({ page }) => {
+        // Gerar um usuário
+        const usuario = await usuarioHelpers.gerarUsuario();
 
-    //     // Realizar login
-    //     await loginPage.realizarLogin(USUARIOS.valido);
+        // Realizar login
+        await loginPage.realizarLogin(USUARIOS.valido);
 
-    //     // Acessar o módulo RHNetSocial
-    //     await uiActionsHelpers.acessarModuloRHNetSocial("rhnetsocial");
+        // Acessar o módulo RHNetSocial
+        await uiActionsHelpers.acessarModuloRHNetSocial("rhnetsocial");
 
-    //     // Realizar admissão preliminar
-    //     await admissaoPage.realizarAdmissaoPreliminar(usuario, "Contribuinte", "Dirigente sindical");
+        // Realizar admissão preliminar
+        await admissaoPage.realizarAdmissaoPreliminar(usuario, "Contribuinte", "Dirigente sindical");
 
-    //     // Verificar se a admissão foi realizada com sucesso
-    //     await expect(page.getByText(MENSAGENS.admissao.sucessoAdmissao)).toBeVisible();
-    // });
+        // Verificar se a admissão foi realizada com sucesso
+        await expect(page.getByText(MENSAGENS.admissao.sucessoAdmissao)).toBeVisible();
+    });
 
     /*
     Cenário 2: Realizar admissão preliminar com sucesso - Contribuinte Pró-Laborista
@@ -173,4 +173,4 @@
     //     // Verificar se a admissão foi realizada com sucesso
     //     await expect(page.getByText(MENSAGENS.admissao.sucessoAdmissao)).toBeVisible();
     // });
-// });
+});
