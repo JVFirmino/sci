@@ -62,6 +62,7 @@ test.describe("Admissão Preliminar", { tag: ["@ADMISSAO_PRELIMINAR"] }, () => {
         await admissaoPage.realizarAdmissaoPreliminar(usuario, "Contribuinte", "Dirigente sindical");
 
         // Verificar se a admissão foi realizada com sucesso
+        await page.waitForTimeout(3000);
         await expect(page.getByText(MENSAGENS.admissao.sucessoAdmissao)).toBeVisible();
     });
 
@@ -98,6 +99,7 @@ test.describe("Admissão Preliminar", { tag: ["@ADMISSAO_PRELIMINAR"] }, () => {
         await admissaoPage.realizarAdmissaoPreliminar(usuario, "Contribuinte", "Pró-Laborista");
 
         // Verificar se a admissão foi realizada com sucesso
+        await page.waitForTimeout(3000);
         await expect(page.getByText(MENSAGENS.admissao.sucessoAdmissao)).toBeVisible();
     });
 
@@ -134,6 +136,7 @@ test.describe("Admissão Preliminar", { tag: ["@ADMISSAO_PRELIMINAR"] }, () => {
         await admissaoPage.realizarAdmissaoPreliminar(usuario, "Contribuinte", "Servidor Público");
 
         // Verificar se a admissão foi realizada com sucesso
+        await page.waitForTimeout(3000);
         await expect(page.getByText(MENSAGENS.admissao.sucessoAdmissao)).toBeVisible();
     });
 
@@ -171,6 +174,7 @@ test.describe("Admissão Preliminar", { tag: ["@ADMISSAO_PRELIMINAR"] }, () => {
         await admissaoPage.realizarAdmissaoPreliminar(usuario, "Contribuinte", "Sócio cotista");
 
         // Verificar se a admissão foi realizada com sucesso
+        await page.waitForTimeout(3000);
         await expect(page.getByText(MENSAGENS.admissao.sucessoAdmissao)).toBeVisible();
     });
 });
