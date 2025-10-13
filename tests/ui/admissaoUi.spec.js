@@ -62,7 +62,7 @@ test.describe("Admissão Preliminar", { tag: ["@ADMISSAO_PRELIMINAR"] }, () => {
         await admissaoPage.realizarAdmissaoPreliminar(usuario, "Contribuinte", "Dirigente sindical");
 
         // Verificar se a admissão foi realizada com sucesso
-        await expect(page.getByTestId("avisosFixed").getByText(MENSAGENS.admissao.sucessoAdmissao)).toBeVisible();
+        await expect(page.getByText(MENSAGENS.admissao.sucessoAdmissao)).toBeVisible();
     });
 
     /*
@@ -84,22 +84,22 @@ test.describe("Admissão Preliminar", { tag: ["@ADMISSAO_PRELIMINAR"] }, () => {
     Criticidade:
     - Alta. A admissão preliminar é uma etapa essencial no cadastro de vínculos no sistema e deve funcionar corretamente para todos os tipos e categorias.
     */
-    // test("realizar admissão preliminar com sucesso contribuinte pró-laborista", { tag: "@ADMISSAO_PRELIMINAR_SUCESSO" }, async({ page }) => {
-    //     // Gerar um usuário
-    //     const usuario = await usuarioHelpers.gerarUsuario();
+    test("realizar admissão preliminar com sucesso contribuinte pró-laborista", { tag: "@ADMISSAO_PRELIMINAR_SUCESSO" }, async({ page }) => {
+        // Gerar um usuário
+        const usuario = await usuarioHelpers.gerarUsuario();
 
-    //     // Realizar login
-    //     await loginPage.realizarLogin(USUARIOS.valido);
+        // Realizar login
+        await loginPage.realizarLogin(USUARIOS.valido);
 
-    //     // Acessar o módulo RHNetSocial
-    //     await uiActionsHelpers.acessarModuloRHNetSocial("rhnetsocial");
+        // Acessar o módulo RHNetSocial
+        await uiActionsHelpers.acessarModuloRHNetSocial("rhnetsocial");
 
-    //     // Realizar admissão preliminar
-    //     await admissaoPage.realizarAdmissaoPreliminar(usuario, "Contribuinte", "Pró-Laborista");
+        // Realizar admissão preliminar
+        await admissaoPage.realizarAdmissaoPreliminar(usuario, "Contribuinte", "Pró-Laborista");
 
-    //     // Verificar se a admissão foi realizada com sucesso
-    //     await expect(page.getByText(MENSAGENS.admissao.sucessoAdmissao)).toBeVisible();
-    // });
+        // Verificar se a admissão foi realizada com sucesso
+        await expect(page.getByText(MENSAGENS.admissao.sucessoAdmissao)).toBeVisible();
+    });
 
     /*
     Cenário 3: Realizar admissão preliminar com sucesso - Contribuinte Servidor Público
@@ -120,22 +120,22 @@ test.describe("Admissão Preliminar", { tag: ["@ADMISSAO_PRELIMINAR"] }, () => {
     Criticidade:
     - Alta. A admissão preliminar é uma etapa essencial no cadastro de vínculos no sistema e deve funcionar corretamente para todos os tipos e categorias.
     */
-    // test("realizar admissão preliminar com sucesso contribuinte servidor público", { tag: "@ADMISSAO_PRELIMINAR_SUCESSO" }, async({ page }) => {
-    //     // Gerar um usuário
-    //     const usuario = await usuarioHelpers.gerarUsuario();
+    test("realizar admissão preliminar com sucesso contribuinte servidor público", { tag: "@ADMISSAO_PRELIMINAR_SUCESSO" }, async({ page }) => {
+        // Gerar um usuário
+        const usuario = await usuarioHelpers.gerarUsuario();
 
-    //     // Realizar login
-    //     await loginPage.realizarLogin(USUARIOS.valido);
+        // Realizar login
+        await loginPage.realizarLogin(USUARIOS.valido);
 
-    //     // Acessar o módulo RHNetSocial
-    //     await uiActionsHelpers.acessarModuloRHNetSocial("rhnetsocial");
+        // Acessar o módulo RHNetSocial
+        await uiActionsHelpers.acessarModuloRHNetSocial("rhnetsocial");
 
-    //     // Realizar admissão preliminar
-    //     await admissaoPage.realizarAdmissaoPreliminar(usuario, "Contribuinte", "Servidor Público");
+        // Realizar admissão preliminar
+        await admissaoPage.realizarAdmissaoPreliminar(usuario, "Contribuinte", "Servidor Público");
 
-    //     // Verificar se a admissão foi realizada com sucesso
-    //     await expect(page.getByText(MENSAGENS.admissao.sucessoAdmissao)).toBeVisible();
-    // });
+        // Verificar se a admissão foi realizada com sucesso
+        await expect(page.getByText(MENSAGENS.admissao.sucessoAdmissao)).toBeVisible();
+    });
 
 
     /*
@@ -157,20 +157,20 @@ test.describe("Admissão Preliminar", { tag: ["@ADMISSAO_PRELIMINAR"] }, () => {
     Criticidade:
     - Alta. A admissão preliminar é uma etapa essencial no cadastro de vínculos no sistema e deve funcionar corretamente para todos os tipos e categorias.
     */
-    // test("realizar admissão preliminar com sucesso contribuinte sócio cotista", { tag: "@ADMISSAO_PRELIMINAR_SUCESSO" }, async({ page }) => {
-    //     // Gerar um usuário
-    //     const usuario = await usuarioHelpers.gerarUsuario();
+    test("realizar admissão preliminar com sucesso contribuinte sócio cotista", { tag: "@ADMISSAO_PRELIMINAR_SUCESSO" }, async({ page }) => {
+        // Gerar um usuário
+        const usuario = await usuarioHelpers.gerarUsuario();
 
-    //     // Realizar login
-    //     await loginPage.realizarLogin(USUARIOS.valido);
+        // Realizar login
+        await loginPage.realizarLogin(USUARIOS.valido);
 
-    //     // Acessar o módulo RHNetSocial
-    //     await uiActionsHelpers.acessarModuloRHNetSocial("rhnetsocial");
+        // Acessar o módulo RHNetSocial
+        await uiActionsHelpers.acessarModuloRHNetSocial("rhnetsocial");
 
-    //     // Realizar admissão preliminar
-    //     await admissaoPage.realizarAdmissaoPreliminar(usuario, "Contribuinte", "Sócio cotista");
+        // Realizar admissão preliminar
+        await admissaoPage.realizarAdmissaoPreliminar(usuario, "Contribuinte", "Sócio cotista");
 
-    //     // Verificar se a admissão foi realizada com sucesso
-    //     await expect(page.getByText(MENSAGENS.admissao.sucessoAdmissao)).toBeVisible();
-    // });
+        // Verificar se a admissão foi realizada com sucesso
+        await expect(page.getByText(MENSAGENS.admissao.sucessoAdmissao)).toBeVisible();
+    });
 });
