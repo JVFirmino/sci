@@ -1,7 +1,7 @@
 // Usuários de teste para diferentes cenários
 export const USUARIOS = {
     valido: {
-        login: 'joaoteste2@sci.com.br',
+        login: 'joao.firmino',
         senha: 'Mudar@12',
     },
     invalido: {
