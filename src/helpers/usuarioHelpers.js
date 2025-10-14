@@ -41,18 +41,34 @@ export class UsuarioHelpers {
         return dataAdmissao.toLocaleDateString('pt-BR');
     }
 
+    formatarSalario(valor) {
+        return valor.toLocaleString('pt-BR', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        });
+    }
+
     /**
-     * Gera um objeto de usuário com dados.
+     * Gera um objeto de usuário com dados simulados.
      * 
-     * @returns {{nome: string, dataNascimento: string, cpf: string, dataAdmissao: string, salario: number}} Objeto contendo os dados do usuário.
+     * Permite passar campos opcionais como tipoCadastro, classe, etc.
+     * Os campos não informados serão preenchidos automaticamente.
+     * 
+     * @param {Object} [opcoes={}] - Campos opcionais para personalizar o usuário.
+     * @returns {Promise<Object>} Objeto com os dados do usuário gerado.
      */
-    async gerarUsuario(){
+    async gerarUsuario(opcoes = {}){
         return {
+            tipoCadastro: opcoes.tipoCadastro ?? null,
+            classe: opcoes.classe ?? null,
+            tipoAdmissao: opcoes.tipoAdmissao ?? null,
+            tipoColaborador: opcoes.tipoColaborador ?? null,
+            tipoContrato: opcoes.tipoContrato ?? null,
             nome: faker.person.firstName(),
             dataNascimento: this.gerarDataNascimentoFormatada(),
             cpf: this.gerarCpfComMascara(),
             dataAdmissao: this.gerarDataAdmissaoFormatada(),
-            salario: faker.number.int({ min: 1, max: 10 })
+            salario: this.formatarSalario(faker.number.float({ min: 1000, max: 9999.99, precision: 0.01 }))
         }
     }
 }

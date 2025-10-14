@@ -48,9 +48,15 @@ test.describe("Admissão Preliminar", { tag: ["@ADMISSAO_PRELIMINAR"] }, () => {
     Criticidade:
     - Alta. A admissão preliminar é uma etapa essencial no cadastro de vínculos no sistema e deve funcionar corretamente para todos os tipos e categorias.
     */
-    test("realizar admissão preliminar com sucesso contribuinte dirigente sindical", { tag: "@ADMISSAO_PRELIMINAR_SUCESSO" }, async({ page }) => {
+    test("realizar admissão preliminar com sucesso contribuinte dirigente sindical", { tag: "@ADMISSAO_PRELIMINAR_CONTRIBUINTE_SUCESSO" }, async({ page }) => {
+        const tipoCadastro = "Contribuinte";
+        const classe = "Dirigente sindical";
+        
         // Gerar um usuário
-        const usuario = await usuarioHelpers.gerarUsuario();
+        const usuario = await usuarioHelpers.gerarUsuario({
+            tipoCadastro, 
+            classe
+        });
 
         // Realizar login
         await loginPage.realizarLogin(USUARIOS.valido);
@@ -59,7 +65,7 @@ test.describe("Admissão Preliminar", { tag: ["@ADMISSAO_PRELIMINAR"] }, () => {
         await uiActionsHelpers.acessarModuloRHNetSocial("rhnetsocial");
 
         // Realizar admissão preliminar
-        await admissaoPage.realizarAdmissaoPreliminar(usuario, "Contribuinte", "Dirigente sindical");
+        await admissaoPage.realizarAdmissaoPreliminar(usuario);
 
         // Verificar se a admissão foi realizada com sucesso
         await expect(page.getByText(MENSAGENS.admissao.sucessoAdmissao)).toBeVisible();
@@ -84,9 +90,15 @@ test.describe("Admissão Preliminar", { tag: ["@ADMISSAO_PRELIMINAR"] }, () => {
     Criticidade:
     - Alta. A admissão preliminar é uma etapa essencial no cadastro de vínculos no sistema e deve funcionar corretamente para todos os tipos e categorias.
     */
-    test("realizar admissão preliminar com sucesso contribuinte pró-laborista", { tag: "@ADMISSAO_PRELIMINAR_SUCESSO" }, async({ page }) => {
+    test("realizar admissão preliminar com sucesso contribuinte pró-laborista", { tag: "@ADMISSAO_PRELIMINAR_CONTRIBUINTE_SUCESSO" }, async({ page }) => {
+        const tipoCadastro = "Contribuinte";
+        const classe = "Pró-Laborista";
+        
         // Gerar um usuário
-        const usuario = await usuarioHelpers.gerarUsuario();
+        const usuario = await usuarioHelpers.gerarUsuario({
+            tipoCadastro,
+            classe
+        });
 
         // Realizar login
         await loginPage.realizarLogin(USUARIOS.valido);
@@ -95,7 +107,7 @@ test.describe("Admissão Preliminar", { tag: ["@ADMISSAO_PRELIMINAR"] }, () => {
         await uiActionsHelpers.acessarModuloRHNetSocial("rhnetsocial");
 
         // Realizar admissão preliminar
-        await admissaoPage.realizarAdmissaoPreliminar(usuario, "Contribuinte", "Pró-Laborista");
+        await admissaoPage.realizarAdmissaoPreliminar(usuario);
 
         // Verificar se a admissão foi realizada com sucesso
         await expect(page.getByText(MENSAGENS.admissao.sucessoAdmissao)).toBeVisible();
@@ -120,9 +132,15 @@ test.describe("Admissão Preliminar", { tag: ["@ADMISSAO_PRELIMINAR"] }, () => {
     Criticidade:
     - Alta. A admissão preliminar é uma etapa essencial no cadastro de vínculos no sistema e deve funcionar corretamente para todos os tipos e categorias.
     */
-    test("realizar admissão preliminar com sucesso contribuinte servidor público", { tag: "@ADMISSAO_PRELIMINAR_SUCESSO" }, async({ page }) => {
+    test("realizar admissão preliminar com sucesso contribuinte servidor público", { tag: "@ADMISSAO_PRELIMINAR_CONTRIBUINTE_SUCESSO" }, async({ page }) => {
+        const tipoCadastro = "Contribuinte";
+        const classe = "Servidor Público";
+        
         // Gerar um usuário
-        const usuario = await usuarioHelpers.gerarUsuario();
+        const usuario = await usuarioHelpers.gerarUsuario({
+            tipoCadastro,
+            classe
+        });
 
         // Realizar login
         await loginPage.realizarLogin(USUARIOS.valido);
@@ -131,7 +149,7 @@ test.describe("Admissão Preliminar", { tag: ["@ADMISSAO_PRELIMINAR"] }, () => {
         await uiActionsHelpers.acessarModuloRHNetSocial("rhnetsocial");
 
         // Realizar admissão preliminar
-        await admissaoPage.realizarAdmissaoPreliminar(usuario, "Contribuinte", "Servidor Público");
+        await admissaoPage.realizarAdmissaoPreliminar(usuario);
 
         // Verificar se a admissão foi realizada com sucesso
         await expect(page.getByText(MENSAGENS.admissao.sucessoAdmissao)).toBeVisible();
@@ -158,8 +176,14 @@ test.describe("Admissão Preliminar", { tag: ["@ADMISSAO_PRELIMINAR"] }, () => {
     - Alta. A admissão preliminar é uma etapa essencial no cadastro de vínculos no sistema e deve funcionar corretamente para todos os tipos e categorias.
     */
     test("realizar admissão preliminar com sucesso contribuinte sócio cotista", { tag: "@ADMISSAO_PRELIMINAR_SUCESSO" }, async({ page }) => {
+        const tipoCadastro =  "Contribuinte";
+        const classe = "Sócio cotista";
+        
         // Gerar um usuário
-        const usuario = await usuarioHelpers.gerarUsuario();
+        const usuario = await usuarioHelpers.gerarUsuario({
+            tipoCadastro,
+            classe
+        });
 
         // Realizar login
         await loginPage.realizarLogin(USUARIOS.valido);
@@ -168,7 +192,148 @@ test.describe("Admissão Preliminar", { tag: ["@ADMISSAO_PRELIMINAR"] }, () => {
         await uiActionsHelpers.acessarModuloRHNetSocial("rhnetsocial");
 
         // Realizar admissão preliminar
-        await admissaoPage.realizarAdmissaoPreliminar(usuario, "Contribuinte", "Sócio cotista");
+        await admissaoPage.realizarAdmissaoPreliminar(usuario);
+
+        // Verificar se a admissão foi realizada com sucesso
+        await expect(page.getByText(MENSAGENS.admissao.sucessoAdmissao)).toBeVisible();
+    });
+
+
+    test("realizar admissão preliminar com sucesso empregado aposentado", { tag: "@ADMISSAO_PRELIMINAR_EMPREGADO_SUCESSO" }, async({ page }) => {
+        const tipoCadastro = "Empregado";
+        const classe = "Aposentado";
+        const tipoAdmissao = "Primeiro emprego";
+        const tipoColaborador = "Mensalista";
+        const tipoContrato = "1 - Contrato de trabalho por prazo indeterminado"
+        
+        // Gerar um usuário
+        const usuario = await usuarioHelpers.gerarUsuario({
+            tipoCadastro,
+            classe,
+            tipoAdmissao,
+            tipoColaborador,
+            tipoContrato
+        });
+
+        // Realizar login
+        await loginPage.realizarLogin(USUARIOS.valido);
+
+        // Acessar o módulo RHNetSocial
+        await uiActionsHelpers.acessarModuloRHNetSocial("rhnetsocial");
+
+        // Realizar admissão preliminar
+        await admissaoPage.realizarAdmissaoPreliminar(usuario);
+
+        // Verificar se a admissão foi realizada com sucesso
+        await expect(page.getByText(MENSAGENS.admissao.sucessoAdmissao)).toBeVisible();
+    });
+
+    test("realizar admissão preliminar com sucesso empregado assalariado", { tag: "@ADMISSAO_PRELIMINAR_EMPREGADO_SUCESSO" }, async({ page }) => {
+        const tipoCadastro = "Empregado";
+        const classe = "Assalariado";
+        const tipoAdmissao = "Outros casos não previstos";
+        const tipoColaborador = "Diarista";
+        const tipoContrato = "1 - Contrato de trabalho por prazo indeterminado"
+        
+        // Gerar um usuário
+        const usuario = await usuarioHelpers.gerarUsuario({
+            tipoCadastro,
+            classe,
+            tipoAdmissao,
+            tipoColaborador,
+            tipoContrato
+        });
+
+        // Realizar login
+        await loginPage.realizarLogin(USUARIOS.valido);
+
+        // Acessar o módulo RHNetSocial
+        await uiActionsHelpers.acessarModuloRHNetSocial("rhnetsocial");
+
+        // Realizar admissão preliminar
+        await admissaoPage.realizarAdmissaoPreliminar(usuario);
+
+        // Verificar se a admissão foi realizada com sucesso
+        await expect(page.getByText(MENSAGENS.admissao.sucessoAdmissao)).toBeVisible();
+    });
+
+    test("realizar admissão preliminar com sucesso empregado empregada doméstica", { tag: "@ADMISSAO_PRELIMINAR_EMPREGADO_SUCESSO" }, async({ page }) => {
+        const tipoCadastro = "Empregado";
+        const classe = "Empregada doméstica";
+        const tipoAdmissao = "Reintegração";
+        const tipoColaborador = "Horista";
+        const tipoContrato = "1 - Contrato de trabalho por prazo indeterminado"
+        
+        // Gerar um usuário
+        const usuario = await usuarioHelpers.gerarUsuario({
+            tipoCadastro,
+            classe,
+            tipoAdmissao,
+            tipoColaborador,
+            tipoContrato
+        });
+
+        // Realizar login
+        await loginPage.realizarLogin(USUARIOS.valido);
+
+        // Acessar o módulo RHNetSocial
+        await uiActionsHelpers.acessarModuloRHNetSocial("rhnetsocial");
+
+        // Realizar admissão preliminar
+        await admissaoPage.realizarAdmissaoPreliminar(usuario);
+
+        // Verificar se a admissão foi realizada com sucesso
+        await expect(page.getByText(MENSAGENS.admissao.sucessoAdmissao)).toBeVisible();
+    });
+
+    test("realizar admissão preliminar com sucesso empregado estagiário", { tag: "@ADMISSAO_PRELIMINAR_EMPREGADO_SUCESSO" }, async({ page }) => {
+        const tipoCadastro = "Empregado";
+        const classe = "Estagiário";
+        const tipoAdmissao = "Reemprego";
+        
+        // Gerar um usuário
+        const usuario = await usuarioHelpers.gerarUsuario({
+            tipoCadastro,
+            classe,
+            tipoAdmissao
+        });
+        // Realizar login
+        await loginPage.realizarLogin(USUARIOS.valido);
+
+        // Acessar o módulo RHNetSocial
+        await uiActionsHelpers.acessarModuloRHNetSocial("rhnetsocial");
+
+        // Realizar admissão preliminar
+        await admissaoPage.realizarAdmissaoPreliminar(usuario);
+
+        // Verificar se a admissão foi realizada com sucesso
+        await expect(page.getByText(MENSAGENS.admissao.sucessoAdmissao)).toBeVisible();
+    });
+
+    test("realizar admissão preliminar com sucesso empregado temporário", { tag: "@ADMISSAO_PRELIMINAR_EMPREGADO_SUCESSO" }, async({ page }) => {
+        const tipoCadastro = "Empregado";
+        const classe = "Temporário";
+        const tipoAdmissao = "Transferência entre matriz e filial";
+        const tipoColaborador = "Comissionado";
+        const tipoContrato = "1 - Contrato de trabalho por prazo indeterminado"
+        
+        // Gerar um usuário
+        const usuario = await usuarioHelpers.gerarUsuario({
+            tipoCadastro,
+            classe,
+            tipoAdmissao,
+            tipoColaborador,
+            tipoContrato
+        });
+
+        // Realizar login
+        await loginPage.realizarLogin(USUARIOS.valido);
+
+        // Acessar o módulo RHNetSocial
+        await uiActionsHelpers.acessarModuloRHNetSocial("rhnetsocial");
+
+        // Realizar admissão preliminar
+        await admissaoPage.realizarAdmissaoPreliminar(usuario);
 
         // Verificar se a admissão foi realizada com sucesso
         await expect(page.getByText(MENSAGENS.admissao.sucessoAdmissao)).toBeVisible();

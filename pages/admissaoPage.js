@@ -11,11 +11,15 @@ export class AdmissaoPage {
         // Campos
         this.elementoTipoCadastro = "s2id_tipoColaborador";
         this.elementoClasse = "s2id_classeId";
+        this.elementoTipoAdmissao = "s2id_tipoAdmissao";
         this.elementoLista = "select2-drop";
+        this.elementoTipoColaborador = "s2id_tipo";
+        this.elementoContrato = "s2id_contratoTipoId"
         this.elementoNome = "nome";
         this.elementoDataNascimento = "nascimentoData";
         this.elementoDataAdmissao = "admissaoData";
         this.elementoCpf = "cpf";
+        this.elementoSalario = "salario"
         // Botões
         this.elementoBotaoAdmitir = "Admitir";
         this.elementoBotaoSalvar = "Salvar";
@@ -36,18 +40,28 @@ export class AdmissaoPage {
     /**
      * Preenche os dados do colaborador.
      * @param {Object} usuario - Os dados do usuário.
-     * @param {string} tipoCadastro - O tipo de cadastro.
-     * @param {string} classe - A classe do colaborador.
      */
-    async preencherDadosColaborador(usuario, tipoCadastro, classe) {
-        await this.utils.selecionarOpcaoTexto(this.elementoTipoCadastro, this.elementoLista, this.roleListitem, tipoCadastro);
-        await this.utils.selecionarOpcaoTexto(this.elementoClasse, this.elementoLista, this.roleListitem, classe);
+    async preencherDadosColaborador(usuario) {
+        await this.utils.selecionarOpcaoTexto(this.elementoTipoCadastro, this.elementoLista, this.roleListitem, usuario.tipoCadastro);
+        await this.utils.selecionarOpcaoTexto(this.elementoClasse, this.elementoLista, this.roleListitem, usuario.classe);
         await this.page.getByTestId(this.elementoNome).fill(usuario.nome);
         await this.page.getByTestId(this.elementoDataNascimento).fill(usuario.dataNascimento);
         await this.page.getByTestId(this.elementoDataAdmissao).fill(usuario.dataAdmissao);
         await this.page.getByTestId(this.elementoCpf).fill(usuario.cpf);
         await this.page.getByTestId("s2id_categoriaeSocialId").click();
         await this.page.locator("#select2-drop ul li").nth(2).click();
+
+        if(usuario.tipoCadastro === "Empregado"){
+            await this.utils.selecionarOpcaoTexto(this.elementoTipoAdmissao, this.elementoLista, this.roleListitem, usuario.tipoAdmissao)
+
+            if(usuario.classe != "Estagiário"){
+                await this.page.getByTestId("s2id_funcaoId").click();
+                await this.page.locator("#select2-drop ul li").nth(2).click()
+                await this.utils.selecionarOpcaoTexto(this.elementoTipoColaborador, this.elementoLista, this.roleListitem, usuario.tipoColaborador);
+                await this.utils.selecionarOpcaoTexto(this.elementoContrato, this.elementoLista, this.roleListitem, usuario.tipoContrato)
+                await this.page.getByTestId(this.elementoSalario).fill(usuario.salario)
+            }
+        }
     }
 
     /**
@@ -59,13 +73,11 @@ export class AdmissaoPage {
 
     /**
      * Realiza o processo completo de admissão preliminar.
-     * @param {Object} usuario - Os dados do usuário.
-     * @param {string} tipoCadastro - O tipo de cadastro.
-     * @param {string} classe - A classe do colaborador.
+     * @param {Object} usuario - Os dados do usuário..
      */
-    async realizarAdmissaoPreliminar(usuario, tipoCadastro, classe){
+    async realizarAdmissaoPreliminar(usuario){
         await this.acessarTelaAdmissaoPreliminar();
-        await this.preencherDadosColaborador(usuario, tipoCadastro, classe);
+        await this.preencherDadosColaborador(usuario);
         await this.salvarAdmissao();
     }
 }
