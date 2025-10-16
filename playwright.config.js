@@ -28,6 +28,8 @@ export default defineConfig({
   reporter: 'html',
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
+
+    headless: false,
     // URL base para a aplicação
     baseURL: BASE_URL,
 
