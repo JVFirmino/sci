@@ -1,5 +1,8 @@
 import fs from 'fs';
 import axios from 'axios';
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const webhookURL = process.env.DISCORD_WEBHOOK;
 const runId = process.env.GITHUB_RUN_ID;
