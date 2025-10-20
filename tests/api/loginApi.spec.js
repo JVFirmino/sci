@@ -1,24 +1,32 @@
 import { expect, test } from "@playwright/test";
 import { loginCredencial } from "../../src/api/services/authService";
 import dotenv from "dotenv";
+import { MENSAGENS } from "../../fixture/mensagemFixture";
 
 dotenv.config();
 
-test.describe("Login API SCI", { tag: ["@LOGIN_SUCESSO"] }, () => {
-    test("login com credencial básica", async () => {
+test.describe("login usuário API", { tag: ["@LOGIN_API"] }, () => {
+    
+    test("login com sucesso",  { tag: "@LOGIN_SUCESSO_API" }, async () => {
         try {
-            const response = await loginCredencial();
-
-            console.log("Resposta da API:", response.data);
-            expect(response.status).toBe(200);
+            const response = await loginCredencial(process.env.BASIC_TOKEN_VALIDO);
+            expect(response.status).toBe(201);
+            expect(response.data).toHaveProperty("mensagem", MENSAGENS.loginApi.sucessoLogin);
+            expect(response.data).toHaveProperty("token");
+            expect(response.data).toHaveProperty("validade", 3600);
         } catch (error) {
-            console.error('❌ Erro ao obter token:');
-            if (error.response) {
-                console.error('Status:', error.response.status);
-                console.error('Dados:', error.response.data);
-            } else {
-                console.error('Mensagem:', error.message);
+            console.error("Erro ao realizar a requisição:", error);
+            throw error; 
         }
-    }
+    });
+
+    test("login token cliente expirado", { tag: "@LOGIN_FALHA_API" }, async () => {
+        try {
+            const response = await loginCredencial(process.env.BASIC_TOKEN_INVALIDO);
+            throw new Error("Esperava um erro, mas a requisição foi bem-sucedida.");
+        } catch (error) {
+            expect(error.response.status).toBe(401);
+            expect(error.response.data).toHaveProperty("mensagem", MENSAGENS.loginApi.expiradoLogin);
+        }
     });
 });

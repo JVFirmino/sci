@@ -5,7 +5,7 @@ import { ROTAS } from "../../fixture/rotaFixture";
 import { MENSAGENS } from "../../fixture/mensagemFixture";
 import { USUARIOS } from "../../fixture/usuarioFixture";
 
-test.describe("login de usuário", { tag: ["@LOGIN"] }, () => {
+test.describe("login usuário UI", { tag: ["@LOGIN_UI"] }, () => {
     let uiActionsHelpers;
     let loginPage;
 
@@ -41,7 +41,7 @@ test.describe("login de usuário", { tag: ["@LOGIN"] }, () => {
     Criticidade:
     - Alta. O login é a principal porta de entrada para o sistema e precisa funcionar corretamente para que o usuário possa utilizar as funcionalidades.
    */
-    test("realizar login com dados válidos", { tag: "@LOGIN_SUCESSO" }, async({ page }) => {
+    test("realizar login com dados válidos", { tag: "@LOGIN_SUCESSO_UI" }, async({ page }) => {
         // Realizar login com dados válidos
         await loginPage.realizarLogin(USUARIOS.valido);
 
@@ -67,12 +67,12 @@ test.describe("login de usuário", { tag: ["@LOGIN"] }, () => {
     Criticidade:
     - Alta. A validação de credenciais incorretas é fundamental para prevenir acessos não autorizados.
     */
-    test("realizar login com dados inválidos", { tag: "@LOGIN_FALHA" }, async({ page }) => {
+    test("realizar login com dados inválidos", { tag: "@LOGIN_FALHA_UI" }, async({ page }) => {
         // Realizar login com dados inválidos
         await loginPage.realizarLogin(USUARIOS.invalido);
         
         // Verificar se a mensagem de erro correta é exibida
-        await expect(page.getByText(MENSAGENS.login.erroCredenciaisInvalidas)).toBeVisible();
+        await expect(page.getByText(MENSAGENS.loginUi.erroCredenciaisInvalidas)).toBeVisible();
     });
 
 
@@ -94,12 +94,12 @@ test.describe("login de usuário", { tag: ["@LOGIN"] }, () => {
     Criticidade:
     - Média. A validação de campos obrigatórios é essencial para garantir a integridade dos dados enviados ao backend.
     */
-    test("realizar login com dados vazios", { tag: "@LOGIN_VAZIO" }, async({ page }) => {
+    test("realizar login com dados vazios", { tag: "@LOGIN_FALHA_UI" }, async({ page }) => {
         // Realizar login com dados vazios
         await loginPage.realizarLogin(USUARIOS.vazio);
 
         // Verificar se a mensagem de erro correta é exibida
-        await expect(page.getByText(MENSAGENS.login.erroCamposVazios)).toBeVisible();
+        await expect(page.getByText(MENSAGENS.loginUi.erroCamposVazios)).toBeVisible();
     });
 });
 

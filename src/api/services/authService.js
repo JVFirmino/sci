@@ -1,9 +1,8 @@
 import authClient from "../clients/authClient.js";
 
-export const loginCredencial = () =>
-    authClient.post("/auth/credencial/login", "", {
+export const loginCredencial = (basicToken) => authClient.post("/auth/credencial/login", "", {
     headers: {
-        Authorization: `Basic ${process.env.BASIC_TOKEN}`,
+        Authorization: `Basic ${basicToken}`,
         "X-CSRF-TOKEN": "",
     },
 });
