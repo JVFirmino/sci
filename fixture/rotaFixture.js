@@ -1,7 +1,7 @@
-// Base url do sistema
+// URL base do sistema sendo testado
 export const BASE_URL = 'https://sciweb.com.br';
 
-// Rotas utilizadas nos testes
+// Definição das principais rotas utilizadas nos testes
 export const ROTAS = {
     login: {
         url: "/",

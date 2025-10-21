@@ -1,4 +1,4 @@
-// Mensagens para validação
+// Centralização de mensagens esperadas para validação nos testes.
 export const MENSAGENS = {
     loginUi: {
         erroCredenciaisInvalidas: "Usuário e/ou senha incorretos.",
@@ -13,6 +13,7 @@ export const MENSAGENS = {
         sucessoRefresh: "Token refresh feito com sucesso.",
         falhouTokenRefresh: "Token refresh falhou.",
         blacklistedTokenRefresh: "The token has been blacklisted",
-        naoInformadoTokenRefresh: "Token não informado."
+        naoInformadoTokenRefresh: "Token não informado.",
+        expiradoTokenRefresh: "Token expirado"
     }
 };
