@@ -6,6 +6,13 @@ export const MENSAGENS = {
     },
     loginApi: {
         sucessoLogin: "Token gerado com sucesso.",
-        expiradoLogin: "Token de cliente expirado.",
+        expiradoTokenLogin: "Token de cliente expirado.",
+        invalidoTokenLogin: "Token de terceiro e/ou cliente inválidos.",
+    },
+    refreshApi: {
+        sucessoRefresh: "Token refresh feito com sucesso.",
+        falhouTokenRefresh: "Token refresh falhou.",
+        blacklistedTokenRefresh: "The token has been blacklisted",
+        naoInformadoTokenRefresh: "Token não informado."
     }
 };

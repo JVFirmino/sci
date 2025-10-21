@@ -26,7 +26,17 @@ test.describe("login usuário API", { tag: ["@LOGIN_API"] }, () => {
             throw new Error("Esperava um erro, mas a requisição foi bem-sucedida.");
         } catch (error) {
             expect(error.response.status).toBe(401);
-            expect(error.response.data).toHaveProperty("mensagem", MENSAGENS.loginApi.expiradoLogin);
+            expect(error.response.data).toHaveProperty("mensagem", MENSAGENS.loginApi.expiradoTokenLogin);
+        }
+    });
+
+    test("login tokens vazios", { tag: "@LOGIN_FALHA_API" }, async () => {
+        try {
+            const response = await loginCredencial("");
+            throw new Error("Esperava um erro, mas a requisição foi bem-sucedida.");
+        } catch (error) {
+            expect(error.response.status).toBe(401);
+            expect(error.response.data).toHaveProperty("mensagem", MENSAGENS.loginApi.invalidoTokenLogin);
         }
     });
 });
