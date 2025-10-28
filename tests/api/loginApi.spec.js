@@ -29,7 +29,6 @@ test.describe("login usuário API", { tag: ["@LOGIN_API"] }, () => {
     test("login com sucesso",  { tag: "@LOGIN_SUCESSO_API" }, async () => {
         
         try {
-            console.log("Usando token:", process.env.BASIC_TOKEN_VALIDO);
             const response = await loginCredencial(process.env.BASIC_TOKEN_VALIDO);
             expect(response.status).toBe(201);
             expect(response.data).toHaveProperty("mensagem", MENSAGENS.loginApi.sucessoLogin);

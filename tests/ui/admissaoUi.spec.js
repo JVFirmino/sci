@@ -48,28 +48,28 @@
 //     Criticidade:
 //     - Alta. A admissão preliminar é uma etapa essencial no cadastro de vínculos no sistema e deve funcionar corretamente para todos os tipos e categorias.
 //     */
-//     test("realizar admissão preliminar com sucesso contribuinte dirigente sindical", { tag: "@ADMISSAO_PRELIMINAR_CONTRIBUINTE_SUCESSO" }, async({ page }) => {
-//         const tipoCadastro = "Contribuinte";
-//         const classe = "Dirigente sindical";
+    // test("realizar admissão preliminar com sucesso contribuinte dirigente sindical", { tag: "@ADMISSAO_PRELIMINAR_CONTRIBUINTE_SUCESSO" }, async({ page }) => {
+    //     const tipoCadastro = "Contribuinte";
+    //     const classe = "Dirigente sindical";
         
-//         // Gerar um usuário
-//         const usuario = await usuarioHelpers.gerarUsuario({
-//             tipoCadastro, 
-//             classe
-//         });
+    //     // Gerar um usuário
+    //     const usuario = await usuarioHelpers.gerarUsuario({
+    //         tipoCadastro, 
+    //         classe
+    //     });
 
-//         // Realizar login
-//         await loginPage.realizarLogin(USUARIOS.valido);
+    //     // Realizar login
+    //     await loginPage.realizarLogin(USUARIOS.valido);
 
-//         // Acessar o módulo RHNetSocial
-//         await uiActionsHelpers.acessarModuloRHNetSocial("rhnetsocial");
+    //     // Acessar o módulo RHNetSocial
+    //     await uiActionsHelpers.acessarModuloRHNetSocial("rhnetsocial");
 
-//         // Realizar admissão preliminar
-//         await admissaoPage.realizarAdmissaoPreliminar(usuario);
+    //     // Realizar admissão preliminar
+    //     await admissaoPage.realizarAdmissaoPreliminar(usuario);
 
-//         // Verificar se a admissão foi realizada com sucesso
-//         await expect(page.getByText(MENSAGENS.admissao.sucessoAdmissao)).toBeVisible();
-//     });
+    //     // Verificar se a admissão foi realizada com sucesso
+    //     await expect(page.getByText(MENSAGENS.admissao.sucessoAdmissao)).toBeVisible();
+    // });
 
 //     /*
 //     Cenário 2: Realizar admissão preliminar com sucesso - Contribuinte Pró-Laborista
