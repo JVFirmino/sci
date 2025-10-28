@@ -15,5 +15,8 @@ export const MENSAGENS = {
         blacklistedTokenRefresh: "The token has been blacklisted",
         naoInformadoTokenRefresh: "Token não informado.",
         expiradoTokenRefresh: "Token expirado"
+    },
+    servicoApi: {
+        sucessoCadastroServico: "Operação realizada com sucesso"
     }
 };

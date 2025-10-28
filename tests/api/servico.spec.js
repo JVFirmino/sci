@@ -5,19 +5,21 @@ import { expect, test } from "@playwright/test";
 import { loginCredencial } from "../../src/api/services/authService";
 import { cadastrarServico } from "../../src/api/services/servicoService";
 import { ApiServicoHelpers } from "../../src/helpers/apiServicoHelpers";
+import { MENSAGENS } from "../../fixture/mensagemFixture";
 
 test.describe("serviço API", { tag: ["@SERVICO_API"] }, () => {
 
     test("cadastrar um serviço", { tag: "@SERVICO_SUCESSO_API" }, async () => {
         try {
-            const quantidade = 2;
+            const empresaId = 900001;
+            const quantidade = 1;
             const apiServicoHelpers = new ApiServicoHelpers();
 
             const loginResponse = await loginCredencial(process.env.BASIC_TOKEN_VALIDO);
-            const response = await cadastrarServico(apiServicoHelpers.gerarMutiplosServicos(900001, quantidade), loginResponse.data.token);
+            const response = await cadastrarServico(apiServicoHelpers.gerarMutiplosServicos(empresaId, quantidade), loginResponse.data.token);
             expect(response.status).toBe(200);
             expect(response.data).toHaveProperty("sucesso", true);
-            expect(response.data).toHaveProperty("mensagem", "Operação realizada com sucesso");
+            expect(response.data).toHaveProperty("mensagem", MENSAGENS.servicoApi.sucessoCadastroServico);
             expect(response.data).toHaveProperty("retorno");
 
             const { retorno } = response.data;
