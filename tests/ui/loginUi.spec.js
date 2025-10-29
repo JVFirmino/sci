@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import { UiActionsHelpers } from "../../src/helpers/uiActionsHelpers";
+import { ActionsUtils } from "../../src/utils/actionsUtils";
 import { LoginPage } from "../../pages/loginPage";
 import { ROTAS } from "../../fixture/rotaFixture";
 import { MENSAGENS } from "../../fixture/mensagemFixture";
@@ -12,7 +12,7 @@ test.describe("login usuário UI", { tag: ["@LOGIN_UI"] }, () => {
     test.beforeEach(async ({ page }) => {
         console.log(`Iniciando o teste: ${test.info().title}`);
 
-        uiActionsHelpers = new UiActionsHelpers(page);
+        uiActionsHelpers = new ActionsUtils(page);
         loginPage = new LoginPage(page);
 
         // Acessar a página de login e verificar o título

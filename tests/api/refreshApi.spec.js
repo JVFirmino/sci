@@ -28,8 +28,9 @@ test.describe("refresh token API", { tag: ["@REFRESH_API"] }, () => {
     - A API deve retornar status 200, mensagem correta, token e validade presentes.
     */
     test("refresh token com sucesso", { tag: "@REFRESH_SUCESSO_API" }, async () => {
+        const token = gerarBasicToken(process.env.AUTH_USERNAME_VALIDO, process.env.AUTH_PASSWORD_VALIDO); 
         try {
-            const loginResponse = await loginCredencial(process.env.BASIC_TOKEN_VALIDO);
+            const loginResponse = await loginCredencial(token);
             const response = await refresh(loginResponse.data.token)
             expect(response.status).toBe(200)
             expect(response.data).toHaveProperty("mensagem", MENSAGENS.refreshApi.sucessoRefresh)
