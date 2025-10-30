@@ -17,6 +17,8 @@ export const MENSAGENS = {
         expiradoTokenRefresh: "Token expirado"
     },
     servicoApi: {
-        sucessoCadastroServico: "Operação realizada com sucesso"
+        sucessoCadastroServico: "Operação realizada com sucesso",
+        expiradoToken: "Token has expired",
+        utilizadoCodigoCbo: "O campo 'Código do CBO' contém um valor único já usado em outro registro."
     }
 };

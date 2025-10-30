@@ -15,20 +15,32 @@ export class ApiServicoHelpers {
         return this.categoriaEsocial[index];
     }
 
-    gerarServico(empresaId){
-        return {
-            empresa_id: empresaId,
-            cbo: `${faker.string.numeric(4)}-${faker.string.numeric(2)}`,
-            descricao_cbo: `CBO ${faker.person.jobTitle()}`,
-            categoria_esocial: this.gerarCategoriaEsocial(),
-            ativo: true
-        };
-    }
+    gerarServico(empresaId, multiplo){
+        if(multiplo){
+            return {
+                empresa_id: empresaId,
+                cbo: `${faker.string.numeric(4)}-${faker.string.numeric(2)}`,
+                descricao_cbo: `CBO ${faker.person.jobTitle()}`,
+                categoria_esocial: this.gerarCategoriaEsocial(),
+                ativo: true
+            }
+        } else {
+            return {
+                dados: [{
+                    empresa_id: empresaId,
+                    cbo: `${faker.string.numeric(4)}-${faker.string.numeric(2)}`,
+                    descricao_cbo: `CBO ${faker.person.jobTitle()}`,
+                    categoria_esocial: this.gerarCategoriaEsocial(),
+                    ativo: true
+                }]
+            }
+        }
+    };
 
-    gerarMutiplosServicos(empresaId, quantidade){
+    gerarMultiplosServicos(empresaId, quantidade, multiplo){
         const servicos = [];
         for (let i = 0; i < quantidade; i++) {
-            servicos.push(this.gerarServico(empresaId));
+            servicos.push(this.gerarServico(empresaId, multiplo));
         }
         return {
             dados: servicos

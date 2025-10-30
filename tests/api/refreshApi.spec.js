@@ -4,6 +4,7 @@ dotenv.config();
 import { expect, test } from "@playwright/test";
 import { loginCredencial, refresh } from "../../src/api/services/authService";
 import { MENSAGENS } from "../../fixture/mensagemFixture";
+import { gerarBasicToken } from "../../src/utils/authUtils";
 
 test.describe("refresh token API", { tag: ["@REFRESH_API"] }, () => {
 
@@ -94,8 +95,9 @@ test.describe("refresh token API", { tag: ["@REFRESH_API"] }, () => {
     - A API deve retornar status 401, mensagem: "Token refresh falhou." e erro: "The token has been blacklisted"
     */
     test("refresh token blacklisted", { tag: "@REFRESH_FALHA_API" }, async () => {
+        const token = gerarBasicToken(process.env.AUTH_USERNAME_VALIDO, process.env.AUTH_PASSWORD_VALIDO);
         try {
-            const loginResponse = await loginCredencial(process.env.BASIC_TOKEN_VALIDO);
+            const loginResponse = await loginCredencial(token);
             await refresh(loginResponse.data.token)
             const response = await refresh(loginResponse.data.token)
             throw new Error("Esperava um erro, mas a requisição foi bem-sucedida.");
