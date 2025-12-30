@@ -15,26 +15,34 @@ export class ApiServicoHelpers {
         return this.categoriaEsocial[index];
     }
 
-    gerarServico(empresaId, multiplo){
-        if(multiplo){
-            return {
-                empresa_id: empresaId,
-                cbo: `${faker.string.numeric(4)}-${faker.string.numeric(2)}`,
-                descricao_cbo: `CBO ${faker.person.jobTitle()}`,
-                categoria_esocial: this.gerarCategoriaEsocial(),
-                ativo: true
-            }
-        } else {
-            return {
-                dados: [{
-                    empresa_id: empresaId,
-                    cbo: `${faker.string.numeric(4)}-${faker.string.numeric(2)}`,
-                    descricao_cbo: `CBO ${faker.person.jobTitle()}`,
-                    categoria_esocial: this.gerarCategoriaEsocial(),
-                    ativo: true
-                }]
-            }
+    gerarItemServico(empresaId){
+        return {
+            empresa_id: empresaId,
+            cbo: `${faker.string.numeric(4)}-${faker.string.numeric(2)}`,
+            descricao_cbo: `CBO ${faker.person.jobTitle()}`,
+            categoria_esocial: this.gerarCategoriaEsocial(),
+            ativo: true
         }
+    }   
+
+    gerarServico(empresaId, multiplo){
+        const item = this.gerarItemServico(empresaId);
+        if(multiplo){
+            return item
+        } else {
+            return { dados: [item] };
+        }
+    };
+
+    gerarServicoDuplicado(empresaId, quantidade){
+        const servicoBase = this.gerarServico(empresaId, false).dados[0];
+        const servicos = [] 
+        for (let i = 0; i < quantidade; i++){
+            servicos.push(structuredClone(servicoBase))
+        }
+        return{
+            dados: servicos
+        };
     };
 
     gerarMultiplosServicos(empresaId, quantidade, multiplo){
