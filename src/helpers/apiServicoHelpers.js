@@ -61,4 +61,15 @@ export class ApiServicoHelpers {
             tipo_servico_autonomo_id: tipoServicoId
         };
     };
+
+    atualizarServico(empresa_id, tipoServicoId){
+        return {
+            tipo_servico_autonomo_id: tipoServicoId,
+            empresa_id: empresa_id,
+            cbo: `${faker.string.numeric(4)}-${faker.string.numeric(2)}`,
+            descricao_cbo: `CBO ${faker.person.jobTitle()}`,
+            categoria_esocial: this.gerarCategoriaEsocial(),
+            ativo: true
+        };
+    };
 }

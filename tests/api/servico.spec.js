@@ -3,7 +3,7 @@ dotenv.config();
 
 import { expect, test } from "@playwright/test";
 import { loginCredencial } from "../../src/api/services/authService";
-import { cadastrarServico, deletarServico } from "../../src/api/services/servicoService";
+import { atualizarServico, cadastrarServico, deletarServico } from "../../src/api/services/servicoService";
 import { ApiServicoHelpers } from "../../src/helpers/apiServicoHelpers";
 import { MENSAGENS } from "../../fixture/mensagemFixture";
 import { gerarBasicToken } from "../../src/utils/authUtils";
@@ -213,6 +213,26 @@ test.describe("serviço API", { tag: ["@SERVICO_API"] }, () => {
             expect(error.response.data).toHaveProperty("error", MENSAGENS.servicoApi.expiradoToken);
         }
     });
+
+
+    test("atualizar um serviço", { tag: "@SERVICO_SUCESSO_API" }, async () => {
+        const empresaId = 900001;
+        const apiServicoHelpers = new ApiServicoHelpers();
+        const gerarServico = apiServicoHelpers.gerarServico(empresaId, false);
+        const token = gerarBasicToken("330|abc123", "496|SNmOmXK7QV8u9E2M8FmF2IaC1eCl8au39ieZKYDG");
+        try {
+            const loginResponse = await loginCredencial(token);
+            const responseServico = await cadastrarServico(gerarServico, loginResponse.data.token);
+            const servicoAtualizar = apiServicoHelpers.atualizarServico(empresaId, responseServico.data.retorno[0].tipo_servico_autonomo_id);
+            const response = await atualizarServico(servicoAtualizar, loginResponse.data.token);
+        } catch (error) {
+            console.error("Erro ao atualizar serviço:", error);
+            throw error;
+        }
+    });
+
+
+
 
 
     test("deletar um serviço", { tag: "@SERVICO_SUCESSO_API" }, async () => {
