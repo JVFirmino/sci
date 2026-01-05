@@ -19,6 +19,9 @@ export const MENSAGENS = {
     servicoApi: {
         sucessoCadastroServico: "Operação realizada com sucesso",
         expiradoToken: "Token has expired",
-        utilizadoCodigoCbo: "O campo 'Código do CBO' contém um valor único já usado em outro registro."
+        utilizadoCodigoCbo: "O campo 'Código do CBO' contém um valor único já usado em outro registro.",
+        deletarServico: "Registro excluído com sucesso",
+        servicoNaoEncontrado: "Registro não encontrado ou já removido anteriormente",
+        semPermissao: "Você não tem permissão para realizar esta ação."
     }
 };

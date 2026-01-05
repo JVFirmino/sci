@@ -3,11 +3,11 @@ dotenv.config();
 
 import { expect, test } from "@playwright/test";
 import { loginCredencial } from "../../src/api/services/authService";
-import { cadastrarServico } from "../../src/api/services/servicoService";
+import { cadastrarServico, deletarServico } from "../../src/api/services/servicoService";
 import { ApiServicoHelpers } from "../../src/helpers/apiServicoHelpers";
 import { MENSAGENS } from "../../fixture/mensagemFixture";
 import { gerarBasicToken } from "../../src/utils/authUtils";
-import { faker, tr } from "@faker-js/faker";
+import { faker } from "@faker-js/faker";
 
 test.describe("serviço API", { tag: ["@SERVICO_API"] }, () => {
 
@@ -183,12 +183,99 @@ test.describe("serviço API", { tag: ["@SERVICO_API"] }, () => {
         }
     });
 
+    test("cadastrar serviço com empresa_id inválido", { tag: "@SERVICO_FALHA_API" }, async () => {
+        const empresaId = 9999999;
+        const apiServicoHelpers = new ApiServicoHelpers();
+        const gerarServico = apiServicoHelpers.gerarServico(empresaId, false);
+        const token = gerarBasicToken("330|abc123", "496|SNmOmXK7QV8u9E2M8FmF2IaC1eCl8au39ieZKYDG");
+        try {
+            const loginResponse = await loginCredencial(token);
+            await cadastrarServico(gerarServico, loginResponse.data.token);
+            throw new Error("Esperava um erro, mas a requisição foi bem-sucedida.");
+        } catch (error) {
+            expect(error.response.status).toBe(403);
+            expect(error.response.data).toHaveProperty("sucesso", false);
+            expect(error.response.data).toHaveProperty("mensagem", MENSAGENS.servicoApi.semPermissao);
+            expect(error.response.data).toHaveProperty("erros");
+            expect(error.response.data).toHaveProperty("retorno", {});
+        }
+    });
+
     test("cadastrar serviço com token expirado", { tag: "@SERVICO_FALHA_API" }, async () => {
         const empresaId = 900001;
         const apiServicoHelpers = new ApiServicoHelpers();
         const gerarServico = apiServicoHelpers.gerarServico(empresaId, false);
         try {
             const response = await cadastrarServico(gerarServico, process.env.TOKEN_REFRESH_EXPIRADO);
+            throw new Error("Esperava um erro, mas a requisição foi bem-sucedida.");
+        } catch (error) {
+            expect(error.response.status).toBe(401);
+            expect(error.response.data).toHaveProperty("error", MENSAGENS.servicoApi.expiradoToken);
+        }
+    });
+
+
+    test("deletar um serviço", { tag: "@SERVICO_SUCESSO_API" }, async () => {
+        const empresaId = 900001;
+        const apiServicoHelpers = new ApiServicoHelpers();
+        const gerarServico = apiServicoHelpers.gerarServico(empresaId, false);
+        const token = gerarBasicToken("330|abc123", "496|SNmOmXK7QV8u9E2M8FmF2IaC1eCl8au39ieZKYDG");
+        try {
+            const loginResponse = await loginCredencial(token);
+            const responseServico = await cadastrarServico(gerarServico, loginResponse.data.token);
+            const servicoDeletar = apiServicoHelpers.montarPayloadDelecaoServico(empresaId, responseServico.data.retorno[0].tipo_servico_autonomo_id);
+            const response = await deletarServico(servicoDeletar, loginResponse.data.token);
+            expect(response.status).toBe(200);
+            expect(response.data).toHaveProperty("sucesso", true);
+            expect(response.data).toHaveProperty("mensagem", MENSAGENS.servicoApi.deletarServico);
+        } catch (error) {
+            console.error("Erro ao deletar serviço:", error);
+            throw error;
+        }
+    });
+
+    test("deletar um serviço que não existe", { tag: "@SERVICO_FALHA_API" }, async () => {
+        const empresaId = 900001;
+        const tipoServicoId = 9999999; 
+        const apiServicoHelpers = new ApiServicoHelpers();
+        const servicoDeletar = apiServicoHelpers.montarPayloadDelecaoServico(empresaId, tipoServicoId);
+        const token = gerarBasicToken("330|abc123", "496|SNmOmXK7QV8u9E2M8FmF2IaC1eCl8au39ieZKYDG");
+        try {
+            const loginResponse = await loginCredencial(token);
+            const response = await deletarServico(servicoDeletar, loginResponse.data.token);
+            expect(response.data).toHaveProperty("mensagem", MENSAGENS.servicoApi.servicoNaoEncontrado);
+        } catch (error) {
+            console.error("Erro ao deletar serviço:", error);
+            throw error;
+        }
+    });
+
+    test("deletar um serviço com empresa_id inválido", { tag: "@SERVICO_FALHA_API" }, async () => {
+        const empresaId = 9999999;
+        const tipoServicoId = 9999999;
+        const apiServicoHelpers = new ApiServicoHelpers();
+        const servicoDeletar = apiServicoHelpers.montarPayloadDelecaoServico(empresaId, tipoServicoId);
+        const token = gerarBasicToken("330|abc123", "496|SNmOmXK7QV8u9E2M8FmF2IaC1eCl8au39ieZKYDG");
+        try {
+            const loginResponse = await loginCredencial(token);
+            const response = await deletarServico(servicoDeletar, loginResponse.data.token);
+            throw new Error("Esperava um erro, mas a requisição foi bem-sucedida.");
+        } catch (error) {
+            expect(error.response.status).toBe(403);
+            expect(error.response.data).toHaveProperty("sucesso", false);
+            expect(error.response.data).toHaveProperty("mensagem", MENSAGENS.servicoApi.semPermissao);
+            expect(error.response.data).toHaveProperty("erros");
+            expect(error.response.data).toHaveProperty("retorno", {});
+        }
+    });
+
+    test("deletar um serviço com token expirado", { tag: "@SERVICO_FALHA_API" }, async () => {
+        const empresaId = 900001;
+        const tipoServicoId = 9999999; 
+        const apiServicoHelpers = new ApiServicoHelpers();
+        const servicoDeletar = apiServicoHelpers.montarPayloadDelecaoServico(empresaId, tipoServicoId);
+        try {    
+            const response = await deletarServico(servicoDeletar, "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vYXBpLWF1dGgtaG1sLnNjaS5jb20uYnIvYXBpL3YxL2F1dGgvY3JlZGVuY2lhbC9sb2dpbiIsImlhdCI6MTc2MzM4MzA1MywiZXhwIjoxNzYzMzg2NjUzLCJuYmYiOjE3NjMzODMwNTMsImp0aSI6IlZpM0x6enZaOHpYQkRPYVgiLCJzdWIiOiI5NzM3MDMiLCJwcnYiOiJjNTIzYjFkZjdhMTZiMmViYmQzYzFjZDUxNDk4ZjUzNjhkODBjMDEwIiwidXN1YXJpbyI6eyJ0aXBvIjoyLCJ1c3VhcmlvSWQiOjk3MzcwMywiZGFkb3MiOnsiY2xpZW50ZUlkIjo4ODU2OSwiZW1wcmVzYXNWaW5jdWxhZGFzIjpbNDc3NDI1XSwiYWNlc3NvcyI6eyJyZWxhdG9yaW8iOnsiR0VUIjpbImNhdGVnb3JpYSIsInJlbGF0b3JpbyIsInB1YmxpY2Fkb3MiLCJtb2RvLXBhZ2FtZW50byJdLCJQT1NUIjpbInB1YmxpY2Fkb3MiXSwiUFVUIjpbInB1YmxpY2Fkb3MiXX0sImF0ZW5kaW1lbnRvIjp7IkdFVCI6WyJ1c3VhcmlvLWFkaWNpb25hbC1jbGllbnRlIiwic3RhdHVzIiwidHJhbWl0ZSIsInVzdWFyaW8tYWRpY2lvbmFsLWFkbWluIiwiZGVwYXJ0YW1lbnRvIiwiYXRlbmRpbWVudG8iLCJpbnRlcmFjYW8iLCJhbmV4byJdLCJQVVQiOlsiY29uY2x1aXIiLCJhbmFsaXNhciJdLCJQT1NUIjpbImludGVyYWNhbyJdfX19fSwiYWNjZXNzX3Rva2VuX2NsaWVudGVfaWQiOjMzMCwiYWNjZXNzX3Rva2VuX3BhcmNlaXJvX2lkIjoxMDcxLCJzaXN0ZW1hSWQiOjUyfQ.XI6zdigf02QvleEJwaOkRJYBlxV2SXpvGaXHZNoVLFI");
             throw new Error("Esperava um erro, mas a requisição foi bem-sucedida.");
         } catch (error) {
             expect(error.response.status).toBe(401);

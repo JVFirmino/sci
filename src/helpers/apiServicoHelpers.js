@@ -35,7 +35,7 @@ export class ApiServicoHelpers {
     };
 
     gerarServicoDuplicado(empresaId, quantidade){
-        const servicoBase = this.gerarServico(empresaId, false).dados[0];
+        const servicoBase = this.gerarServico(empresaId, true);
         const servicos = [] 
         for (let i = 0; i < quantidade; i++){
             servicos.push(structuredClone(servicoBase))
@@ -52,6 +52,13 @@ export class ApiServicoHelpers {
         }
         return {
             dados: servicos
+        };
+    };
+    
+    montarPayloadDelecaoServico(empresaId, tipoServicoId){
+        return {
+            empresa_id: empresaId,
+            tipo_servico_autonomo_id: tipoServicoId
         };
     };
 }
