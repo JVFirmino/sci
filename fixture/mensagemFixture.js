@@ -28,6 +28,7 @@ export const MENSAGENS = {
         servicoIdNaoEncontrado: "O valor informado no campo ID do tipo de serviço não foi encontrado"
     },
     feriadoApi:{
-        sucessoCadastroFeriado: "Operação realizada com sucesso"
+        sucessoCadastroFeriado: "Operação realizada com sucesso",
+        feriadoUtilizado: "O campo 'dados.0.data' contém um valor único já usado em outro registro."
     }
 };

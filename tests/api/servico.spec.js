@@ -153,7 +153,7 @@ test.describe("serviço API", { tag: ["@SERVICO_API"] }, () => {
         }
     });
 
-    test("cadastrar múltiplos serviços com itens duplicados no array", { tag: "@SERVICO_FALHA_API" }, async () => {
+    test("cadastrar mais de um serviços com itens duplicados no array", { tag: "@SERVICO_FALHA_API" }, async () => {
         const empresaId = 900001;
         const quantidade = 2
         const apiServicoHelpers = new ApiServicoHelpers();
