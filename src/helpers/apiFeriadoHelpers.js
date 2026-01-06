@@ -1,0 +1,50 @@
+import { faker } from "@faker-js/faker";
+
+export class ApiFeriadoHelpers {
+    constructor() {}
+
+    gerarItemFeriado(empresaId) {
+        const dataInicial = new Date();
+        dataInicial.setFullYear(dataInicial.getFullYear() + 3);
+
+        const dataFinal = new Date();
+        dataFinal.setFullYear(dataFinal.getFullYear() + 20);
+
+        const dataAleatoria = faker.date.between({ from: dataInicial, to: dataFinal });
+        return {
+            empresa_id: empresaId,
+            data: dataAleatoria.toISOString().split('T')[0],
+            descricao: faker.lorem.words(3)
+        };
+    };
+
+    gerarFeriado(empresaId, multiplo){
+        const item = this.gerarItemFeriado(empresaId);
+        if(multiplo){
+            return item
+        } else {
+            return { dados: [item] };
+        }
+    };
+
+    gerarFeriadoDuplicado(empresaId, quantidade){
+        const feriadoBase = this.gerarFeriado(empresaId, true);
+        const feriados = [] 
+        for (let i = 0; i < quantidade; i++){
+            feriados.push(structuredClone(feriadoBase))
+        }
+        return{
+            dados: feriados
+        };
+    };
+
+    gerarMultiplosFeriados(empresaId, quantidade, multiplo){
+        const feriados = [];
+        for (let i = 0; i < quantidade; i++) {
+            feriados.push(this.gerarFeriado(empresaId, multiplo));
+        }
+        return {
+            dados: feriados
+        };
+    };
+}

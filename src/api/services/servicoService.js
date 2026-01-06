@@ -1,4 +1,4 @@
-import servicoClient from "../clients/servicoClient.js";
+import servicoClient from "../clients/rhNet.js";
 
 // Função para cadastrar um novo serviço
 export const cadastrarServico = (servicoData, jwtToken) => servicoClient.post("/autonomo/tiposervicos", servicoData, {

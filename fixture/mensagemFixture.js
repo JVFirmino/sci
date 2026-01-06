@@ -26,5 +26,8 @@ export const MENSAGENS = {
         duplicadoServico: "Duplicata encontrada no array para os campos: clienteId, empresa_id, cbo, categoria_esocial",
         duplicadoServico2: "Duplicata encontrada no array para os campos: cliente_id, empresa_id, cbo, categoria_esocial",
         servicoIdNaoEncontrado: "O valor informado no campo ID do tipo de serviço não foi encontrado"
+    },
+    feriadoApi:{
+        sucessoCadastroFeriado: "Operação realizada com sucesso"
     }
 };
