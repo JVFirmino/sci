@@ -20,7 +20,7 @@ export class ApiServicoHelpers {
             empresa_id: empresaId,
             cbo: `${faker.string.numeric(4)}-${faker.string.numeric(2)}`,
             descricao_cbo: `CBO ${faker.person.jobTitle()}`,
-            categoria_esocial: this.gerarCategoriaEsocial(),
+            categoria_esocial: `${this.gerarCategoriaEsocial()}`,
             ativo: true
         }
     }   
@@ -54,13 +54,6 @@ export class ApiServicoHelpers {
             dados: servicos
         };
     };
-    
-    montarPayloadDelecaoServico(empresaId, tipoServicoId){
-        return {
-            empresa_id: empresaId,
-            tipo_servico_autonomo_id: tipoServicoId
-        };
-    };
 
     atualizarServico(empresa_id, tipoServicoId){
         return {
@@ -68,8 +61,28 @@ export class ApiServicoHelpers {
             empresa_id: empresa_id,
             cbo: `${faker.string.numeric(4)}-${faker.string.numeric(2)}`,
             descricao_cbo: `CBO ${faker.person.jobTitle()}`,
-            categoria_esocial: this.gerarCategoriaEsocial(),
+            categoria_esocial: `${this.gerarCategoriaEsocial()}`,
             ativo: true
         };
     };
+
+    gerarPayloadAtualizacao(servicoBaseA, servicoParaAtualizarB, overrides = {}) {
+        return {
+            tipo_servico_autonomo_id: servicoParaAtualizarB.tipo_servico_autonomo_id,
+            empresa_id: servicoBaseA.empresa_id,
+            cbo: servicoBaseA.cbo,
+            descricao_cbo: servicoBaseA.descricao_cbo,
+            categoria_esocial: servicoBaseA.categoria_esocial,
+            ativo: servicoBaseA.ativo,
+            ...overrides
+        };
+    };
+
+    montarPayloadDeletarServico(empresaId, tipoServicoId){
+        return {
+            empresa_id: empresaId,
+            tipo_servico_autonomo_id: tipoServicoId
+        };
+    };
+
 }

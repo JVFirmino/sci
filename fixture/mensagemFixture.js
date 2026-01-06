@@ -22,6 +22,9 @@ export const MENSAGENS = {
         utilizadoCodigoCbo: "O campo 'Código do CBO' contém um valor único já usado em outro registro.",
         deletarServico: "Registro excluído com sucesso",
         servicoNaoEncontrado: "Registro não encontrado ou já removido anteriormente",
-        semPermissao: "Você não tem permissão para realizar esta ação."
+        semPermissao: "Você não tem permissão para realizar esta ação.",
+        duplicadoServico: "Duplicata encontrada no array para os campos: clienteId, empresa_id, cbo, categoria_esocial",
+        duplicadoServico2: "Duplicata encontrada no array para os campos: cliente_id, empresa_id, cbo, categoria_esocial",
+        servicoIdNaoEncontrado: "O valor informado no campo ID do tipo de serviço não foi encontrado"
     }
 };
