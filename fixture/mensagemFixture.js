@@ -29,6 +29,8 @@ export const MENSAGENS = {
     },
     feriadoApi:{
         sucessoCadastroFeriado: "Operação realizada com sucesso",
-        feriadoUtilizado: "O campo 'dados.0.data' contém um valor único já usado em outro registro."
+        feriadoUtilizado: "O campo 'dados.0.data' contém um valor único já usado em outro registro.",
+        semPermissao: "Você não tem permissão para realizar esta ação.",
+        expiradoToken: "Token has expired"
     }
 };
