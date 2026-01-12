@@ -1,4 +1,3 @@
-// Centralização de mensagens esperadas para validação nos testes.
 export const MENSAGENS = {
     loginUi: {
         erroCredenciaisInvalidas: "Usuário e/ou senha incorretos.",

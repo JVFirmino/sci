@@ -1,4 +1,3 @@
-// Usuários de teste utilizados para diferentes cenários
 export const USUARIOS = {
     valido: {
         login: 'joaoteste2@sci.com.br',
