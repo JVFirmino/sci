@@ -62,6 +62,14 @@ export class ApiFeriadoHelpers {
         };
     }
 
+    atualizarFeriado(empresa_id, data){
+        return {
+            empresa_id: empresa_id,
+            data: data,
+            descricao: faker.lorem.words(3)
+        };
+    };
+
     montarPayloadDeletarFeriado(empresaId, data){
         return {
             empresa_id: empresaId,

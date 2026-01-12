@@ -5,7 +5,7 @@ import { expect, test } from "@playwright/test";
 import { ApiFeriadoHelpers } from "../../src/helpers/apiFeriadoHelpers";
 import { gerarBasicToken } from "../../src/utils/authUtils";
 import { loginCredencial } from "../../src/api/services/authService";
-import { cadastrarFeriado, deletarFeriado } from "../../src/api/services/feriadoService";
+import { atualizarFeriado, cadastrarFeriado, deletarFeriado } from "../../src/api/services/feriadoService";
 import { MENSAGENS } from "../../fixture/mensagemFixture";
 
 test.describe("feriado API", { tag: ["@FERIADO_API"] }, () => {
@@ -155,6 +155,31 @@ test.describe("feriado API", { tag: ["@FERIADO_API"] }, () => {
         } catch (error) {
             expect(error.response.status).toBe(401);
             expect(error.response.data).toHaveProperty("error", MENSAGENS.feriadoApi.expiradoToken);
+        }
+    });
+
+    test("atualizar um feriado", { tag: "@FERIADO_SUCESSO_API" }, async () => {
+        const empresaId = 900001;
+        const apiFeriadoHelpers = new ApiFeriadoHelpers(); 
+        const gerarFeriado = apiFeriadoHelpers.gerarFeriado(empresaId, false);
+        const token = gerarBasicToken("330|abc123", "496|SNmOmXK7QV8u9E2M8FmF2IaC1eCl8au39ieZKYDG");
+        try {
+            const loginResponse = await loginCredencial(token);
+            const responseFeriado = await cadastrarFeriado(gerarFeriado, loginResponse.data.token);
+            const feriadoAtualizar = apiFeriadoHelpers.atualizarFeriado(empresaId, responseFeriado.data.retorno[0].data);
+            const response = await atualizarFeriado(feriadoAtualizar, loginResponse.data.token);
+            expect(response.status).toBe(200);
+            expect(response.data).toHaveProperty("sucesso", true);
+            expect(response.data).toHaveProperty("mensagem", MENSAGENS.feriadoApi.sucessoCadastroFeriado);
+            expect(response.data).toHaveProperty("retorno");
+
+            const { retorno } = response.data;
+            expect(retorno).toHaveProperty("empresa_id", feriadoAtualizar.empresa_id);
+            expect(retorno).toHaveProperty("data", feriadoAtualizar.data);
+            expect(retorno).toHaveProperty("descricao", feriadoAtualizar.descricao);
+        }catch (error) {
+            console.error("Erro ao realizar a requisição:", error);
+            throw error; 
         }
     });
 
