@@ -31,6 +31,9 @@ export const MENSAGENS = {
         sucessoCadastroFeriado: "Operação realizada com sucesso",
         feriadoUtilizado: "O campo 'dados.0.data' contém um valor único já usado em outro registro.",
         semPermissao: "Você não tem permissão para realizar esta ação.",
-        expiradoToken: "Token has expired"
+        expiradoToken: "Token has expired",
+        deletarFeriado: "Registro excluído com sucesso",
+        feriadoNaoEncontrado: "Registro não encontrado ou já removido anteriormente",
+        semPermissao: "Você não tem permissão para realizar esta ação.",
     }
 };

@@ -55,6 +55,21 @@ export class ApiServicoHelpers {
         };
     };
 
+    gerarMesmoServicoParaEmpresas(empresaIds){
+        const gerarServicoItem = this.gerarItemServico(null);
+        const servicos = [];
+        for(let i = 0; i < empresaIds.length; i++){
+            servicos.push({
+                ...gerarServicoItem,
+                empresa_id: empresaIds[i]
+            });
+        }
+
+        return{
+            dados: servicos
+        };
+    }
+
     atualizarServico(empresa_id, tipoServicoId){
         return {
             tipo_servico_autonomo_id: tipoServicoId,

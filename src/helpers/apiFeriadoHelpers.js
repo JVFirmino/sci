@@ -47,4 +47,25 @@ export class ApiFeriadoHelpers {
             dados: feriados
         };
     };
+
+    gerarMesmoFeriadoParaEmpresas(empresaIds){
+        const gerarItemFeriado = this.gerarItemFeriado(null);
+        const feriados = [];
+        for (let i = 0; i < empresaIds.length; i++) {
+            feriados.push({
+                ...gerarItemFeriado,
+                empresa_id: empresaIds[i],
+            });
+        }
+        return {
+            dados: feriados
+        };
+    }
+
+    montarPayloadDeletarFeriado(empresaId, data){
+        return {
+            empresa_id: empresaId,
+            data: data
+        };
+    };
 }

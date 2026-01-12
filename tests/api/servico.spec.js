@@ -153,6 +153,39 @@ test.describe("serviço API", { tag: ["@SERVICO_API"] }, () => {
         }
     });
 
+    test("cadastrar 2 servicos iguais para empresas diferentes", { tag: "@SERVICO_SUCESSO_API" }, async () => {
+        const empresaIds = [900001, 2];
+        const apiServicoHelpers = new ApiServicoHelpers();
+        const gerarMesmoServicoParaEmpresas = apiServicoHelpers.gerarMesmoServicoParaEmpresas(empresaIds);
+        const token = gerarBasicToken("330|abc123", "496|SNmOmXK7QV8u9E2M8FmF2IaC1eCl8au39ieZKYDG");
+        try {
+            const loginResponse = await loginCredencial(token);
+            const response = await cadastrarServico(gerarMesmoServicoParaEmpresas, loginResponse.data.token);
+            expect(response.status).toBe(200);
+            expect(response.data).toHaveProperty("sucesso", true);
+            expect(response.data).toHaveProperty("mensagem", MENSAGENS.servicoApi.sucessoCadastroServico);
+            expect(response.data).toHaveProperty("retorno");
+
+            const { retorno } = response.data;
+            expect(Array.isArray(retorno)).toBe(true);
+            expect(retorno).toHaveLength(empresaIds.length);
+            retorno.forEach((item, index) => {
+                expect(item).toMatchObject({
+                    empresa_id: gerarMesmoServicoParaEmpresas.dados[index].empresa_id,
+                    cbo: gerarMesmoServicoParaEmpresas.dados[index].cbo,
+                    descricao_cbo: gerarMesmoServicoParaEmpresas.dados[index].descricao_cbo,
+                    categoria_esocial: gerarMesmoServicoParaEmpresas.dados[index].categoria_esocial,
+                    ativo: gerarMesmoServicoParaEmpresas.dados[index].ativo
+                });
+                expect(item).toHaveProperty("tipo_servico_autonomo_id");
+                expect(item).toHaveProperty("cliente_id");
+            });
+        }catch (error) {
+            console.error("Erro ao realizar a requisição:", error);
+            throw error;
+        }
+    });
+
     test("cadastrar mais de um serviços com itens duplicados no array", { tag: "@SERVICO_FALHA_API" }, async () => {
         const empresaId = 900001;
         const quantidade = 2
@@ -419,6 +452,7 @@ test.describe("serviço API", { tag: ["@SERVICO_API"] }, () => {
             expect(response.status).toBe(200);
             expect(response.data).toHaveProperty("sucesso", true);
             expect(response.data).toHaveProperty("mensagem", MENSAGENS.servicoApi.deletarServico);
+            expect(response.data).toHaveProperty("retorno", {});
         } catch (error) {
             console.error("Erro ao deletar serviço:", error);
             throw error;
