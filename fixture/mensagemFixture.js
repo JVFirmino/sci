@@ -34,5 +34,8 @@ export const MENSAGENS = {
         deletarFeriado: "Registro excluído com sucesso",
         feriadoNaoEncontrado: "Registro não encontrado ou já removido anteriormente",
         semPermissao: "Você não tem permissão para realizar esta ação.",
+    },
+    preliminar:{
+        sucessoCadastroPreliminar: "Operação realizada com sucesso"
     }
 };

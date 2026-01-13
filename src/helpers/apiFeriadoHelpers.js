@@ -1,7 +1,10 @@
 import { faker } from "@faker-js/faker";
 
 export class ApiFeriadoHelpers {
-    constructor() {}
+
+    formatDate(date) {
+        return date.toLocaleDateString('en-CA');
+    }
 
     gerarItemFeriado(empresaId) {
         const dataInicial = new Date();
@@ -10,10 +13,10 @@ export class ApiFeriadoHelpers {
         const dataFinal = new Date();
         dataFinal.setFullYear(dataFinal.getFullYear() + 20);
 
-        const dataAleatoria = faker.date.between({ from: dataInicial, to: dataFinal });
+        const dataAleatoria = this.formatDate(faker.date.between({ from: dataInicial, to: dataFinal }));
         return {
             empresa_id: empresaId,
-            data: dataAleatoria.toISOString().split('T')[0],
+            data: dataAleatoria,
             descricao: faker.lorem.words(3)
         };
     };

@@ -16,11 +16,57 @@ export class ApiPreliminarHelpers {
         731, 734, 738, 741, 751, 761, 771, 781
     ];
 
-    gerarCategoriaEsocial(tipoColaborador) {
-        const lista = tipoColaborador === 'Empregado'
-            ? this.categoriaEsocialEmpregado
-            : this.categoriaEsocialContribuinte;
+    classeContribuinte = [
+        5, 6, 7, 8
+    ];
 
+    classeEmpregado = [
+        0, 1, 2, 3, 4
+    ];
+
+    tipoAdmissao = [
+        0, 1, 2, 3, 4, 5, 6, 7
+    ];
+
+    cargo = [
+        1, 13, 7, 14, 11, 3, 4, 15, 6, 9, 5, 10, 8, 2, 12
+    ]
+
+    tipoDeColaborador = [
+        0, 1, 2, 3, 4
+    ]
+
+    tipoDeContrato = [
+        0, 1, 2, 3, 4, 5
+    ]
+
+    formatDate(date) {
+        return date.toLocaleDateString('en-CA');
+    }
+
+    gerarAleatorio(lista){
+        const index = faker.number.int({ min: 0, max: lista.length - 1 });
+        return lista[index];
+    }
+
+    gerarClasse(tipo_colaborador){
+        let lista;
+        if (tipo_colaborador === 0) {
+            lista = this.classeEmpregado;
+        } else {
+            lista = this.classeContribuinte;
+        }
+        const index = faker.number.int({ min: 0, max: lista.length - 1 });
+        return lista[index];
+    }
+
+    gerarCategoriaEsocial(tipo_colaborador){
+        let lista;
+        if (tipo_colaborador === 0) {
+            lista = this.categoriaEsocialEmpregado;
+        } else {
+            lista = this.categoriaEsocialContribuinte;
+        }
         const index = faker.number.int({ min: 0, max: lista.length - 1 });
         return lista[index];
     }
@@ -31,26 +77,68 @@ export class ApiPreliminarHelpers {
 
     gerarDataAdmissao() {
         const hoje = new Date();
-        const umAnoAtras = new Date();
-        umAnoAtras.setFullYear(hoje.getFullYear() - 1);
-
-        const umMesFrente = new Date();
-        umMesFrente.setMonth(hoje.getMonth() + 1);
-
-        return faker.date.between({ from: umAnoAtras, to: umMesFrente });
+        const data = new Date(hoje);
+        data.setFullYear(hoje.getFullYear() - 5);
+        data.setMonth(hoje.getMonth() + 1);
+        return this.formatDate(data);
     }
 
-    gerarItemPreliminar(empresaId, tipoColaborador) {
+    gerarFimPrazoExperiencia(admissaoData, prazoExperiencia) {
+        const dataAdmissao = new Date(admissaoData);
+        dataAdmissao.setDate(dataAdmissao.getDate() + prazoExperiencia);
+        return this.formatDate(dataAdmissao);
+    }
+
+    gerarItemPreliminar1(empresaId, tipoColaborador, overrides = {}) {
+        
         return {
-            "empresa_id": 900001,
-            "v_id": 1001,
-            "id": 128278555,
-            "tipo_colaborador": 0,
-            "classe_id": 1,
-            "nome": "João da Silva",
-            "nascimento_data": "1990-05-15",
-            "cpf": "123.456.789-00",
-            "categoria_esocial_id": 101,
+            empresa_id: empresaId,
+            v_id: faker.number.int({ min: 1000, max: 99999 }),
+            tipo_colaborador: tipoColaborador,
+            classe_id: this.gerarClasse(tipoColaborador),
+            nome: faker.person.firstName(),
+            nascimento_data: this.formatDate(faker.date.birthdate({ min: 18, mode: "age" })),
+            admissao_data: this.gerarDataAdmissao(),
+            cpf: this.gerarCpfComMascara(),
+            categoria_esocial_id: this.gerarCategoriaEsocial(tipoColaborador),
+            ...overrides
         };
     }
+
+    gerarItemPreliminar2(empresaId, tipoColaborador, contratoTipo) {
+        const itemBase = this.gerarItemPreliminar1(empresaId, tipoColaborador);
+
+        itemBase.tipo_admissao = this.gerarAleatorio(this.tipoAdmissao);
+        itemBase.funcao_id = this.gerarAleatorio(this.cargo);
+        itemBase.tipo = this.gerarAleatorio(this.tipoDeColaborador);
+        itemBase.salario = parseFloat(faker.finance.amount(1500, 10000, 2));
+        itemBase.contrato_tipo_id = contratoTipo;
+        if(contratoTipo !== 1) {
+            itemBase.prazo_experiencia = faker.number.int({ min: 30, max: 180 });
+            itemBase.fim_prazo_experiencia = this.gerarFimPrazoExperiencia(itemBase.admissao_data, itemBase.prazo_experiencia);
+        }
+        return itemBase;
+    }
 }
+
+
+/*
+"matricula_anterior": null,
+"pis": null,
+"numero_recibo": null,
+"data_integracao": null,
+"preenchimento_dados_cadastrais": true,
+"email": "joao.silva@example.com",
+"matricula_esocial": null,
+"funcionario_contribuinte_id": null
+*/
+
+/*
+"tipo_admissao": null,
+"funcao_id": null,
+"tipo": null,
+"salario": 3500.75,
+"contrato_tipo_id": null,
+"prazo_experiencia": 90,
+"fim_prazo_experiencia": "2025-12-23",
+*/
