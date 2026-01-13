@@ -4,16 +4,14 @@ import { cpf } from "cpf-cnpj-validator";
 export class ApiPreliminarHelpers {
 
     categoriaEsocialEmpregado = [
-        101, 102, 103, 104, 105, 
-        106, 107, 108, 111, 
-        201, 202, 410, 
-        901, 902, 903
+        101, 102, 103, 104, 105, 106, 107, 
+        108, 111, 201, 202,  901, 902, 903
     ];
 
     categoriaEsocialContribuinte = [
         301, 302, 303, 305, 306, 307, 308, 309, 
-        401, 701, 711, 712, 721, 722, 723, 
-        731, 734, 738, 741, 751, 761, 771, 781
+        401, 701, 711, 712, 721, 722, 723, 731, 
+        734, 738, 741, 751, 761, 771, 781
     ];
 
     classeContribuinte = [
@@ -29,7 +27,8 @@ export class ApiPreliminarHelpers {
     ];
 
     cargo = [
-        1, 13, 7, 14, 11, 3, 4, 15, 6, 9, 5, 10, 8, 2, 12
+        1, 13, 7, 14, 11, 3, 4, 
+        15, 6, 9, 5, 10, 8, 2, 12
     ]
 
     tipoDeColaborador = [
