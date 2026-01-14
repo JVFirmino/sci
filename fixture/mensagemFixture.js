@@ -36,6 +36,11 @@ export const MENSAGENS = {
         semPermissao: "Você não tem permissão para realizar esta ação.",
     },
     preliminar:{
-        sucessoCadastroPreliminar: "Operação realizada com sucesso"
+        sucessoCadastroPreliminar: "Operação realizada com sucesso",
+        admissaoExistente: "Registro já existe!",
+        semPermissao: "Você não tem permissão para realizar esta ação.",
+        expiradoToken: "Token has expired",
+        classeIdInexistente: "O campo 'classe id' contém um valor inexistente para o cliente.",
+        categoriaEsocialInexistente: "O campo 'categoria esocial id' contém um valor inexistente para o cliente."
     }
 };

@@ -88,8 +88,7 @@ export class ApiPreliminarHelpers {
         return this.formatDate(dataAdmissao);
     }
 
-    gerarItemPreliminar1(empresaId, tipoColaborador, overrides = {}) {
-        
+    gerarItemPreliminarContribuinte(empresaId, tipoColaborador, overrides = {}) {
         return {
             empresa_id: empresaId,
             v_id: faker.number.int({ min: 1000, max: 99999 }),
@@ -104,20 +103,25 @@ export class ApiPreliminarHelpers {
         };
     }
 
-    gerarItemPreliminar2(empresaId, tipoColaborador, contratoTipo) {
-        const itemBase = this.gerarItemPreliminar1(empresaId, tipoColaborador);
+    gerarItemPreliminarEmpregado(empresaId, contratoTipo, overrides = {}) {
+        const itemBase = this.gerarItemPreliminarContribuinte(empresaId, 0);
 
         itemBase.tipo_admissao = this.gerarAleatorio(this.tipoAdmissao);
         itemBase.funcao_id = this.gerarAleatorio(this.cargo);
         itemBase.tipo = this.gerarAleatorio(this.tipoDeColaborador);
         itemBase.salario = parseFloat(faker.finance.amount(1500, 10000, 2));
         itemBase.contrato_tipo_id = contratoTipo;
+
         if(contratoTipo !== 1) {
             itemBase.prazo_experiencia = faker.number.int({ min: 30, max: 180 });
             itemBase.fim_prazo_experiencia = this.gerarFimPrazoExperiencia(itemBase.admissao_data, itemBase.prazo_experiencia);
         }
-        return itemBase;
+        return {
+            ...itemBase,
+            ...overrides
+        }
     }
+
 }
 
 
