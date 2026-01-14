@@ -29,24 +29,24 @@ export class ApiPreliminarHelpers {
     cargo = [
         1, 13, 7, 14, 11, 3, 4, 
         15, 6, 9, 5, 10, 8, 2, 12
-    ]
+    ];
 
     tipoDeColaborador = [
         0, 1, 2, 3, 4
-    ]
+    ];
 
     tipoDeContrato = [
         0, 1, 2, 3, 4, 5
-    ]
+    ];
 
     formatDate(date) {
         return date.toLocaleDateString('en-CA');
-    }
+    };
 
     gerarAleatorio(lista){
         const index = faker.number.int({ min: 0, max: lista.length - 1 });
         return lista[index];
-    }
+    };
 
     gerarClasse(tipo_colaborador){
         let lista;
@@ -57,7 +57,7 @@ export class ApiPreliminarHelpers {
         }
         const index = faker.number.int({ min: 0, max: lista.length - 1 });
         return lista[index];
-    }
+    };
 
     gerarCategoriaEsocial(tipo_colaborador){
         let lista;
@@ -68,11 +68,11 @@ export class ApiPreliminarHelpers {
         }
         const index = faker.number.int({ min: 0, max: lista.length - 1 });
         return lista[index];
-    }
+    };
 
     gerarCpfComMascara() {
         return cpf.format(cpf.generate());
-    }
+    };
 
     gerarDataAdmissao() {
         const hoje = new Date();
@@ -80,13 +80,13 @@ export class ApiPreliminarHelpers {
         data.setFullYear(hoje.getFullYear() - 5);
         data.setMonth(hoje.getMonth() + 1);
         return this.formatDate(data);
-    }
+    };
 
     gerarFimPrazoExperiencia(admissaoData, prazoExperiencia) {
         const dataAdmissao = new Date(admissaoData);
         dataAdmissao.setDate(dataAdmissao.getDate() + prazoExperiencia);
         return this.formatDate(dataAdmissao);
-    }
+    };
 
     gerarItemPreliminarContribuinte(empresaId, tipoColaborador, overrides = {}) {
         return {
@@ -101,7 +101,7 @@ export class ApiPreliminarHelpers {
             categoria_esocial_id: this.gerarCategoriaEsocial(tipoColaborador),
             ...overrides
         };
-    }
+    };
 
     gerarItemPreliminarEmpregado(empresaId, contratoTipo, overrides = {}) {
         const itemBase = this.gerarItemPreliminarContribuinte(empresaId, 0);
@@ -119,8 +119,15 @@ export class ApiPreliminarHelpers {
         return {
             ...itemBase,
             ...overrides
-        }
-    }
+        };
+    };
+
+    montarPayloadDeletarPreliminar(empresaId, idPreliminar){
+        return {
+            empresa_id: empresaId,
+            id: idPreliminar
+        };
+    };
 
 }
 

@@ -5,3 +5,11 @@ export const cadastrarAdmissaoPreliminar = (admissaoData, jwtToken) => servicoCl
         "Authorization": `Bearer ${jwtToken}`,
     }
 });
+
+
+export const deletarAdmissaoPreliminar = (admissaoData, jwtToken) => servicoClient.delete("/funcionario/preliminar", {
+    data: admissaoData,
+    headers:{
+        "Authorization": `Bearer ${jwtToken}`,
+    }
+});

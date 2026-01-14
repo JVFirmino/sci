@@ -5,7 +5,7 @@ import { expect, test } from "@playwright/test";
 import { ApiPreliminarHelpers } from "../../src/helpers/apiPreliminarHelpers";
 import { gerarBasicToken } from "../../src/utils/authUtils";
 import { loginCredencial } from "../../src/api/services/authService";
-import { cadastrarAdmissaoPreliminar } from "../../src/api/services/preliminarService";
+import { cadastrarAdmissaoPreliminar, deletarAdmissaoPreliminar } from "../../src/api/services/preliminarService";
 import { MENSAGENS } from "../../fixture/mensagemFixture";
 
 test.describe("preliminar API", { tag: ["@PRELIMINAR_API"] }, () => {
@@ -227,13 +227,101 @@ test.describe("preliminar API", { tag: ["@PRELIMINAR_API"] }, () => {
         }
     });
     
-    test("cadastrar admissão preliminar com token expirado", { tag: "@SERVICO_FALHA_API" }, async () => {
+    test("cadastrar admissão preliminar com token expirado", { tag: "@PRELIMINAR_FALHA_API" }, async () => {
         const empresaId = 999999;
         const tipoColaborador = 1;
         const apiPreliminarHelpers = new ApiPreliminarHelpers();
         const gerarPreliminar = apiPreliminarHelpers.gerarItemPreliminarContribuinte(empresaId, tipoColaborador);
         try {
             await cadastrarAdmissaoPreliminar(gerarPreliminar, "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vYXBpLWF1dGgtaG1sLnNjaS5jb20uYnIvYXBpL3YxL2F1dGgvY3JlZGVuY2lhbC9sb2dpbiIsImlhdCI6MTc2MzM4MzA1MywiZXhwIjoxNzYzMzg2NjUzLCJuYmYiOjE3NjMzODMwNTMsImp0aSI6IlZpM0x6enZaOHpYQkRPYVgiLCJzdWIiOiI5NzM3MDMiLCJwcnYiOiJjNTIzYjFkZjdhMTZiMmViYmQzYzFjZDUxNDk4ZjUzNjhkODBjMDEwIiwidXN1YXJpbyI6eyJ0aXBvIjoyLCJ1c3VhcmlvSWQiOjk3MzcwMywiZGFkb3MiOnsiY2xpZW50ZUlkIjo4ODU2OSwiZW1wcmVzYXNWaW5jdWxhZGFzIjpbNDc3NDI1XSwiYWNlc3NvcyI6eyJyZWxhdG9yaW8iOnsiR0VUIjpbImNhdGVnb3JpYSIsInJlbGF0b3JpbyIsInB1YmxpY2Fkb3MiLCJtb2RvLXBhZ2FtZW50byJdLCJQT1NUIjpbInB1YmxpY2Fkb3MiXSwiUFVUIjpbInB1YmxpY2Fkb3MiXX0sImF0ZW5kaW1lbnRvIjp7IkdFVCI6WyJ1c3VhcmlvLWFkaWNpb25hbC1jbGllbnRlIiwic3RhdHVzIiwidHJhbWl0ZSIsInVzdWFyaW8tYWRpY2lvbmFsLWFkbWluIiwiZGVwYXJ0YW1lbnRvIiwiYXRlbmRpbWVudG8iLCJpbnRlcmFjYW8iLCJhbmV4byJdLCJQVVQiOlsiY29uY2x1aXIiLCJhbmFsaXNhciJdLCJQT1NUIjpbImludGVyYWNhbyJdfX19fSwiYWNjZXNzX3Rva2VuX2NsaWVudGVfaWQiOjMzMCwiYWNjZXNzX3Rva2VuX3BhcmNlaXJvX2lkIjoxMDcxLCJzaXN0ZW1hSWQiOjUyfQ.XI6zdigf02QvleEJwaOkRJYBlxV2SXpvGaXHZNoVLFI");
+            throw new Error("Esperava um erro, mas a requisição foi bem-sucedida.");
+        } catch (error) {
+            expect(error.response.status).toBe(401);
+            expect(error.response.data).toHaveProperty("error", MENSAGENS.preliminar.expiradoToken);
+        }
+    });
+
+    test("deletar uma admissão preliminar", { tag: "@PRELIMINAR_SUCESSO_API" }, async () => {
+        const empresaId = 900001;
+        const tipoColaborador = 1;
+        const apiPreliminarHelpers = new ApiPreliminarHelpers();
+        const gerarPreliminar = apiPreliminarHelpers.gerarItemPreliminarContribuinte(empresaId, tipoColaborador);
+        const token = gerarBasicToken("330|abc123", "496|SNmOmXK7QV8u9E2M8FmF2IaC1eCl8au39ieZKYDG");
+        try {
+            const loginResponse = await loginCredencial(token);
+            const responsePreliminar = await cadastrarAdmissaoPreliminar(gerarPreliminar, loginResponse.data.token);
+            const preliminarDeletar = apiPreliminarHelpers.montarPayloadDeletarPreliminar(empresaId, responsePreliminar.data.retorno.id);
+            const response = await deletarAdmissaoPreliminar(preliminarDeletar, loginResponse.data.token)
+            expect(response.status).toBe(200);
+            expect(response.data).toHaveProperty("sucesso", true);
+            expect(response.data).toHaveProperty("mensagem", MENSAGENS.preliminar.deletarPreliminar);
+            expect(response.data).toHaveProperty("retorno", {});
+        } catch (error) {
+            console.error("Erro ao realizar a requisição:", error);
+            throw error;
+        }
+    });
+
+    test("deletar uma admissão de outra empresa", { tag: "@PRELIMINAR_SUCESSO_API" }, async() => {
+        const empresaId = 900001;
+        const tipoColaborador = 1;
+        const apiPreliminarHelpers = new ApiPreliminarHelpers();
+        const gerarPreliminar = apiPreliminarHelpers.gerarItemPreliminarContribuinte(empresaId, tipoColaborador);
+        const token = gerarBasicToken("330|abc123", "496|SNmOmXK7QV8u9E2M8FmF2IaC1eCl8au39ieZKYDG");
+        try {
+            const loginResponse = await loginCredencial(token);
+            const responsePreliminar = await cadastrarAdmissaoPreliminar(gerarPreliminar, loginResponse.data.token);
+            const preliminarDeletar = apiPreliminarHelpers.montarPayloadDeletarPreliminar(2, responsePreliminar.data.retorno.id);
+            const response = await deletarAdmissaoPreliminar(preliminarDeletar, loginResponse.data.token)
+            expect(response.data).toHaveProperty("mensagem", MENSAGENS.preliminar.preliminarNaoEncontrado);
+        } catch (error) {
+            console.error("Erro ao realizar a requisição:", error);
+            throw error;
+        }
+    })
+
+    test("deletar uma admissão preliminar que não existe", { tag: "@SERVICO_FALHA_API" }, async () => {
+        const empresaId = 900001;
+        const idPreliminar = 123123; 
+        const apiPreliminarHelpers = new ApiPreliminarHelpers();
+        const preliminarDeletar = apiPreliminarHelpers.montarPayloadDeletarPreliminar(empresaId, idPreliminar);
+        const token = gerarBasicToken("330|abc123", "496|SNmOmXK7QV8u9E2M8FmF2IaC1eCl8au39ieZKYDG");
+        try {
+            const loginResponse = await loginCredencial(token);
+            const response = await deletarAdmissaoPreliminar(preliminarDeletar, loginResponse.data.token);
+            expect(response.data).toHaveProperty("mensagem", MENSAGENS.preliminar.preliminarNaoEncontrado);
+        } catch (error) {
+            console.error("Erro ao realizar a requisição:", error);
+            throw error;
+        }
+    });
+
+    test("deletar uma admissão preliminar com empresa_id inválido", { tag: "@SERVICO_FALHA_API" }, async () => {
+        const empresaId = 9999999;
+        const idPreliminar = 9999999;
+        const apiPreliminarHelpers = new ApiPreliminarHelpers();
+        const preliminarDeletar = apiPreliminarHelpers.montarPayloadDeletarPreliminar(empresaId, idPreliminar);
+        const token = gerarBasicToken("330|abc123", "496|SNmOmXK7QV8u9E2M8FmF2IaC1eCl8au39ieZKYDG");
+        try {
+            const loginResponse = await loginCredencial(token);
+            const response = await deletarAdmissaoPreliminar(preliminarDeletar, loginResponse.data.token);
+            throw new Error("Esperava um erro, mas a requisição foi bem-sucedida.");
+        } catch (error) {
+            expect(error.response.status).toBe(403);
+            expect(error.response.data).toHaveProperty("sucesso", false);
+            expect(error.response.data).toHaveProperty("mensagem", MENSAGENS.preliminar.semPermissao);
+            expect(error.response.data).toHaveProperty("erros");
+            expect(error.response.data).toHaveProperty("retorno", {});
+        }
+    });
+
+    test("deletar um serviço com token expirado", { tag: "@SERVICO_FALHA_API" }, async () => {
+        const empresaId = 900001;
+        const idPreliminar = 221; 
+        const apiPreliminarHelpers = new ApiPreliminarHelpers();
+        const preliminarDeletar = apiPreliminarHelpers.montarPayloadDeletarPreliminar(empresaId, idPreliminar);
+        try {    
+            const response = await deletarAdmissaoPreliminar(preliminarDeletar, "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vYXBpLWF1dGgtaG1sLnNjaS5jb20uYnIvYXBpL3YxL2F1dGgvY3JlZGVuY2lhbC9sb2dpbiIsImlhdCI6MTc2MzM4MzA1MywiZXhwIjoxNzYzMzg2NjUzLCJuYmYiOjE3NjMzODMwNTMsImp0aSI6IlZpM0x6enZaOHpYQkRPYVgiLCJzdWIiOiI5NzM3MDMiLCJwcnYiOiJjNTIzYjFkZjdhMTZiMmViYmQzYzFjZDUxNDk4ZjUzNjhkODBjMDEwIiwidXN1YXJpbyI6eyJ0aXBvIjoyLCJ1c3VhcmlvSWQiOjk3MzcwMywiZGFkb3MiOnsiY2xpZW50ZUlkIjo4ODU2OSwiZW1wcmVzYXNWaW5jdWxhZGFzIjpbNDc3NDI1XSwiYWNlc3NvcyI6eyJyZWxhdG9yaW8iOnsiR0VUIjpbImNhdGVnb3JpYSIsInJlbGF0b3JpbyIsInB1YmxpY2Fkb3MiLCJtb2RvLXBhZ2FtZW50byJdLCJQT1NUIjpbInB1YmxpY2Fkb3MiXSwiUFVUIjpbInB1YmxpY2Fkb3MiXX0sImF0ZW5kaW1lbnRvIjp7IkdFVCI6WyJ1c3VhcmlvLWFkaWNpb25hbC1jbGllbnRlIiwic3RhdHVzIiwidHJhbWl0ZSIsInVzdWFyaW8tYWRpY2lvbmFsLWFkbWluIiwiZGVwYXJ0YW1lbnRvIiwiYXRlbmRpbWVudG8iLCJpbnRlcmFjYW8iLCJhbmV4byJdLCJQVVQiOlsiY29uY2x1aXIiLCJhbmFsaXNhciJdLCJQT1NUIjpbImludGVyYWNhbyJdfX19fSwiYWNjZXNzX3Rva2VuX2NsaWVudGVfaWQiOjMzMCwiYWNjZXNzX3Rva2VuX3BhcmNlaXJvX2lkIjoxMDcxLCJzaXN0ZW1hSWQiOjUyfQ.XI6zdigf02QvleEJwaOkRJYBlxV2SXpvGaXHZNoVLFI");
             throw new Error("Esperava um erro, mas a requisição foi bem-sucedida.");
         } catch (error) {
             expect(error.response.status).toBe(401);

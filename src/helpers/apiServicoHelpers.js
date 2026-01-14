@@ -12,7 +12,7 @@ export class ApiServicoHelpers {
     gerarCategoriaEsocial(){
         const index = faker.number.int({ min: 0, max: this.categoriaEsocial.length - 1 });
         return this.categoriaEsocial[index];
-    }
+    };
 
     gerarItemServico(empresaId){
         return {
@@ -21,8 +21,8 @@ export class ApiServicoHelpers {
             descricao_cbo: `CBO ${faker.person.jobTitle()}`,
             categoria_esocial: `${this.gerarCategoriaEsocial()}`,
             ativo: true
-        }
-    }   
+        };
+    };
 
     gerarServico(empresaId, multiplo){
         const item = this.gerarItemServico(empresaId);
@@ -67,7 +67,7 @@ export class ApiServicoHelpers {
         return{
             dados: servicos
         };
-    }
+    };
 
     atualizarServico(empresa_id, tipoServicoId){
         return {
