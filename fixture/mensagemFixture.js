@@ -45,5 +45,13 @@ export const MENSAGENS = {
         deletarPreliminar: "Registro excluído com sucesso",
         preliminarNaoEncontrado: "Registro não encontrado ou já removido anteriormente",
         idPreliminarNaoEncontrado: "O valor informado no campo id não foi encontrado"
+    },
+    liberarAdmissaoPreliminar:{
+        sucessoLiberacao:"Operação realizada com sucesso",
+        atualizadoSucesso:"Registro atualizado com sucesso para admissão preliminar.",
+        admissaoIdInexistente:"O campo 'id' contém um valor inexistente para o cliente.",
+        observacaoLimiteAtingido: "O campo 'observacao liberacao' não pode ter mais que 200 caracteres.",
+        semPermissao: "Você não tem permissão para realizar esta ação.",
+        expiradoToken: "Token has expired"
     }
 };
