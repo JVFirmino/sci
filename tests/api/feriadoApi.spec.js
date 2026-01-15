@@ -8,7 +8,7 @@ import { loginCredencial } from "../../src/api/services/authService";
 import { atualizarFeriado, cadastrarFeriado, deletarFeriado } from "../../src/api/services/feriadoService";
 import { MENSAGENS } from "../../fixture/mensagemFixture";
 
-test.describe("feriado API", { tag: ["@FERIADO_API"] }, () => {
+test.describe.serial("feriado API", { tag: ["@FERIADO_API"] }, () => {
 
     test("cadastrar um feriado", { tag: "@FERIADO_SUCESSO_API" }, async () => {
         const empresaId = 900001;

@@ -8,7 +8,7 @@ import { loginCredencial } from "../../src/api/services/authService";
 import { atualizarPreliminar, cadastrarAdmissaoPreliminar, deletarAdmissaoPreliminar } from "../../src/api/services/preliminarService";
 import { MENSAGENS } from "../../fixture/mensagemFixture";
 
-test.describe("preliminar API", { tag: ["@PRELIMINAR_API"] }, () => {
+test.describe.serial("preliminar API", { tag: ["@PRELIMINAR_API"] }, () => {
 
     test("cadastrar admissão preliminar contribuinte com sucesso", { tag: "@PRELIMINAR_SUCESSO_API" }, async () => {
         const empresaId = 900001;
@@ -276,7 +276,7 @@ test.describe("preliminar API", { tag: ["@PRELIMINAR_API"] }, () => {
         }
     });
 
-    // Erro no response não está retornando o categoria esocial atualizado
+    //Erro no response não está retornando o categoria esocial atualizado
     test("atualizar uma admissão preliminar empregado", { tag: "@PRELIMINAR_SUCESSO_API" }, async () => {
         const empresaId = 900001;
         const tipoContrato = 2;
@@ -370,7 +370,6 @@ test.describe("preliminar API", { tag: ["@PRELIMINAR_API"] }, () => {
             const responsePreliminar = await cadastrarAdmissaoPreliminar(gerarPreliminar, loginResponse.data.token);
             const preliminarAtualizar = apiPreliminarHelpers.gerarItemPreliminarContribuinteAtualizar(empresaId, responsePreliminar.data.retorno.id, tipoColaborador, { classe_id : 2, tipo_admissao: apiPreliminarHelpers.gerarAleatorio(apiPreliminarHelpers.tipoAdmissao) });
             const response = await atualizarPreliminar(preliminarAtualizar, loginResponse.data.token);
-            console.log(response.data)
             expect(response.status).toBe(200);
             expect(response.data).toHaveProperty("sucesso", true);
             expect(response.data).toHaveProperty("mensagem", MENSAGENS.preliminar.sucessoCadastroPreliminar);

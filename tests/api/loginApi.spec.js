@@ -6,7 +6,7 @@ import { loginCredencial } from "../../src/api/services/authService";
 import { MENSAGENS } from "../../fixture/mensagemFixture";
 import { gerarBasicToken } from "../../src/utils/authUtils";
 
-test.describe("login usuário API", { tag: ["@LOGIN_API"] }, () => {
+test.describe.serial("login usuário API", { tag: ["@LOGIN_API"] }, () => {
     
     test("login com sucesso",  { tag: "@LOGIN_SUCESSO_API" }, async () => {
         const token = gerarBasicToken(process.env.AUTH_USERNAME_VALIDO, process.env.AUTH_PASSWORD_VALIDO); 

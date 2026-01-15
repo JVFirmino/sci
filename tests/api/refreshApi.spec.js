@@ -6,7 +6,7 @@ import { loginCredencial, refresh } from "../../src/api/services/authService";
 import { MENSAGENS } from "../../fixture/mensagemFixture";
 import { gerarBasicToken } from "../../src/utils/authUtils";
 
-test.describe("refresh token API", { tag: ["@REFRESH_API"] }, () => {
+test.describe.serial("refresh token API", { tag: ["@REFRESH_API"] }, () => {
 
     test("refresh token com sucesso", { tag: "@REFRESH_SUCESSO_API" }, async () => {
         const token = gerarBasicToken(process.env.AUTH_USERNAME_VALIDO, process.env.AUTH_PASSWORD_VALIDO); 

@@ -9,7 +9,7 @@ import { MENSAGENS } from "../../fixture/mensagemFixture";
 import { gerarBasicToken } from "../../src/utils/authUtils";
 import { faker } from "@faker-js/faker";
 
-test.describe("serviço API", { tag: ["@SERVICO_API"] }, () => {
+test.describe.serial("serviço API", { tag: ["@SERVICO_API"] }, () => {
 
     test("cadastrar um serviço", { tag: "@SERVICO_SUCESSO_API" }, async () => {
         const empresaId = 900001;
