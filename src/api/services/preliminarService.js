@@ -7,6 +7,13 @@ export const cadastrarAdmissaoPreliminar = (admissaoData, jwtToken) => servicoCl
 });
 
 
+export const atualizarPreliminar = (admissaoData, jwtToken) => servicoClient.put("/funcionario/preliminar", admissaoData, {
+    headers:{
+        "Authorization": `Bearer ${jwtToken}`,
+    }
+});
+
+
 export const deletarAdmissaoPreliminar = (admissaoData, jwtToken) => servicoClient.delete("/funcionario/preliminar", {
     data: admissaoData,
     headers:{

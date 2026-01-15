@@ -43,6 +43,7 @@ export const MENSAGENS = {
         classeIdInexistente: "O campo 'classe id' contém um valor inexistente para o cliente.",
         categoriaEsocialInexistente: "O campo 'categoria esocial id' contém um valor inexistente para o cliente.",
         deletarPreliminar: "Registro excluído com sucesso",
-        preliminarNaoEncontrado: "Registro não encontrado ou já removido anteriormente"
+        preliminarNaoEncontrado: "Registro não encontrado ou já removido anteriormente",
+        idPreliminarNaoEncontrado: "O valor informado no campo id não foi encontrado"
     }
 };

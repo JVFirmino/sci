@@ -79,6 +79,7 @@ export class ApiPreliminarHelpers {
         const data = new Date(hoje);
         data.setFullYear(hoje.getFullYear() - 5);
         data.setMonth(hoje.getMonth() + 1);
+        data.setDate(faker.number.int({ min : 1, max : 27}))
         return this.formatDate(data);
     };
 
@@ -105,6 +106,42 @@ export class ApiPreliminarHelpers {
 
     gerarItemPreliminarEmpregado(empresaId, contratoTipo, overrides = {}) {
         const itemBase = this.gerarItemPreliminarContribuinte(empresaId, 0);
+
+        itemBase.tipo_admissao = this.gerarAleatorio(this.tipoAdmissao);
+        itemBase.funcao_id = this.gerarAleatorio(this.cargo);
+        itemBase.tipo = this.gerarAleatorio(this.tipoDeColaborador);
+        itemBase.salario = parseFloat(faker.finance.amount(1500, 10000, 2));
+        itemBase.contrato_tipo_id = contratoTipo;
+
+        if(contratoTipo !== 1) {
+            itemBase.prazo_experiencia = faker.number.int({ min: 30, max: 180 });
+            itemBase.fim_prazo_experiencia = this.gerarFimPrazoExperiencia(itemBase.admissao_data, itemBase.prazo_experiencia);
+        }
+        return {
+            ...itemBase,
+            ...overrides
+        };
+    };
+
+
+    gerarItemPreliminarContribuinteAtualizar(empresaId, preliminarId, tipoColaborador, overrides = {}) {
+        return {
+            id: preliminarId,
+            empresa_id: empresaId,
+            v_id: faker.number.int({ min: 1000, max: 99999 }),
+            tipo_colaborador: tipoColaborador,
+            classe_id: this.gerarClasse(tipoColaborador),
+            nome: faker.person.firstName(),
+            nascimento_data: this.formatDate(faker.date.birthdate({ min: 18, mode: "age" })),
+            admissao_data: this.gerarDataAdmissao(),
+            cpf: this.gerarCpfComMascara(),
+            categoria_esocial_id: this.gerarCategoriaEsocial(tipoColaborador),
+            ...overrides
+        };
+    };
+
+    gerarItemPreliminarEmpregadoAtualizar(empresaId, preliminarId, contratoTipo, overrides = {}) {
+        const itemBase = this.gerarItemPreliminarContribuinteAtualizar(empresaId, preliminarId, 0);
 
         itemBase.tipo_admissao = this.gerarAleatorio(this.tipoAdmissao);
         itemBase.funcao_id = this.gerarAleatorio(this.cargo);

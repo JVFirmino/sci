@@ -459,6 +459,23 @@ test.describe("serviço API", { tag: ["@SERVICO_API"] }, () => {
         }
     });
 
+    test("deletar um serviço de outra empresa", { tag: "@SERVICO_FALHA_API" }, async () => {
+        const empresaId = 900001;
+        const apiServicoHelpers = new ApiServicoHelpers();
+        const gerarServico = apiServicoHelpers.gerarServico(empresaId, false);
+        const token = gerarBasicToken("330|abc123", "496|SNmOmXK7QV8u9E2M8FmF2IaC1eCl8au39ieZKYDG");
+        try {
+            const loginResponse = await loginCredencial(token);
+            const responseServico = await cadastrarServico(gerarServico, loginResponse.data.token);
+            const servicoDeletar = apiServicoHelpers.montarPayloadDeletarServico(2, responseServico.data.retorno[0].tipo_servico_autonomo_id);
+            const response = await deletarServico(servicoDeletar, loginResponse.data.token);
+            expect(response.data).toHaveProperty("mensagem", MENSAGENS.servicoApi.servicoNaoEncontrado);
+        } catch (error) {
+            console.error("Erro ao deletar serviço:", error);
+            throw error;
+        }
+    });
+
     test("deletar um serviço que não existe", { tag: "@SERVICO_FALHA_API" }, async () => {
         const empresaId = 900001;
         const tipoServicoId = 9999999; 

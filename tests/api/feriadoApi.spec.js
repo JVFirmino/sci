@@ -236,6 +236,24 @@ test.describe("feriado API", { tag: ["@FERIADO_API"] }, () => {
         }
     });
 
+    test("deletar um feriado de outra empresa", { tag: "@SERVICO_FALHA_API" }, async () => {
+        const empresaId = 900001;
+        const apiFeriadoHelpers = new ApiFeriadoHelpers(); 
+        const gerarFeriado = apiFeriadoHelpers.gerarFeriado(empresaId, false);
+        const token = gerarBasicToken("330|abc123", "496|SNmOmXK7QV8u9E2M8FmF2IaC1eCl8au39ieZKYDG");
+        try {
+            const loginResponse = await loginCredencial(token);
+            const responseFeriado = await cadastrarFeriado(gerarFeriado, loginResponse.data.token);
+            const feriadoDeletar = apiFeriadoHelpers.montarPayloadDeletarFeriado(2, responseFeriado.data.retorno[0].data);
+            const response = await deletarFeriado(feriadoDeletar, loginResponse.data.token);
+            expect(response.data).toHaveProperty("mensagem", MENSAGENS.feriadoApi.feriadoNaoEncontrado);
+            
+        } catch (error) {
+            console.error("Erro ao realizar a requisição:", error);
+            throw error;
+        }
+    });
+
     test("deletar um feriado inexistente", { tag: "@SERVICO_FALHA_API" }, async () => {
         const empresaId = 900001;
         const dataInexistente = "2099-12-31";
