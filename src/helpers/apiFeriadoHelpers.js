@@ -26,7 +26,7 @@ export class ApiFeriadoHelpers {
         if(multiplo){
             return item
         } else {
-            return { dados: [item] };
+            return { dados: [item] }
         }
     };
 

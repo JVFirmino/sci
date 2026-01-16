@@ -53,5 +53,8 @@ export const MENSAGENS = {
         observacaoLimiteAtingido: "O campo 'observacao liberacao' não pode ter mais que 200 caracteres.",
         semPermissao: "Você não tem permissão para realizar esta ação.",
         expiradoToken: "Token has expired"
+    },
+    autonomo:{
+        sucessoCadastroAutonomo: "Operação realizada com sucesso",
     }
 };
