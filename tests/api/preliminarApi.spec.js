@@ -241,7 +241,6 @@ test.describe.serial("preliminar API", { tag: ["@PRELIMINAR_API"] }, () => {
         }
     });
 
-    // Erro no response não está retornando o categoria esocial atualizado
     test("atualizar uma admissão preliminar contribuinte", { tag: "@PRELIMINAR_SUCESSO_API" }, async () => {
         const empresaId = 900001;
         const tipoColaborador = 1;
@@ -268,7 +267,7 @@ test.describe.serial("preliminar API", { tag: ["@PRELIMINAR_API"] }, () => {
             expect(retorno).toHaveProperty("nascimento_data", preliminarAtualizar.nascimento_data);
             expect(retorno).toHaveProperty("admissao_data", preliminarAtualizar.admissao_data);
             expect(retorno).toHaveProperty("cpf", preliminarAtualizar.cpf);
-            // expect(retorno).toHaveProperty("categoria_esocial_id", preliminarAtualizar.categoria_esocial_id);
+            expect(retorno).toHaveProperty("categoria_esocial_id", preliminarAtualizar.categoria_esocial_id);
             expect(retorno).toHaveProperty("liberacao_id", 2);
         } catch (error) {
             console.error("Erro ao realizar a requisição:", error);
@@ -276,7 +275,6 @@ test.describe.serial("preliminar API", { tag: ["@PRELIMINAR_API"] }, () => {
         }
     });
 
-    //Erro no response não está retornando o categoria esocial atualizado
     test("atualizar uma admissão preliminar empregado", { tag: "@PRELIMINAR_SUCESSO_API" }, async () => {
         const empresaId = 900001;
         const tipoContrato = 2;
@@ -303,7 +301,7 @@ test.describe.serial("preliminar API", { tag: ["@PRELIMINAR_API"] }, () => {
             expect(retorno).toHaveProperty("nascimento_data", preliminarAtualizar.nascimento_data);
             expect(retorno).toHaveProperty("admissao_data", preliminarAtualizar.admissao_data);
             expect(retorno).toHaveProperty("cpf", preliminarAtualizar.cpf);
-            // expect(retorno).toHaveProperty("categoria_esocial_id", preliminarAtualizar.categoria_esocial_id);
+            expect(retorno).toHaveProperty("categoria_esocial_id", preliminarAtualizar.categoria_esocial_id);
             expect(retorno).toHaveProperty("tipo_admissao", preliminarAtualizar.tipo_admissao);
             expect(retorno).toHaveProperty("funcao_id", preliminarAtualizar.funcao_id);
             expect(retorno).toHaveProperty("tipo", preliminarAtualizar.tipo);
@@ -318,7 +316,6 @@ test.describe.serial("preliminar API", { tag: ["@PRELIMINAR_API"] }, () => {
         }
     });
 
-    // Erro no response não está retornando o categoria esocial atualizado
     test("atualizar admissão preliminar empregado com contrato tipo 1 (sem experiência) com sucesso", { tag: "@PRELIMINAR_SUCESSO_API" }, async () => {
         const empresaId = 900001;
         const tipoContrato = 1;
@@ -345,7 +342,7 @@ test.describe.serial("preliminar API", { tag: ["@PRELIMINAR_API"] }, () => {
             expect(retorno).toHaveProperty("nascimento_data", preliminarAtualizar.nascimento_data);
             expect(retorno).toHaveProperty("admissao_data", preliminarAtualizar.admissao_data);
             expect(retorno).toHaveProperty("cpf", preliminarAtualizar.cpf);
-            // expect(retorno).toHaveProperty("categoria_esocial_id", preliminarAtualizar.categoria_esocial_id);
+            expect(retorno).toHaveProperty("categoria_esocial_id", preliminarAtualizar.categoria_esocial_id);
             expect(retorno).toHaveProperty("tipo_admissao", preliminarAtualizar.tipo_admissao);
             expect(retorno).toHaveProperty("funcao_id", preliminarAtualizar.funcao_id);
             expect(retorno).toHaveProperty("tipo", preliminarAtualizar.tipo);
@@ -358,7 +355,6 @@ test.describe.serial("preliminar API", { tag: ["@PRELIMINAR_API"] }, () => {
         }
     });
 
-    // Erro no response não está retornando o categoria esocial atualizado
     test("atualizar admissão preliminar empregado estagiário com sucesso", { tag: "@PRELIMINAR_SUCESSO_API" }, async () => {
         const empresaId = 900001;
         const tipoColaborador = 0;
@@ -385,7 +381,7 @@ test.describe.serial("preliminar API", { tag: ["@PRELIMINAR_API"] }, () => {
             expect(retorno).toHaveProperty("nascimento_data", preliminarAtualizar.nascimento_data);
             expect(retorno).toHaveProperty("admissao_data", preliminarAtualizar.admissao_data);
             expect(retorno).toHaveProperty("cpf", preliminarAtualizar.cpf);
-            // expect(retorno).toHaveProperty("categoria_esocial_id", preliminarAtualizar.categoria_esocial_id);
+            expect(retorno).toHaveProperty("categoria_esocial_id", preliminarAtualizar.categoria_esocial_id);
             expect(retorno).toHaveProperty("tipo_admissao", preliminarAtualizar.tipo_admissao);     
             expect(retorno).toHaveProperty("liberacao_id", 2);
         } catch (error) {
@@ -394,7 +390,7 @@ test.describe.serial("preliminar API", { tag: ["@PRELIMINAR_API"] }, () => {
         }
     });
 
-    // Erro no response não está retornando o categoria esocial atualizado
+    
     test("atualizar uma admissão preliminar contribuinte com meus vId já existente", { tag: "@PRELIMINAR_SUCESSO_API" }, async () => {
         const empresaId = 900001;
         const tipoColaborador = 1;
@@ -423,7 +419,7 @@ test.describe.serial("preliminar API", { tag: ["@PRELIMINAR_API"] }, () => {
             expect(retorno).toHaveProperty("nascimento_data", preliminarAtualizar.nascimento_data);
             expect(retorno).toHaveProperty("admissao_data", preliminarAtualizar.admissao_data);
             expect(retorno).toHaveProperty("cpf", preliminarAtualizar.cpf);
-            // expect(retorno).toHaveProperty("categoria_esocial_id", preliminarAtualizar.categoria_esocial_id);
+            expect(retorno).toHaveProperty("categoria_esocial_id", preliminarAtualizar.categoria_esocial_id);
             expect(retorno).toHaveProperty("liberacao_id", 2);
         } catch (error) {
             console.error("Erro ao realizar a requisição:", error);
