@@ -15,7 +15,7 @@ test.describe.serial("refresh token API", { tag: ["@REFRESH_API"] }, () => {
             const response = await refresh(loginResponse.data.token)
             expect(response.status).toBe(200)
             expect(response.data).toHaveProperty("mensagem", MENSAGENS.refreshApi.sucessoRefresh)
-            expect(response.data).toHaveProperty("token");
+            expect(response.data).toHaveProperty("token", expect.anything());
             expect(response.data).toHaveProperty("validade", 3600);
         } catch (error) {
             console.error("Erro ao realizar a requisição:", error);

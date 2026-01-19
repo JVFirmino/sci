@@ -37,7 +37,7 @@ export class ApiAutonomoHelpers {
         }
     };
 
-    gerarMultiplosAutonomos(empresaId, multiplo, quantidade){
+    gerarMultiplosAutonomos(empresaId, quantidade, multiplo){
         const autonomos = [];
         for (let index = 0; index < quantidade; index++) {
             autonomos.push(this.gerarAutonomo(empresaId, multiplo))

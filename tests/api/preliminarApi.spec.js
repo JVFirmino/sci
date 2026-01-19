@@ -25,7 +25,7 @@ test.describe.serial("preliminar API", { tag: ["@PRELIMINAR_API"] }, () => {
             expect(response.data).toHaveProperty("retorno");
 
             const { retorno } = response.data;
-            expect(retorno).toHaveProperty("id");
+            expect(retorno).toHaveProperty("id", expect.anything());
             expect(retorno).toHaveProperty("empresa_id", gerarPreliminar.empresa_id);
             expect(retorno).toHaveProperty("v_id", gerarPreliminar.v_id);
             expect(retorno).toHaveProperty("tipo_colaborador", gerarPreliminar.tipo_colaborador);
@@ -57,7 +57,7 @@ test.describe.serial("preliminar API", { tag: ["@PRELIMINAR_API"] }, () => {
             expect(response.data).toHaveProperty("retorno");
 
             const { retorno } = response.data;
-            expect(retorno).toHaveProperty("id");
+            expect(retorno).toHaveProperty("id", expect.anything());
             expect(retorno).toHaveProperty("empresa_id", gerarPreliminar.empresa_id);
             expect(retorno).toHaveProperty("v_id", gerarPreliminar.v_id);
             expect(retorno).toHaveProperty("tipo_colaborador", gerarPreliminar.tipo_colaborador);
@@ -96,7 +96,7 @@ test.describe.serial("preliminar API", { tag: ["@PRELIMINAR_API"] }, () => {
             expect(response.data).toHaveProperty("retorno");
 
             const { retorno } = response.data;
-            expect(retorno).toHaveProperty("id");
+            expect(retorno).toHaveProperty("id", expect.anything());
             expect(retorno).toHaveProperty("empresa_id", gerarPreliminar.empresa_id);
             expect(retorno).toHaveProperty("v_id", gerarPreliminar.v_id);
             expect(retorno).toHaveProperty("tipo_colaborador", gerarPreliminar.tipo_colaborador);
@@ -133,7 +133,7 @@ test.describe.serial("preliminar API", { tag: ["@PRELIMINAR_API"] }, () => {
             expect(response.data).toHaveProperty("retorno");
 
             const { retorno } = response.data;
-            expect(retorno).toHaveProperty("id");
+            expect(retorno).toHaveProperty("id", expect.anything());
             expect(retorno).toHaveProperty("empresa_id", gerarPreliminar.empresa_id);
             expect(retorno).toHaveProperty("v_id", gerarPreliminar.v_id);
             expect(retorno).toHaveProperty("tipo_colaborador", gerarPreliminar.tipo_colaborador);
@@ -333,7 +333,7 @@ test.describe.serial("preliminar API", { tag: ["@PRELIMINAR_API"] }, () => {
             expect(response.data).toHaveProperty("retorno");
 
             const { retorno } = response.data;
-            expect(retorno).toHaveProperty("id");
+            expect(retorno).toHaveProperty("id", preliminarAtualizar.id);
             expect(retorno).toHaveProperty("empresa_id", preliminarAtualizar.empresa_id);
             expect(retorno).toHaveProperty("v_id", preliminarAtualizar.v_id);
             expect(retorno).toHaveProperty("tipo_colaborador", preliminarAtualizar.tipo_colaborador);
@@ -372,7 +372,7 @@ test.describe.serial("preliminar API", { tag: ["@PRELIMINAR_API"] }, () => {
             expect(response.data).toHaveProperty("retorno");
 
             const { retorno } = response.data;
-            expect(retorno).toHaveProperty("id");
+            expect(retorno).toHaveProperty("id", preliminarAtualizar.id);
             expect(retorno).toHaveProperty("empresa_id", preliminarAtualizar.empresa_id);
             expect(retorno).toHaveProperty("v_id", preliminarAtualizar.v_id);
             expect(retorno).toHaveProperty("tipo_colaborador", preliminarAtualizar.tipo_colaborador);

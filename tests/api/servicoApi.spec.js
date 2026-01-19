@@ -29,15 +29,13 @@ test.describe.serial("serviço API", { tag: ["@SERVICO_API"] }, () => {
             expect(Array.isArray(retorno)).toBe(true);
             expect(retorno).toHaveLength(quantidade);
             retorno.forEach((item, index) => {
-                expect(item).toMatchObject({
-                    empresa_id: gerarServicos.dados[index].empresa_id,
-                    cbo: gerarServicos.dados[index].cbo,
-                    descricao_cbo: gerarServicos.dados[index].descricao_cbo,
-                    categoria_esocial: gerarServicos.dados[index].categoria_esocial,
-                    ativo: gerarServicos.dados[index].ativo
-                });
-                expect(item).toHaveProperty("tipo_servico_autonomo_id");
-                expect(item).toHaveProperty("cliente_id");
+                expect(item).toHaveProperty("empresa_id", gerarServicos.dados[index].empresa_id);
+                expect(item).toHaveProperty("cbo", gerarServicos.dados[index].cbo);
+                expect(item).toHaveProperty("descricao_cbo", gerarServicos.dados[index].descricao_cbo);
+                expect(item).toHaveProperty("categoria_esocial", gerarServicos.dados[index].categoria_esocial);
+                expect(item).toHaveProperty("ativo", gerarServicos.dados[index].ativo);
+                expect(item).toHaveProperty("tipo_servico_autonomo_id", expect.anything());
+                expect(item).toHaveProperty("cliente_id", expect.anything());
             });
         }catch (error) {
             console.error("Erro ao realizar a requisição:", error);
@@ -63,15 +61,13 @@ test.describe.serial("serviço API", { tag: ["@SERVICO_API"] }, () => {
             expect(Array.isArray(retorno)).toBe(true);
             expect(retorno).toHaveLength(quantidade);
             retorno.forEach((item, index) => {
-                expect(item).toMatchObject({
-                    empresa_id: gerarMultiplosServicos.dados[index].empresa_id,
-                    cbo: gerarMultiplosServicos.dados[index].cbo,
-                    descricao_cbo: gerarMultiplosServicos.dados[index].descricao_cbo,
-                    categoria_esocial: gerarMultiplosServicos.dados[index].categoria_esocial,
-                    ativo: gerarMultiplosServicos.dados[index].ativo
-                });
-                expect(item).toHaveProperty("tipo_servico_autonomo_id");
-                expect(item).toHaveProperty("cliente_id");
+                expect(item).toHaveProperty("empresa_id", gerarMultiplosServicos.dados[index].empresa_id);
+                expect(item).toHaveProperty("cbo", gerarMultiplosServicos.dados[index].cbo);
+                expect(item).toHaveProperty("descricao_cbo", gerarMultiplosServicos.dados[index].descricao_cbo);
+                expect(item).toHaveProperty("categoria_esocial", gerarMultiplosServicos.dados[index].categoria_esocial);
+                expect(item).toHaveProperty("ativo", gerarMultiplosServicos.dados[index].ativo);
+                expect(item).toHaveProperty("tipo_servico_autonomo_id", expect.anything());
+                expect(item).toHaveProperty("cliente_id", expect.anything());
             });
         }catch (error) {
             console.error("Erro ao realizar a requisição:", error);
@@ -100,15 +96,13 @@ test.describe.serial("serviço API", { tag: ["@SERVICO_API"] }, () => {
             expect(Array.isArray(retorno)).toBe(true);
             expect(retorno).toHaveLength(quantidade);
             retorno.forEach((item, index) => {
-                expect(item).toMatchObject({
-                    empresa_id: cloneServico.dados[index].empresa_id,
-                    cbo: cloneServico.dados[index].cbo,
-                    descricao_cbo: cloneServico.dados[index].descricao_cbo,
-                    categoria_esocial: cloneServico.dados[index].categoria_esocial,
-                    ativo: cloneServico.dados[index].ativo
-                });
-                expect(item).toHaveProperty("tipo_servico_autonomo_id");
-                expect(item).toHaveProperty("cliente_id");
+                expect(item).toHaveProperty("empresa_id", cloneServico.dados[index].empresa_id);
+                expect(item).toHaveProperty("cbo", cloneServico.dados[index].cbo);
+                expect(item).toHaveProperty("descricao_cbo", cloneServico.dados[index].descricao_cbo);
+                expect(item).toHaveProperty("categoria_esocial", cloneServico.dados[index].categoria_esocial);
+                expect(item).toHaveProperty("ativo", cloneServico.dados[index].ativo);
+                expect(item).toHaveProperty("tipo_servico_autonomo_id", expect.anything());
+                expect(item).toHaveProperty("cliente_id", expect.anything());
             });
         } catch (error) {
             console.error("Erro ao realizar a requisição:", error);
@@ -137,15 +131,13 @@ test.describe.serial("serviço API", { tag: ["@SERVICO_API"] }, () => {
             expect(Array.isArray(retorno)).toBe(true);
             expect(retorno).toHaveLength(quantidade);
             retorno.forEach((item, index) => {
-                expect(item).toMatchObject({
-                    empresa_id: cloneServico.dados[index].empresa_id,
-                    cbo: cloneServico.dados[index].cbo,
-                    descricao_cbo: cloneServico.dados[index].descricao_cbo,
-                    categoria_esocial: cloneServico.dados[index].categoria_esocial,
-                    ativo: cloneServico.dados[index].ativo
-                });
-                expect(item).toHaveProperty("tipo_servico_autonomo_id");
-                expect(item).toHaveProperty("cliente_id");
+                expect(item).toHaveProperty("empresa_id", cloneServico.dados[index].empresa_id);
+                expect(item).toHaveProperty("cbo", cloneServico.dados[index].cbo);
+                expect(item).toHaveProperty("descricao_cbo", cloneServico.dados[index].descricao_cbo);
+                expect(item).toHaveProperty("categoria_esocial", cloneServico.dados[index].categoria_esocial);
+                expect(item).toHaveProperty("ativo", cloneServico.dados[index].ativo);
+                expect(item).toHaveProperty("tipo_servico_autonomo_id", expect.anything());
+                expect(item).toHaveProperty("cliente_id", expect.anything());
             });
         } catch (error) {
             console.error("Erro ao realizar a requisição:", error);
@@ -170,15 +162,13 @@ test.describe.serial("serviço API", { tag: ["@SERVICO_API"] }, () => {
             expect(Array.isArray(retorno)).toBe(true);
             expect(retorno).toHaveLength(empresaIds.length);
             retorno.forEach((item, index) => {
-                expect(item).toMatchObject({
-                    empresa_id: gerarMesmoServicoParaEmpresas.dados[index].empresa_id,
-                    cbo: gerarMesmoServicoParaEmpresas.dados[index].cbo,
-                    descricao_cbo: gerarMesmoServicoParaEmpresas.dados[index].descricao_cbo,
-                    categoria_esocial: gerarMesmoServicoParaEmpresas.dados[index].categoria_esocial,
-                    ativo: gerarMesmoServicoParaEmpresas.dados[index].ativo
-                });
-                expect(item).toHaveProperty("tipo_servico_autonomo_id");
-                expect(item).toHaveProperty("cliente_id");
+                expect(item).toHaveProperty("empresa_id", gerarMesmoServicoParaEmpresas.dados[index].empresa_id);
+                expect(item).toHaveProperty("cbo", gerarMesmoServicoParaEmpresas.dados[index].cbo);
+                expect(item).toHaveProperty("descricao_cbo", gerarMesmoServicoParaEmpresas.dados[index].descricao_cbo);
+                expect(item).toHaveProperty("categoria_esocial", gerarMesmoServicoParaEmpresas.dados[index].categoria_esocial);
+                expect(item).toHaveProperty("ativo", gerarMesmoServicoParaEmpresas.dados[index].ativo);
+                expect(item).toHaveProperty("tipo_servico_autonomo_id", expect.anything());
+                expect(item).toHaveProperty("cliente_id", expect.anything());
             });
         }catch (error) {
             console.error("Erro ao realizar a requisição:", error);
@@ -272,7 +262,7 @@ test.describe.serial("serviço API", { tag: ["@SERVICO_API"] }, () => {
 
             const { retorno } = response.data;
             expect(retorno).toHaveProperty("tipo_servico_autonomo_id", servicoAtualizar.tipo_servico_autonomo_id);
-            expect(retorno).toHaveProperty("cliente_id");
+            expect(retorno).toHaveProperty("cliente_id", expect.anything());
             expect(retorno).toHaveProperty("empresa_id", servicoAtualizar.empresa_id);
             expect(retorno).toHaveProperty("cbo", servicoAtualizar.cbo);
             expect(retorno).toHaveProperty("descricao_cbo", servicoAtualizar.descricao_cbo);
@@ -306,7 +296,7 @@ test.describe.serial("serviço API", { tag: ["@SERVICO_API"] }, () => {
 
             const { retorno } = response.data;
             expect(retorno).toHaveProperty("tipo_servico_autonomo_id", servicoAtualizar.tipo_servico_autonomo_id);
-            expect(retorno).toHaveProperty("cliente_id");
+            expect(retorno).toHaveProperty("cliente_id", expect.anything());
             expect(retorno).toHaveProperty("empresa_id", servicoAtualizar.empresa_id);
             expect(retorno).toHaveProperty("cbo", servicoAtualizar.cbo);
             expect(retorno).toHaveProperty("descricao_cbo", servicoAtualizar.descricao_cbo);
@@ -340,7 +330,7 @@ test.describe.serial("serviço API", { tag: ["@SERVICO_API"] }, () => {
 
             const { retorno } = response.data;
             expect(retorno).toHaveProperty("tipo_servico_autonomo_id", servicoAtualizar.tipo_servico_autonomo_id);
-            expect(retorno).toHaveProperty("cliente_id");
+            expect(retorno).toHaveProperty("cliente_id", expect.anything());
             expect(retorno).toHaveProperty("empresa_id", servicoAtualizar.empresa_id);
             expect(retorno).toHaveProperty("cbo", servicoAtualizar.cbo);
             expect(retorno).toHaveProperty("descricao_cbo", servicoAtualizar.descricao_cbo);

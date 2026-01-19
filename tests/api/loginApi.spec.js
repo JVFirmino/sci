@@ -14,7 +14,7 @@ test.describe.serial("login usuário API", { tag: ["@LOGIN_API"] }, () => {
             const response = await loginCredencial(token);
             expect(response.status).toBe(201);
             expect(response.data).toHaveProperty("mensagem", MENSAGENS.loginApi.sucessoLogin);
-            expect(response.data).toHaveProperty("token");
+            expect(response.data).toHaveProperty("token", expect.anything());
             expect(response.data).toHaveProperty("validade", 3600);
         } catch (error) {
             console.error("Erro ao realizar a requisição:", error);
