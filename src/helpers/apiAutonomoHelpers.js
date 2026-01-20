@@ -73,4 +73,11 @@ export class ApiAutonomoHelpers {
         };
     };
 
+    montarPayloadDeletarFeriado(empresaId, autonomo){
+        return {
+            autonomo_id: autonomo,
+            empresa_id: empresaId
+        };
+    };
+
 }

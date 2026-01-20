@@ -5,3 +5,10 @@ export const cadastrarAutonomo = (autonomoData, jwtToken) => servicoClient.post(
         "Authorization": `Bearer ${jwtToken}`,
     }
 });
+
+export const deletarAutonomo = (autonomoData, jwtToken) => servicoClient.delete("/autonomo/autonomos", {
+    data: autonomoData,
+    headers:{
+        "Authorization": `Bearer ${jwtToken}`,
+    }
+});

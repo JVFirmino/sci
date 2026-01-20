@@ -59,6 +59,9 @@ export const MENSAGENS = {
         autonomoCadastrado: "Autonomo já cadastrado!",
         cpfJaUsado: "O campo 'dados.0.cpf' contém um valor único já usado em outro registro.",
         semPermissao: "Você não tem permissão para realizar esta ação.",
-        expiradoToken: "Token has expired"
+        expiradoToken: "Token has expired",
+        deletarAutonomo: "Registro excluído com sucesso",
+        autonomoNaoEncontrado: "Registro não encontrado ou já removido anteriormente",
+        autonomoNaoEncontrado: "Registro não encontrado ou já removido anteriormente"
     }
 };

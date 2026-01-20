@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 import { ApiAutonomoHelpers } from "../../src/helpers/apiAutonomoHelpers";
 import { loginCredencial } from "../../src/api/services/authService";
-import { cadastrarAutonomo } from "../../src/api/services/autonomoService";
+import { cadastrarAutonomo, deletarAutonomo } from "../../src/api/services/autonomoService";
 import { gerarBasicToken } from "../../src/utils/authUtils";
 import { MENSAGENS } from "../../fixture/mensagemFixture";
 
@@ -181,7 +181,7 @@ test.describe.serial("autonomo API", { tag: ["@AUTONOMO_API"] }, () => {
         }
     });
     
-    test("cadastrar feriado com token expirado", { tag: "@AUTONOMO_FALHA_API" }, async () => {
+    test("cadastrar autonomo com token expirado", { tag: "@AUTONOMO_FALHA_API" }, async () => {
         const empresaId = 900001;
         const apiAutonomoHelpers = new ApiAutonomoHelpers(); 
         const gerarAutonomo = apiAutonomoHelpers.gerarAutonomo(empresaId, false);
@@ -191,6 +191,93 @@ test.describe.serial("autonomo API", { tag: ["@AUTONOMO_API"] }, () => {
         } catch (error) {
             expect(error.response.status).toBe(401);
             expect(error.response.data).toHaveProperty("error", MENSAGENS.feriadoApi.expiradoToken);
+        }
+    });
+
+    test("deletar um autonomo", { tag: "@AUTONOMO_SUCESSO_API" }, async () => {
+        const empresaId = 900001;
+        const apiAutonomoHelpers = new ApiAutonomoHelpers();  
+        const gerarAutonomo = apiAutonomoHelpers.gerarAutonomo(empresaId, false);
+        const token = gerarBasicToken("330|abc123", "496|SNmOmXK7QV8u9E2M8FmF2IaC1eCl8au39ieZKYDG");
+        try {
+            const loginResponse = await loginCredencial(token);
+            const responseAutonomo = await cadastrarAutonomo(gerarAutonomo, loginResponse.data.token);
+            const autonomoDeletar = apiAutonomoHelpers.montarPayloadDeletarFeriado(empresaId, responseAutonomo.data.retorno[0].autonomo.autonomo_id);
+            const response = await deletarAutonomo(autonomoDeletar, loginResponse.data.token);
+            expect(response.status).toBe(200);
+            expect(response.data).toHaveProperty("sucesso", true);
+            expect(response.data).toHaveProperty("mensagem", MENSAGENS.autonomo.deletarAutonomo);
+            expect(response.data).toHaveProperty("retorno", {});
+        }catch (error) {
+            console.error("Erro ao realizar a requisição:", error);
+            throw error; 
+        }
+    });
+
+    test("deletar um autonomo de outra empresa", { tag: "@AUTONOMO_FALHA_API" }, async () => {
+        const empresaId = 900001;
+        const apiAutonomoHelpers = new ApiAutonomoHelpers();  
+        const gerarAutonomo = apiAutonomoHelpers.gerarAutonomo(empresaId, false);
+        const token = gerarBasicToken("330|abc123", "496|SNmOmXK7QV8u9E2M8FmF2IaC1eCl8au39ieZKYDG");
+        try {
+            const loginResponse = await loginCredencial(token);
+            const responseAutonomo = await cadastrarAutonomo(gerarAutonomo, loginResponse.data.token);
+            const autonomoDeletar = apiAutonomoHelpers.montarPayloadDeletarFeriado(2, responseAutonomo.data.retorno[0].autonomo.autonomo_id);
+            const response = await deletarAutonomo(autonomoDeletar, loginResponse.data.token);
+            expect(response.data).toHaveProperty("mensagem", MENSAGENS.autonomo.autonomoNaoEncontrado);
+            
+        } catch (error) {
+            console.error("Erro ao realizar a requisição:", error);
+            throw error;
+        }
+    });
+
+    test("deletar um autonomo inexistente", { tag: "@AUTONOMO_FALHA_API" }, async () => {
+        const empresaId = 900001;
+        const autonomoInexistente = 2342342;
+        const apiAutonomoHelpers = new ApiAutonomoHelpers(); 
+        const autonomoDeletar = apiAutonomoHelpers.montarPayloadDeletarFeriado(empresaId, autonomoInexistente);
+        const token = gerarBasicToken("330|abc123", "496|SNmOmXK7QV8u9E2M8FmF2IaC1eCl8au39ieZKYDG");
+        try {
+            const loginResponse = await loginCredencial(token);
+            const response = await deletarAutonomo(autonomoDeletar, loginResponse.data.token);
+            expect(response.data).toHaveProperty("mensagem", MENSAGENS.autonomo.autonomoNaoEncontrado);
+        } catch (error) {
+            console.error("Erro ao realizar a requisição:", error);
+            throw error;
+        }
+    });
+
+    test("deletar um autonomo com empresa_id inválido", { tag: "@AUTONOMO_FALHA_API" }, async () => {
+        const empresaId = 9999999;
+        const autonomo = 2342342;
+        const apiAutonomoHelpers = new ApiAutonomoHelpers(); 
+        const autonomoInvalido = apiAutonomoHelpers.montarPayloadDeletarFeriado(empresaId, autonomo);
+        const token = gerarBasicToken("330|abc123", "496|SNmOmXK7QV8u9E2M8FmF2IaC1eCl8au39ieZKYDG");
+        try {
+            const loginResponse = await loginCredencial(token);
+            const response = await deletarAutonomo(autonomoInvalido, loginResponse.data.token);
+            throw new Error("Esperava um erro, mas a requisição foi bem-sucedida.");
+        } catch (error) {
+            expect(error.response.status).toBe(403);
+            expect(error.response.data).toHaveProperty("sucesso", false);
+            expect(error.response.data).toHaveProperty("mensagem", MENSAGENS.autonomo.semPermissao);
+            expect(error.response.data).toHaveProperty("erros");
+            expect(error.response.data).toHaveProperty("retorno", {});
+        }
+    });
+    
+    test("deletar um autonomo com token expirado", { tag: "@AUTONOMO_FALHA_API" }, async () => {
+        const empresaId = 900001;
+        const autonomo = 2342342;
+        const apiAutonomoHelpers = new ApiAutonomoHelpers(); 
+        const autonomoInvalido = apiAutonomoHelpers.montarPayloadDeletarFeriado(empresaId, autonomo);;
+        try {
+            const response = await deletarAutonomo(autonomoInvalido, "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vYXBpLWF1dGgtaG1sLnNjaS5jb20uYnIvYXBpL3YxL2F1dGgvY3JlZGVuY2lhbC9sb2dpbiIsImlhdCI6MTc2MzM4MzA1MywiZXhwIjoxNzYzMzg2NjUzLCJuYmYiOjE3NjMzODMwNTMsImp0aSI6IlZpM0x6enZaOHpYQkRPYVgiLCJzdWIiOiI5NzM3MDMiLCJwcnYiOiJjNTIzYjFkZjdhMTZiMmViYmQzYzFjZDUxNDk4ZjUzNjhkODBjMDEwIiwidXN1YXJpbyI6eyJ0aXBvIjoyLCJ1c3VhcmlvSWQiOjk3MzcwMywiZGFkb3MiOnsiY2xpZW50ZUlkIjo4ODU2OSwiZW1wcmVzYXNWaW5jdWxhZGFzIjpbNDc3NDI1XSwiYWNlc3NvcyI6eyJyZWxhdG9yaW8iOnsiR0VUIjpbImNhdGVnb3JpYSIsInJlbGF0b3JpbyIsInB1YmxpY2Fkb3MiLCJtb2RvLXBhZ2FtZW50byJdLCJQT1NUIjpbInB1YmxpY2Fkb3MiXSwiUFVUIjpbInB1YmxpY2Fkb3MiXX0sImF0ZW5kaW1lbnRvIjp7IkdFVCI6WyJ1c3VhcmlvLWFkaWNpb25hbC1jbGllbnRlIiwic3RhdHVzIiwidHJhbWl0ZSIsInVzdWFyaW8tYWRpY2lvbmFsLWFkbWluIiwiZGVwYXJ0YW1lbnRvIiwiYXRlbmRpbWVudG8iLCJpbnRlcmFjYW8iLCJhbmV4byJdLCJQVVQiOlsiY29uY2x1aXIiLCJhbmFsaXNhciJdLCJQT1NUIjpbImludGVyYWNhbyJdfX19fSwiYWNjZXNzX3Rva2VuX2NsaWVudGVfaWQiOjMzMCwiYWNjZXNzX3Rva2VuX3BhcmNlaXJvX2lkIjoxMDcxLCJzaXN0ZW1hSWQiOjUyfQ.XI6zdigf02QvleEJwaOkRJYBlxV2SXpvGaXHZNoVLFI");
+            throw new Error("Esperava um erro, mas a requisição foi bem-sucedida.");
+        } catch (error) {
+            expect(error.response.status).toBe(401);
+            expect(error.response.data).toHaveProperty("error", MENSAGENS.autonomo.expiradoToken);
         }
     });
     
