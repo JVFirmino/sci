@@ -73,6 +73,19 @@ export class ApiAutonomoHelpers {
         };
     };
 
+    atualizarAutonomo(empresaId, autonomoId, overrides = {}){
+        return {
+            autonomo_id: autonomoId,
+            empresa_id:empresaId,
+            nome: faker.person.firstName(),
+            cpf: this.gerarCpfComMascara(),
+            nascimento_data: this.formatDate(faker.date.birthdate({ min: 18, mode: "age" })),
+            status:this.gerarAleatorio(this.status),
+            ...overrides
+            
+        };
+    };
+
     montarPayloadDeletarFeriado(empresaId, autonomo){
         return {
             autonomo_id: autonomo,

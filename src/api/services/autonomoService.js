@@ -6,6 +6,12 @@ export const cadastrarAutonomo = (autonomoData, jwtToken) => servicoClient.post(
     }
 });
 
+export const atualizarAutonomo = (autonomoData, jwtToken) => servicoClient.put("/autonomo/autonomos", autonomoData, {
+    headers:{
+        "Authorization": `Bearer ${jwtToken}`,
+    }
+});
+
 export const deletarAutonomo = (autonomoData, jwtToken) => servicoClient.delete("/autonomo/autonomos", {
     data: autonomoData,
     headers:{
