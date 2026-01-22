@@ -62,6 +62,7 @@ export const MENSAGENS = {
         expiradoToken: "Token has expired",
         deletarAutonomo: "Registro excluído com sucesso",
         autonomoNaoEncontrado: "Registro não encontrado ou já removido anteriormente",
-        autonomoNaoEncontrado: "Registro não encontrado ou já removido anteriormente"
+        autonomoNaoEncontrado: "Registro não encontrado ou já removido anteriormente",
+        cpfJaUsado2: "O campo 'cpf' contém um valor único já usado em outro registro."
     }
 };

@@ -197,7 +197,6 @@ test.describe.serial("autonomo API", { tag: ["@AUTONOMO_API"] }, () => {
 
     test("atualizar um autonomo", { tag: "@AUTONOMO_SUCESSO_API" }, async () => {
         const empresaId = 900001;
-        const quantidade = 1
         const apiAutonomoHelpers = new ApiAutonomoHelpers(); 
         const gerarAutonomo = apiAutonomoHelpers.gerarAutonomo(empresaId, false);
         const token = gerarBasicToken("330|abc123", "496|SNmOmXK7QV8u9E2M8FmF2IaC1eCl8au39ieZKYDG");
@@ -211,7 +210,8 @@ test.describe.serial("autonomo API", { tag: ["@AUTONOMO_API"] }, () => {
             expect(response.data).toHaveProperty("mensagem", MENSAGENS.autonomo.sucessoCadastroAutonomo);
             expect(response.data).toHaveProperty("retorno");
 
-            const  retorno  = response.data.retorno;
+            const  { retorno }  = response.data;
+            expect(Array.isArray(retorno)).toBe(true);
             expect(retorno).toHaveLength(1);
             const { autonomo } = retorno[0];
 
@@ -226,6 +226,67 @@ test.describe.serial("autonomo API", { tag: ["@AUTONOMO_API"] }, () => {
         }catch (error) {
             console.error("Erro ao realizar a requisição:", error);
             throw error; 
+        }
+    });
+
+    test("atualizar um autonomo de uma empresa A igual a um autonomo de empresa B", { tag: "@AUTONOMO_SUCESSO_API" }, async () => {
+        const empresaIdA = 900001;
+        const empresaIdB = 2;
+        const apiAutonomoHelpers = new ApiAutonomoHelpers(); 
+        const gerarAutonomoA = apiAutonomoHelpers.gerarAutonomo(empresaIdA, false);
+        const gerarAutonomoB = apiAutonomoHelpers.gerarAutonomo(empresaIdB, false);
+        const token = gerarBasicToken("330|abc123", "496|SNmOmXK7QV8u9E2M8FmF2IaC1eCl8au39ieZKYDG");
+        try {
+            const loginResponse = await loginCredencial(token);
+            const responseAutonomoA = await cadastrarAutonomo(gerarAutonomoA, loginResponse.data.token);
+            const responseAutonomoB = await cadastrarAutonomo(gerarAutonomoB, loginResponse.data.token);
+            const cloneAutonomo = structuredClone(gerarAutonomoA.dados[0]);
+            console.log(cloneAutonomo)
+            cloneAutonomo.dados[0].empresa_id = 2
+            const response = await atualizarAutonomo(cloneAutonomo, loginResponse.data.token);
+            expect(response.status).toBe(200);
+            expect(response.data).toHaveProperty("sucesso", true);
+            expect(response.data).toHaveProperty("mensagem", MENSAGENS.autonomo.sucessoCadastroAutonomo);
+            expect(response.data).toHaveProperty("retorno");
+
+            const  { retorno }  = response.data;
+            expect(Array.isArray(retorno)).toBe(true);
+            expect(retorno).toHaveLength(1);
+            const { autonomo } = retorno[0];
+
+            expect(autonomo).toHaveProperty("autonomo_id", cloneAutonomo.autonomo_id)
+            expect(autonomo).toHaveProperty("empresa_id", cloneAutonomo.empresa_id);
+            expect(autonomo).toHaveProperty("cpf", cloneAutonomo.cpf);
+            expect(autonomo).toHaveProperty("nome", cloneAutonomo.nome);
+            expect(autonomo).toHaveProperty("nascimento_data", cloneAutonomo.nascimento_data);
+            expect(autonomo).toHaveProperty("status", Boolean(cloneAutonomo.status));
+            expect(autonomo).toHaveProperty("detalhe_autonomo")
+            expect(autonomo).toHaveProperty("autonomo_id", cloneAutonomo.autonomo_id);
+        }catch (error) {
+            console.error("Erro ao realizar a requisição:", error);
+            throw error; 
+        }
+    });
+
+    test("atualizar um autonomo pra um já existente", { tag: "@AUTONOMO_SUCESSO_API" }, async () => {
+        const empresaId = 900001;
+        const apiAutonomoHelpers = new ApiAutonomoHelpers(); 
+        const gerarAutonomoA = apiAutonomoHelpers.gerarAutonomo(empresaId, false);
+        const gerarAutonomoB = apiAutonomoHelpers.gerarAutonomo(empresaId, false);
+        const token = gerarBasicToken("330|abc123", "496|SNmOmXK7QV8u9E2M8FmF2IaC1eCl8au39ieZKYDG");
+        try {
+            const loginResponse = await loginCredencial(token);
+            const responseAutonomoA = await cadastrarAutonomo(gerarAutonomoA, loginResponse.data.token);
+            const responseAutonomoB = await cadastrarAutonomo(gerarAutonomoB, loginResponse.data.token);
+            const autonomoAtualizar = apiAutonomoHelpers.atualizarAutonomo(empresaId, responseAutonomoB.data.retorno[0].autonomo.autonomo_id, { cpf: responseAutonomoA.data.retorno[0].autonomo.cpf});
+            const response = await atualizarAutonomo(autonomoAtualizar, loginResponse.data.token);
+            throw new Error("Esperava um erro, mas a requisição foi bem-sucedida.");
+        } catch (error) {
+            expect(error.response.status).toBe(422);
+            expect(error.response.data).toHaveProperty("sucesso", false);
+            expect(error.response.data).toHaveProperty("mensagem", MENSAGENS.autonomo.cpfJaUsado2);
+            expect(error.response.data).toHaveProperty("erros");
+            expect(error.response.data).toHaveProperty("retorno", {});
         }
     });
 

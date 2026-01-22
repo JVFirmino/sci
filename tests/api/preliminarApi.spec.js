@@ -151,6 +151,41 @@ test.describe.serial("preliminar API", { tag: ["@PRELIMINAR_API"] }, () => {
         }
     });
 
+    test("cadastrar admissão preliminar iguais para empresas diferentes", { tag: "@PRELIMINAR_FALHA_API" }, async () => {
+        const empresaId = 900001;
+        const tipoColaborador = 1;
+        const apiPreliminarHelpers = new ApiPreliminarHelpers();
+        const gerarPreliminar = apiPreliminarHelpers.gerarItemPreliminarContribuinte(empresaId, tipoColaborador);
+        const token = gerarBasicToken("330|abc123", "496|SNmOmXK7QV8u9E2M8FmF2IaC1eCl8au39ieZKYDG");
+        try {
+            const loginResponse = await loginCredencial(token);
+            await cadastrarAdmissaoPreliminar(gerarPreliminar, loginResponse.data.token);
+            const clonePreliminar = structuredClone(gerarPreliminar);
+            clonePreliminar.empresa_id = 2
+            const response = await cadastrarAdmissaoPreliminar(clonePreliminar, loginResponse.data.token);
+            expect(response.status).toBe(201);
+            expect(response.data).toHaveProperty("sucesso", true);
+            expect(response.data).toHaveProperty("mensagem", MENSAGENS.preliminar.sucessoCadastroPreliminar);
+            expect(response.data).toHaveProperty("retorno");
+
+            const { retorno } = response.data;
+            expect(retorno).toHaveProperty("id", expect.anything());
+            expect(retorno).toHaveProperty("empresa_id", clonePreliminar.empresa_id);
+            expect(retorno).toHaveProperty("v_id", clonePreliminar.v_id);
+            expect(retorno).toHaveProperty("tipo_colaborador", clonePreliminar.tipo_colaborador);
+            expect(retorno).toHaveProperty("classe_id", clonePreliminar.classe_id);
+            expect(retorno).toHaveProperty("nome", clonePreliminar.nome);
+            expect(retorno).toHaveProperty("nascimento_data", clonePreliminar.nascimento_data);
+            expect(retorno).toHaveProperty("admissao_data", clonePreliminar.admissao_data);
+            expect(retorno).toHaveProperty("cpf", clonePreliminar.cpf);
+            expect(retorno).toHaveProperty("categoria_esocial_id", clonePreliminar.categoria_esocial_id);
+            expect(retorno).toHaveProperty("liberacao_id", 2);
+        } catch (error) {
+            console.error("Erro ao realizar a requisição:", error);
+            throw error;
+        }
+    });
+
     test("cadastrar admissão preliminar já existente", { tag: "@PRELIMINAR_FALHA_API" }, async () => {
         const empresaId = 900001;
         const tipoColaborador = 1;
@@ -169,6 +204,7 @@ test.describe.serial("preliminar API", { tag: ["@PRELIMINAR_API"] }, () => {
             expect(error.response.data).toHaveProperty("retorno");
         }
     });
+
 
     test("cadastrar admissão preliminar com classeId diferente", { tag: "@SERVICO_FALHA_API" }, async () => {
         const empresaId = 900001;
@@ -427,7 +463,7 @@ test.describe.serial("preliminar API", { tag: ["@PRELIMINAR_API"] }, () => {
         }
     });
 
-    test("atualizar admissão preliminar com classeId diferente", { tag: "@SERVICO_FALHA_API" }, async () => {
+    test("atualizar admissão preliminar com classeId diferente", { tag: "@PRELIMINAR_FALHA_API" }, async () => {
         const empresaId = 900001;
         const contratoTipo = 1
         const apiPreliminarHelpers = new ApiPreliminarHelpers();
@@ -448,7 +484,7 @@ test.describe.serial("preliminar API", { tag: ["@PRELIMINAR_API"] }, () => {
         }
     });
 
-    test("atualizar admissão preliminar com categoriaEsocial diferente", { tag: "@SERVICO_FALHA_API" }, async () => {
+    test("atualizar admissão preliminar com categoriaEsocial diferente", { tag: "@PRELIMINAR_FALHA_API" }, async () => {
         const empresaId = 900001;
         const tipoColaborador = 1
         const apiPreliminarHelpers = new ApiPreliminarHelpers();
@@ -469,7 +505,7 @@ test.describe.serial("preliminar API", { tag: ["@PRELIMINAR_API"] }, () => {
         }
     });
 
-    test("atualizar serviço com id do serviço inválido", { tag: "@SERVICO_FALHA_API" }, async () => {
+    test("atualizar admissão preliminar com id da admissão preliminar inválido", { tag: "@PRELIMINAR_FALHA_API" }, async () => {
         const empresaId = 900001;
         const tipoColaborador = 1
         const preliminarIdInvalido = 9999999;
