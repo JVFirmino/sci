@@ -9,7 +9,7 @@ import { gerarBasicToken } from "../../src/utils/authUtils";
 test.describe.serial("login usuário API", { tag: ["@LOGIN_API"] }, () => {
     
     test("login com sucesso",  { tag: "@LOGIN_SUCESSO_API" }, async () => {
-        const token = gerarBasicToken(process.env.AUTH_USERNAME_VALIDO, process.env.AUTH_PASSWORD_VALIDO); 
+        const token = gerarBasicToken(process.env.API_USERNAME, process.env.API_PASSWORD); 
         try {
             const response = await loginCredencial(token);
             expect(response.status).toBe(201);
@@ -23,7 +23,7 @@ test.describe.serial("login usuário API", { tag: ["@LOGIN_API"] }, () => {
     });
 
     test("login token cliente expirado", { tag: "@LOGIN_FALHA_API" }, async () => {
-        const token = gerarBasicToken(process.env.AUTH_USERNAME_VALIDO, process.env.AUTH_PASSWORD_INVALIDO);
+        const token = gerarBasicToken(process.env.API_USERNAME, process.env.API_PASSWORD_INVALIDO);
         try {
             const response = await loginCredencial(token);
             throw new Error("Esperava um erro, mas a requisição foi bem-sucedida.");

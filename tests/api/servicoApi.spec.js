@@ -16,7 +16,7 @@ test.describe.serial("serviço API", { tag: ["@SERVICO_API"] }, () => {
         const quantidade = 1;
         const apiServicoHelpers = new ApiServicoHelpers();
         const gerarServicos = apiServicoHelpers.gerarServico(empresaId, false);
-        const token = gerarBasicToken("330|abc123", "496|SNmOmXK7QV8u9E2M8FmF2IaC1eCl8au39ieZKYDG");
+        const token = gerarBasicToken(process.env.API_USERNAME, process.env.API_PASSWORD);
         try {
             const loginResponse = await loginCredencial(token);
             const response = await cadastrarServico(gerarServicos, loginResponse.data.token);
@@ -48,7 +48,7 @@ test.describe.serial("serviço API", { tag: ["@SERVICO_API"] }, () => {
         const quantidade = 2;
         const apiServicoHelpers = new ApiServicoHelpers();
         const gerarMultiplosServicos = apiServicoHelpers.gerarMultiplosServicos(empresaId, quantidade, true);
-        const token = gerarBasicToken("330|abc123", "496|SNmOmXK7QV8u9E2M8FmF2IaC1eCl8au39ieZKYDG");
+        const token = gerarBasicToken(process.env.API_USERNAME, process.env.API_PASSWORD);
         try {
             const loginResponse = await loginCredencial(token);
             const response = await cadastrarServico(gerarMultiplosServicos, loginResponse.data.token);
@@ -80,7 +80,7 @@ test.describe.serial("serviço API", { tag: ["@SERVICO_API"] }, () => {
         const quantidade = 1;
         const apiServicoHelpers = new ApiServicoHelpers();
         const gerarServico = apiServicoHelpers.gerarServico(empresaId, false);
-        const token = gerarBasicToken("330|abc123", "496|SNmOmXK7QV8u9E2M8FmF2IaC1eCl8au39ieZKYDG");
+        const token = gerarBasicToken(process.env.API_USERNAME, process.env.API_PASSWORD);
         try {
             const loginResponse = await loginCredencial(token);
             await cadastrarServico(gerarServico, loginResponse.data.token);
@@ -115,7 +115,7 @@ test.describe.serial("serviço API", { tag: ["@SERVICO_API"] }, () => {
         const quantidade = 1;
         const apiServicoHelpers = new ApiServicoHelpers();
         const gerarServico = apiServicoHelpers.gerarServico(empresaId, false);
-        const token = gerarBasicToken("330|abc123", "496|SNmOmXK7QV8u9E2M8FmF2IaC1eCl8au39ieZKYDG");
+        const token = gerarBasicToken(process.env.API_USERNAME, process.env.API_PASSWORD);
         try {
             const loginResponse = await loginCredencial(token)
             await cadastrarServico(gerarServico, loginResponse.data.token);
@@ -149,7 +149,7 @@ test.describe.serial("serviço API", { tag: ["@SERVICO_API"] }, () => {
         const empresaIds = [900001, 2];
         const apiServicoHelpers = new ApiServicoHelpers();
         const gerarMesmoServicoParaEmpresas = apiServicoHelpers.gerarMesmoServicoParaEmpresas(empresaIds);
-        const token = gerarBasicToken("330|abc123", "496|SNmOmXK7QV8u9E2M8FmF2IaC1eCl8au39ieZKYDG");
+        const token = gerarBasicToken(process.env.API_USERNAME, process.env.API_PASSWORD);
         try {
             const loginResponse = await loginCredencial(token);
             const response = await cadastrarServico(gerarMesmoServicoParaEmpresas, loginResponse.data.token);
@@ -181,7 +181,7 @@ test.describe.serial("serviço API", { tag: ["@SERVICO_API"] }, () => {
         const quantidade = 2
         const apiServicoHelpers = new ApiServicoHelpers();
         const gerarServico = apiServicoHelpers.gerarServicoDuplicado(empresaId, quantidade);
-        const token = gerarBasicToken("330|abc123", "496|SNmOmXK7QV8u9E2M8FmF2IaC1eCl8au39ieZKYDG");
+        const token = gerarBasicToken(process.env.API_USERNAME, process.env.API_PASSWORD);
         try {
             const loginResponse = await loginCredencial(token);
             const response = await cadastrarServico(gerarServico, loginResponse.data.token);
@@ -199,7 +199,7 @@ test.describe.serial("serviço API", { tag: ["@SERVICO_API"] }, () => {
         const empresaId = 900001;
         const apiServicoHelpers = new ApiServicoHelpers();
         const gerarServico = apiServicoHelpers.gerarServico(empresaId, false);
-        const token = gerarBasicToken("330|abc123", "496|SNmOmXK7QV8u9E2M8FmF2IaC1eCl8au39ieZKYDG");
+        const token = gerarBasicToken(process.env.API_USERNAME, process.env.API_PASSWORD);
         try {
             const loginResponse = await loginCredencial(token);
             await cadastrarServico(gerarServico, loginResponse.data.token);
@@ -218,7 +218,7 @@ test.describe.serial("serviço API", { tag: ["@SERVICO_API"] }, () => {
         const empresaId = 9999999;
         const apiServicoHelpers = new ApiServicoHelpers();
         const gerarServico = apiServicoHelpers.gerarServico(empresaId, false);
-        const token = gerarBasicToken("330|abc123", "496|SNmOmXK7QV8u9E2M8FmF2IaC1eCl8au39ieZKYDG");
+        const token = gerarBasicToken(process.env.API_USERNAME, process.env.API_PASSWORD);
         try {
             const loginResponse = await loginCredencial(token);
             await cadastrarServico(gerarServico, loginResponse.data.token);
@@ -237,7 +237,7 @@ test.describe.serial("serviço API", { tag: ["@SERVICO_API"] }, () => {
         const apiServicoHelpers = new ApiServicoHelpers();
         const gerarServico = apiServicoHelpers.gerarServico(empresaId, false);
         try {
-            const response = await cadastrarServico(gerarServico, process.env.TOKEN_REFRESH_EXPIRADO);
+            const response = await cadastrarServico(gerarServico, process.env.API_TOKEN_JWT);
             throw new Error("Esperava um erro, mas a requisição foi bem-sucedida.");
         } catch (error) {
             expect(error.response.status).toBe(401);
@@ -249,7 +249,7 @@ test.describe.serial("serviço API", { tag: ["@SERVICO_API"] }, () => {
         const empresaId = 900001;
         const apiServicoHelpers = new ApiServicoHelpers();
         const gerarServico = apiServicoHelpers.gerarServico(empresaId, false);
-        const token = gerarBasicToken("330|abc123", "496|SNmOmXK7QV8u9E2M8FmF2IaC1eCl8au39ieZKYDG");
+        const token = gerarBasicToken(process.env.API_USERNAME, process.env.API_PASSWORD);
         try {
             const loginResponse = await loginCredencial(token);
             const responseServico = await cadastrarServico(gerarServico, loginResponse.data.token);
@@ -279,7 +279,7 @@ test.describe.serial("serviço API", { tag: ["@SERVICO_API"] }, () => {
         const apiServicoHelpers = new ApiServicoHelpers();
         const gerarServicoA = apiServicoHelpers.gerarServico(empresaId, false);
         const gerarServicoB = apiServicoHelpers.gerarServico(empresaId, false);
-        const token = gerarBasicToken("330|abc123", "496|SNmOmXK7QV8u9E2M8FmF2IaC1eCl8au39ieZKYDG");
+        const token = gerarBasicToken(process.env.API_USERNAME, process.env.API_PASSWORD);
         try {
             const loginResponse = await loginCredencial(token);
             const responseServicoA = await cadastrarServico(gerarServicoA, loginResponse.data.token);
@@ -313,7 +313,7 @@ test.describe.serial("serviço API", { tag: ["@SERVICO_API"] }, () => {
         const apiServicoHelpers = new ApiServicoHelpers();
         const gerarServicoA = apiServicoHelpers.gerarServico(empresaId, false);
         const gerarServicoB = apiServicoHelpers.gerarServico(empresaId, false);
-        const token = gerarBasicToken("330|abc123", "496|SNmOmXK7QV8u9E2M8FmF2IaC1eCl8au39ieZKYDG");
+        const token = gerarBasicToken(process.env.API_USERNAME, process.env.API_PASSWORD);
         try {
             const loginResponse = await loginCredencial(token);
             const responseServicoA = await cadastrarServico(gerarServicoA, loginResponse.data.token);
@@ -348,7 +348,7 @@ test.describe.serial("serviço API", { tag: ["@SERVICO_API"] }, () => {
         const apiServicoHelpers = new ApiServicoHelpers();
         const gerarServicoA = apiServicoHelpers.gerarServico(empresaIdA, false);
         const gerarServicoB = apiServicoHelpers.gerarServico(empresaIdB, false);
-        const token = gerarBasicToken("330|abc123", "496|SNmOmXK7QV8u9E2M8FmF2IaC1eCl8au39ieZKYDG");
+        const token = gerarBasicToken(process.env.API_USERNAME, process.env.API_PASSWORD);
         try {
             const loginResponse = await loginCredencial(token);
             const responseServicoA = await cadastrarServico(gerarServicoA, loginResponse.data.token);
@@ -381,7 +381,7 @@ test.describe.serial("serviço API", { tag: ["@SERVICO_API"] }, () => {
         const apiServicoHelpers = new ApiServicoHelpers();
         const gerarServicoA = apiServicoHelpers.gerarServico(empresaId, false);
         const gerarServicoB = apiServicoHelpers.gerarServico(empresaId, false);
-        const token = gerarBasicToken("330|abc123", "496|SNmOmXK7QV8u9E2M8FmF2IaC1eCl8au39ieZKYDG");
+        const token = gerarBasicToken(process.env.API_USERNAME, process.env.API_PASSWORD);
 
         try {
             const loginResponse = await loginCredencial(token);
@@ -407,7 +407,7 @@ test.describe.serial("serviço API", { tag: ["@SERVICO_API"] }, () => {
         const tipoServicoIdInvalido = 9999999;
         const apiServicoHelpers = new ApiServicoHelpers();
         const gerarServico = apiServicoHelpers.gerarServico(empresaId, false);
-        const token = gerarBasicToken("330|abc123", "496|SNmOmXK7QV8u9E2M8FmF2IaC1eCl8au39ieZKYDG");
+        const token = gerarBasicToken(process.env.API_USERNAME, process.env.API_PASSWORD);
         try {
             const loginResponse = await loginCredencial(token);
             const responseServico = await cadastrarServico(gerarServico, loginResponse.data.token);
@@ -429,7 +429,7 @@ test.describe.serial("serviço API", { tag: ["@SERVICO_API"] }, () => {
         const empresaIdInvalido = 9999999;
         const apiServicoHelpers = new ApiServicoHelpers();
         const gerarServico = apiServicoHelpers.gerarServico(empresaId, false);
-        const token = gerarBasicToken("330|abc123", "496|SNmOmXK7QV8u9E2M8FmF2IaC1eCl8au39ieZKYDG");
+        const token = gerarBasicToken(process.env.API_USERNAME, process.env.API_PASSWORD);
         try {
             const loginResponse = await loginCredencial(token);
             const responseServico = await cadastrarServico(gerarServico, loginResponse.data.token);
@@ -449,12 +449,12 @@ test.describe.serial("serviço API", { tag: ["@SERVICO_API"] }, () => {
         const empresaId = 900001;
         const apiServicoHelpers = new ApiServicoHelpers();
         const gerarServico = apiServicoHelpers.gerarServico(empresaId, false);
-        const token = gerarBasicToken("330|abc123", "496|SNmOmXK7QV8u9E2M8FmF2IaC1eCl8au39ieZKYDG");
+        const token = gerarBasicToken(process.env.API_USERNAME, process.env.API_PASSWORD);
         try {
             const loginResponse = await loginCredencial(token);
             const responseServico = await cadastrarServico(gerarServico, loginResponse.data.token);
             const servicoAtualizar = apiServicoHelpers.atualizarServico(empresaId, responseServico.data.retorno[0].tipo_servico_autonomo_id);
-            const response = await atualizarServico(servicoAtualizar, "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vYXBpLWF1dGgtaG1sLnNjaS5jb20uYnIvYXBpL3YxL2F1dGgvY3JlZGVuY2lhbC9sb2dpbiIsImlhdCI6MTc2MzM4MzA1MywiZXhwIjoxNzYzMzg2NjUzLCJuYmYiOjE3NjMzODMwNTMsImp0aSI6IlZpM0x6enZaOHpYQkRPYVgiLCJzdWIiOiI5NzM3MDMiLCJwcnYiOiJjNTIzYjFkZjdhMTZiMmViYmQzYzFjZDUxNDk4ZjUzNjhkODBjMDEwIiwidXN1YXJpbyI6eyJ0aXBvIjoyLCJ1c3VhcmlvSWQiOjk3MzcwMywiZGFkb3MiOnsiY2xpZW50ZUlkIjo4ODU2OSwiZW1wcmVzYXNWaW5jdWxhZGFzIjpbNDc3NDI1XSwiYWNlc3NvcyI6eyJyZWxhdG9yaW8iOnsiR0VUIjpbImNhdGVnb3JpYSIsInJlbGF0b3JpbyIsInB1YmxpY2Fkb3MiLCJtb2RvLXBhZ2FtZW50byJdLCJQT1NUIjpbInB1YmxpY2Fkb3MiXSwiUFVUIjpbInB1YmxpY2Fkb3MiXX0sImF0ZW5kaW1lbnRvIjp7IkdFVCI6WyJ1c3VhcmlvLWFkaWNpb25hbC1jbGllbnRlIiwic3RhdHVzIiwidHJhbWl0ZSIsInVzdWFyaW8tYWRpY2lvbmFsLWFkbWluIiwiZGVwYXJ0YW1lbnRvIiwiYXRlbmRpbWVudG8iLCJpbnRlcmFjYW8iLCJhbmV4byJdLCJQVVQiOlsiY29uY2x1aXIiLCJhbmFsaXNhciJdLCJQT1NUIjpbImludGVyYWNhbyJdfX19fSwiYWNjZXNzX3Rva2VuX2NsaWVudGVfaWQiOjMzMCwiYWNjZXNzX3Rva2VuX3BhcmNlaXJvX2lkIjoxMDcxLCJzaXN0ZW1hSWQiOjUyfQ.XI6zdigf02QvleEJwaOkRJYBlxV2SXpvGaXHZNoVLFI");
+            const response = await atualizarServico(servicoAtualizar, process.env.API_TOKEN_JWT);
             throw new Error("Esperava um erro, mas a requisição foi bem-sucedida.");
         }
         catch (error) {
@@ -467,7 +467,7 @@ test.describe.serial("serviço API", { tag: ["@SERVICO_API"] }, () => {
         const empresaId = 900001;
         const apiServicoHelpers = new ApiServicoHelpers();
         const gerarServico = apiServicoHelpers.gerarServico(empresaId, false);
-        const token = gerarBasicToken("330|abc123", "496|SNmOmXK7QV8u9E2M8FmF2IaC1eCl8au39ieZKYDG");
+        const token = gerarBasicToken(process.env.API_USERNAME, process.env.API_PASSWORD);
         try {
             const loginResponse = await loginCredencial(token);
             const responseServico = await cadastrarServico(gerarServico, loginResponse.data.token);
@@ -487,7 +487,7 @@ test.describe.serial("serviço API", { tag: ["@SERVICO_API"] }, () => {
         const empresaId = 900001;
         const apiServicoHelpers = new ApiServicoHelpers();
         const gerarServico = apiServicoHelpers.gerarServico(empresaId, false);
-        const token = gerarBasicToken("330|abc123", "496|SNmOmXK7QV8u9E2M8FmF2IaC1eCl8au39ieZKYDG");
+        const token = gerarBasicToken(process.env.API_USERNAME, process.env.API_PASSWORD);
         try {
             const loginResponse = await loginCredencial(token);
             const responseServico = await cadastrarServico(gerarServico, loginResponse.data.token);
@@ -505,7 +505,7 @@ test.describe.serial("serviço API", { tag: ["@SERVICO_API"] }, () => {
         const tipoServicoId = 9999999; 
         const apiServicoHelpers = new ApiServicoHelpers();
         const servicoDeletar = apiServicoHelpers.montarPayloadDeletarServico(empresaId, tipoServicoId);
-        const token = gerarBasicToken("330|abc123", "496|SNmOmXK7QV8u9E2M8FmF2IaC1eCl8au39ieZKYDG");
+        const token = gerarBasicToken(process.env.API_USERNAME, process.env.API_PASSWORD);
         try {
             const loginResponse = await loginCredencial(token);
             const response = await deletarServico(servicoDeletar, loginResponse.data.token);
@@ -521,7 +521,7 @@ test.describe.serial("serviço API", { tag: ["@SERVICO_API"] }, () => {
         const tipoServicoId = 9999999;
         const apiServicoHelpers = new ApiServicoHelpers();
         const servicoDeletar = apiServicoHelpers.montarPayloadDeletarServico(empresaId, tipoServicoId);
-        const token = gerarBasicToken("330|abc123", "496|SNmOmXK7QV8u9E2M8FmF2IaC1eCl8au39ieZKYDG");
+        const token = gerarBasicToken(process.env.API_USERNAME, process.env.API_PASSWORD);
         try {
             const loginResponse = await loginCredencial(token);
             const response = await deletarServico(servicoDeletar, loginResponse.data.token);
@@ -541,7 +541,7 @@ test.describe.serial("serviço API", { tag: ["@SERVICO_API"] }, () => {
         const apiServicoHelpers = new ApiServicoHelpers();
         const servicoDeletar = apiServicoHelpers.montarPayloadDeletarServico(empresaId, tipoServicoId);
         try {    
-            const response = await deletarServico(servicoDeletar, "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vYXBpLWF1dGgtaG1sLnNjaS5jb20uYnIvYXBpL3YxL2F1dGgvY3JlZGVuY2lhbC9sb2dpbiIsImlhdCI6MTc2MzM4MzA1MywiZXhwIjoxNzYzMzg2NjUzLCJuYmYiOjE3NjMzODMwNTMsImp0aSI6IlZpM0x6enZaOHpYQkRPYVgiLCJzdWIiOiI5NzM3MDMiLCJwcnYiOiJjNTIzYjFkZjdhMTZiMmViYmQzYzFjZDUxNDk4ZjUzNjhkODBjMDEwIiwidXN1YXJpbyI6eyJ0aXBvIjoyLCJ1c3VhcmlvSWQiOjk3MzcwMywiZGFkb3MiOnsiY2xpZW50ZUlkIjo4ODU2OSwiZW1wcmVzYXNWaW5jdWxhZGFzIjpbNDc3NDI1XSwiYWNlc3NvcyI6eyJyZWxhdG9yaW8iOnsiR0VUIjpbImNhdGVnb3JpYSIsInJlbGF0b3JpbyIsInB1YmxpY2Fkb3MiLCJtb2RvLXBhZ2FtZW50byJdLCJQT1NUIjpbInB1YmxpY2Fkb3MiXSwiUFVUIjpbInB1YmxpY2Fkb3MiXX0sImF0ZW5kaW1lbnRvIjp7IkdFVCI6WyJ1c3VhcmlvLWFkaWNpb25hbC1jbGllbnRlIiwic3RhdHVzIiwidHJhbWl0ZSIsInVzdWFyaW8tYWRpY2lvbmFsLWFkbWluIiwiZGVwYXJ0YW1lbnRvIiwiYXRlbmRpbWVudG8iLCJpbnRlcmFjYW8iLCJhbmV4byJdLCJQVVQiOlsiY29uY2x1aXIiLCJhbmFsaXNhciJdLCJQT1NUIjpbImludGVyYWNhbyJdfX19fSwiYWNjZXNzX3Rva2VuX2NsaWVudGVfaWQiOjMzMCwiYWNjZXNzX3Rva2VuX3BhcmNlaXJvX2lkIjoxMDcxLCJzaXN0ZW1hSWQiOjUyfQ.XI6zdigf02QvleEJwaOkRJYBlxV2SXpvGaXHZNoVLFI");
+            const response = await deletarServico(servicoDeletar, process.env.API_TOKEN_JWT);
             throw new Error("Esperava um erro, mas a requisição foi bem-sucedida.");
         } catch (error) {
             expect(error.response.status).toBe(401);

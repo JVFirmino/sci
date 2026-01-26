@@ -15,7 +15,7 @@ test.describe.serial("preliminar API", { tag: ["@PRELIMINAR_API"] }, () => {
         const tipoColaborador = 1;
         const apiPreliminarHelpers = new ApiPreliminarHelpers();
         const gerarPreliminar = apiPreliminarHelpers.gerarItemPreliminarContribuinte(empresaId, tipoColaborador);
-        const token = gerarBasicToken("330|abc123", "496|SNmOmXK7QV8u9E2M8FmF2IaC1eCl8au39ieZKYDG");
+        const token = gerarBasicToken(process.env.API_USERNAME, process.env.API_PASSWORD); 
         try {
             const loginResponse = await loginCredencial(token);
             const response = await cadastrarAdmissaoPreliminar(gerarPreliminar, loginResponse.data.token);
@@ -47,7 +47,7 @@ test.describe.serial("preliminar API", { tag: ["@PRELIMINAR_API"] }, () => {
         const tipoContrato = 2;
         const apiPreliminarHelpers = new ApiPreliminarHelpers();
         const gerarPreliminar = apiPreliminarHelpers.gerarItemPreliminarEmpregado(empresaId, tipoContrato);
-        const token = gerarBasicToken("330|abc123", "496|SNmOmXK7QV8u9E2M8FmF2IaC1eCl8au39ieZKYDG");
+        const token = gerarBasicToken(process.env.API_USERNAME, process.env.API_PASSWORD); 
         try {
             const loginResponse = await loginCredencial(token);
             const response = await cadastrarAdmissaoPreliminar(gerarPreliminar, loginResponse.data.token);
@@ -86,7 +86,7 @@ test.describe.serial("preliminar API", { tag: ["@PRELIMINAR_API"] }, () => {
         const tipoContrato = 1;
         const apiPreliminarHelpers = new ApiPreliminarHelpers();
         const gerarPreliminar = apiPreliminarHelpers.gerarItemPreliminarEmpregado(empresaId, tipoContrato);
-        const token = gerarBasicToken("330|abc123", "496|SNmOmXK7QV8u9E2M8FmF2IaC1eCl8au39ieZKYDG");
+        const token = gerarBasicToken(process.env.API_USERNAME, process.env.API_PASSWORD); 
         try {
             const loginResponse = await loginCredencial(token);
             const response = await cadastrarAdmissaoPreliminar(gerarPreliminar, loginResponse.data.token);
@@ -123,7 +123,7 @@ test.describe.serial("preliminar API", { tag: ["@PRELIMINAR_API"] }, () => {
         const tipoColaborador = 0;
         const apiPreliminarHelpers = new ApiPreliminarHelpers();
         const gerarPreliminar = apiPreliminarHelpers.gerarItemPreliminarContribuinte(empresaId, tipoColaborador, { classe_id : 2, tipo_admissao: apiPreliminarHelpers.gerarAleatorio(apiPreliminarHelpers.tipoAdmissao) });
-        const token = gerarBasicToken("330|abc123", "496|SNmOmXK7QV8u9E2M8FmF2IaC1eCl8au39ieZKYDG");
+        const token = gerarBasicToken(process.env.API_USERNAME, process.env.API_PASSWORD); 
         try {
             const loginResponse = await loginCredencial(token);
             const response = await cadastrarAdmissaoPreliminar(gerarPreliminar, loginResponse.data.token);
@@ -156,7 +156,7 @@ test.describe.serial("preliminar API", { tag: ["@PRELIMINAR_API"] }, () => {
         const tipoColaborador = 1;
         const apiPreliminarHelpers = new ApiPreliminarHelpers();
         const gerarPreliminar = apiPreliminarHelpers.gerarItemPreliminarContribuinte(empresaId, tipoColaborador);
-        const token = gerarBasicToken("330|abc123", "496|SNmOmXK7QV8u9E2M8FmF2IaC1eCl8au39ieZKYDG");
+        const token = gerarBasicToken(process.env.API_USERNAME, process.env.API_PASSWORD); 
         try {
             const loginResponse = await loginCredencial(token);
             await cadastrarAdmissaoPreliminar(gerarPreliminar, loginResponse.data.token);
@@ -191,7 +191,7 @@ test.describe.serial("preliminar API", { tag: ["@PRELIMINAR_API"] }, () => {
         const tipoColaborador = 1;
         const apiPreliminarHelpers = new ApiPreliminarHelpers();
         const gerarPreliminar = apiPreliminarHelpers.gerarItemPreliminarContribuinte(empresaId, tipoColaborador);
-        const token = gerarBasicToken("330|abc123", "496|SNmOmXK7QV8u9E2M8FmF2IaC1eCl8au39ieZKYDG");
+        const token = gerarBasicToken(process.env.API_USERNAME, process.env.API_PASSWORD); 
         try {
             const loginResponse = await loginCredencial(token);
             await cadastrarAdmissaoPreliminar(gerarPreliminar, loginResponse.data.token);
@@ -211,7 +211,7 @@ test.describe.serial("preliminar API", { tag: ["@PRELIMINAR_API"] }, () => {
         const contratoTipo = 1
         const apiPreliminarHelpers = new ApiPreliminarHelpers();
         const gerarPreliminar = apiPreliminarHelpers.gerarItemPreliminarEmpregado(empresaId, contratoTipo, { classe_id : apiPreliminarHelpers.gerarClasse(1) });
-        const token = gerarBasicToken("330|abc123", "496|SNmOmXK7QV8u9E2M8FmF2IaC1eCl8au39ieZKYDG");
+        const token = gerarBasicToken(process.env.API_USERNAME, process.env.API_PASSWORD); 
         try{
             const loginResponse = await loginCredencial(token);
             await cadastrarAdmissaoPreliminar(gerarPreliminar, loginResponse.data.token);
@@ -230,7 +230,7 @@ test.describe.serial("preliminar API", { tag: ["@PRELIMINAR_API"] }, () => {
         const tipoColaborador = 1
         const apiPreliminarHelpers = new ApiPreliminarHelpers();
         const gerarPreliminar = apiPreliminarHelpers.gerarItemPreliminarContribuinte(empresaId, tipoColaborador, { categoria_esocial_id : apiPreliminarHelpers.gerarCategoriaEsocial(0) });
-        const token = gerarBasicToken("330|abc123", "496|SNmOmXK7QV8u9E2M8FmF2IaC1eCl8au39ieZKYDG");
+        const token = gerarBasicToken(process.env.API_USERNAME, process.env.API_PASSWORD); 
         try{
             const loginResponse = await loginCredencial(token);
             await cadastrarAdmissaoPreliminar(gerarPreliminar, loginResponse.data.token);
@@ -249,7 +249,7 @@ test.describe.serial("preliminar API", { tag: ["@PRELIMINAR_API"] }, () => {
         const tipoContrato = 1;
         const apiPreliminarHelpers = new ApiPreliminarHelpers();
         const gerarPreliminar = apiPreliminarHelpers.gerarItemPreliminarEmpregado(empresaId, tipoContrato);
-        const token = gerarBasicToken("330|abc123", "496|SNmOmXK7QV8u9E2M8FmF2IaC1eCl8au39ieZKYDG");
+        const token = gerarBasicToken(process.env.API_USERNAME, process.env.API_PASSWORD); 
         try {
             const loginResponse = await loginCredencial(token);
             await cadastrarAdmissaoPreliminar(gerarPreliminar, loginResponse.data.token);
@@ -269,7 +269,7 @@ test.describe.serial("preliminar API", { tag: ["@PRELIMINAR_API"] }, () => {
         const apiPreliminarHelpers = new ApiPreliminarHelpers();
         const gerarPreliminar = apiPreliminarHelpers.gerarItemPreliminarContribuinte(empresaId, tipoColaborador);
         try {
-            await cadastrarAdmissaoPreliminar(gerarPreliminar, "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vYXBpLWF1dGgtaG1sLnNjaS5jb20uYnIvYXBpL3YxL2F1dGgvY3JlZGVuY2lhbC9sb2dpbiIsImlhdCI6MTc2MzM4MzA1MywiZXhwIjoxNzYzMzg2NjUzLCJuYmYiOjE3NjMzODMwNTMsImp0aSI6IlZpM0x6enZaOHpYQkRPYVgiLCJzdWIiOiI5NzM3MDMiLCJwcnYiOiJjNTIzYjFkZjdhMTZiMmViYmQzYzFjZDUxNDk4ZjUzNjhkODBjMDEwIiwidXN1YXJpbyI6eyJ0aXBvIjoyLCJ1c3VhcmlvSWQiOjk3MzcwMywiZGFkb3MiOnsiY2xpZW50ZUlkIjo4ODU2OSwiZW1wcmVzYXNWaW5jdWxhZGFzIjpbNDc3NDI1XSwiYWNlc3NvcyI6eyJyZWxhdG9yaW8iOnsiR0VUIjpbImNhdGVnb3JpYSIsInJlbGF0b3JpbyIsInB1YmxpY2Fkb3MiLCJtb2RvLXBhZ2FtZW50byJdLCJQT1NUIjpbInB1YmxpY2Fkb3MiXSwiUFVUIjpbInB1YmxpY2Fkb3MiXX0sImF0ZW5kaW1lbnRvIjp7IkdFVCI6WyJ1c3VhcmlvLWFkaWNpb25hbC1jbGllbnRlIiwic3RhdHVzIiwidHJhbWl0ZSIsInVzdWFyaW8tYWRpY2lvbmFsLWFkbWluIiwiZGVwYXJ0YW1lbnRvIiwiYXRlbmRpbWVudG8iLCJpbnRlcmFjYW8iLCJhbmV4byJdLCJQVVQiOlsiY29uY2x1aXIiLCJhbmFsaXNhciJdLCJQT1NUIjpbImludGVyYWNhbyJdfX19fSwiYWNjZXNzX3Rva2VuX2NsaWVudGVfaWQiOjMzMCwiYWNjZXNzX3Rva2VuX3BhcmNlaXJvX2lkIjoxMDcxLCJzaXN0ZW1hSWQiOjUyfQ.XI6zdigf02QvleEJwaOkRJYBlxV2SXpvGaXHZNoVLFI");
+            await cadastrarAdmissaoPreliminar(gerarPreliminar, process.env.API_TOKEN_JWT);
             throw new Error("Esperava um erro, mas a requisição foi bem-sucedida.");
         } catch (error) {
             expect(error.response.status).toBe(401);
@@ -282,7 +282,7 @@ test.describe.serial("preliminar API", { tag: ["@PRELIMINAR_API"] }, () => {
         const tipoColaborador = 1;
         const apiPreliminarHelpers = new ApiPreliminarHelpers();
         const gerarPreliminar = apiPreliminarHelpers.gerarItemPreliminarContribuinte(empresaId, tipoColaborador);
-        const token = gerarBasicToken("330|abc123", "496|SNmOmXK7QV8u9E2M8FmF2IaC1eCl8au39ieZKYDG");
+        const token = gerarBasicToken(process.env.API_USERNAME, process.env.API_PASSWORD); 
         try {
             const loginResponse = await loginCredencial(token);
             const responsePreliminar = await cadastrarAdmissaoPreliminar(gerarPreliminar, loginResponse.data.token);
@@ -316,7 +316,7 @@ test.describe.serial("preliminar API", { tag: ["@PRELIMINAR_API"] }, () => {
         const tipoContrato = 2;
         const apiPreliminarHelpers = new ApiPreliminarHelpers();
         const gerarPreliminar = apiPreliminarHelpers.gerarItemPreliminarEmpregado(empresaId, tipoContrato);
-        const token = gerarBasicToken("330|abc123", "496|SNmOmXK7QV8u9E2M8FmF2IaC1eCl8au39ieZKYDG");
+        const token = gerarBasicToken(process.env.API_USERNAME, process.env.API_PASSWORD); 
         try {
             const loginResponse = await loginCredencial(token);
             const responsePreliminar = await cadastrarAdmissaoPreliminar(gerarPreliminar, loginResponse.data.token);
@@ -357,7 +357,7 @@ test.describe.serial("preliminar API", { tag: ["@PRELIMINAR_API"] }, () => {
         const tipoContrato = 1;
         const apiPreliminarHelpers = new ApiPreliminarHelpers();
         const gerarPreliminar = apiPreliminarHelpers.gerarItemPreliminarEmpregado(empresaId, tipoContrato);
-        const token = gerarBasicToken("330|abc123", "496|SNmOmXK7QV8u9E2M8FmF2IaC1eCl8au39ieZKYDG");
+        const token = gerarBasicToken(process.env.API_USERNAME, process.env.API_PASSWORD); 
         try {
             const loginResponse = await loginCredencial(token);
             const responsePreliminar = await cadastrarAdmissaoPreliminar(gerarPreliminar, loginResponse.data.token);
@@ -396,7 +396,7 @@ test.describe.serial("preliminar API", { tag: ["@PRELIMINAR_API"] }, () => {
         const tipoColaborador = 0;
         const apiPreliminarHelpers = new ApiPreliminarHelpers();
         const gerarPreliminar = apiPreliminarHelpers.gerarItemPreliminarContribuinte(empresaId, tipoColaborador, { classe_id : 2, tipo_admissao: apiPreliminarHelpers.gerarAleatorio(apiPreliminarHelpers.tipoAdmissao) });
-        const token = gerarBasicToken("330|abc123", "496|SNmOmXK7QV8u9E2M8FmF2IaC1eCl8au39ieZKYDG");
+        const token = gerarBasicToken(process.env.API_USERNAME, process.env.API_PASSWORD); 
         try {
             const loginResponse = await loginCredencial(token);
             const responsePreliminar = await cadastrarAdmissaoPreliminar(gerarPreliminar, loginResponse.data.token);
@@ -433,7 +433,7 @@ test.describe.serial("preliminar API", { tag: ["@PRELIMINAR_API"] }, () => {
         const apiPreliminarHelpers = new ApiPreliminarHelpers();
         const gerarPreliminarA = apiPreliminarHelpers.gerarItemPreliminarContribuinte(empresaId, tipoColaborador);
         const gerarPreliminarB = apiPreliminarHelpers.gerarItemPreliminarContribuinte(empresaId, tipoColaborador);
-        const token = gerarBasicToken("330|abc123", "496|SNmOmXK7QV8u9E2M8FmF2IaC1eCl8au39ieZKYDG");
+        const token = gerarBasicToken(process.env.API_USERNAME, process.env.API_PASSWORD); 
         try {
             const loginResponse = await loginCredencial(token);
             const responsePreliminarA = await cadastrarAdmissaoPreliminar(gerarPreliminarA, loginResponse.data.token);
@@ -468,7 +468,7 @@ test.describe.serial("preliminar API", { tag: ["@PRELIMINAR_API"] }, () => {
         const contratoTipo = 1
         const apiPreliminarHelpers = new ApiPreliminarHelpers();
         const gerarPreliminar = apiPreliminarHelpers.gerarItemPreliminarEmpregado(empresaId, contratoTipo);
-        const token = gerarBasicToken("330|abc123", "496|SNmOmXK7QV8u9E2M8FmF2IaC1eCl8au39ieZKYDG");
+        const token = gerarBasicToken(process.env.API_USERNAME, process.env.API_PASSWORD); 
         try{
             const loginResponse = await loginCredencial(token);
             const responsePreliminar = await cadastrarAdmissaoPreliminar(gerarPreliminar, loginResponse.data.token);
@@ -489,7 +489,7 @@ test.describe.serial("preliminar API", { tag: ["@PRELIMINAR_API"] }, () => {
         const tipoColaborador = 1
         const apiPreliminarHelpers = new ApiPreliminarHelpers();
         const gerarPreliminar = apiPreliminarHelpers.gerarItemPreliminarContribuinte(empresaId, tipoColaborador, { categoria_esocial_id : apiPreliminarHelpers.gerarCategoriaEsocial(0) });
-        const token = gerarBasicToken("330|abc123", "496|SNmOmXK7QV8u9E2M8FmF2IaC1eCl8au39ieZKYDG");
+        const token = gerarBasicToken(process.env.API_USERNAME, process.env.API_PASSWORD); 
         try{
             const loginResponse = await loginCredencial(token);
             const responsePreliminar = await cadastrarAdmissaoPreliminar(gerarPreliminar, loginResponse.data.token);
@@ -511,7 +511,7 @@ test.describe.serial("preliminar API", { tag: ["@PRELIMINAR_API"] }, () => {
         const preliminarIdInvalido = 9999999;
         const apiPreliminarHelpers = new ApiPreliminarHelpers();
         const gerarPreliminar = apiPreliminarHelpers.gerarItemPreliminarContribuinte(empresaId, tipoColaborador);
-        const token = gerarBasicToken("330|abc123", "496|SNmOmXK7QV8u9E2M8FmF2IaC1eCl8au39ieZKYDG");
+        const token = gerarBasicToken(process.env.API_USERNAME, process.env.API_PASSWORD); 
         try {
             const loginResponse = await loginCredencial(token);
             const responsePreliminar = await cadastrarAdmissaoPreliminar(gerarPreliminar, loginResponse.data.token);
@@ -534,7 +534,7 @@ test.describe.serial("preliminar API", { tag: ["@PRELIMINAR_API"] }, () => {
         const tipoContrato = 1;
         const apiPreliminarHelpers = new ApiPreliminarHelpers();
         const gerarPreliminar = apiPreliminarHelpers.gerarItemPreliminarEmpregado(empresaId, tipoContrato);
-        const token = gerarBasicToken("330|abc123", "496|SNmOmXK7QV8u9E2M8FmF2IaC1eCl8au39ieZKYDG");
+        const token = gerarBasicToken(process.env.API_USERNAME, process.env.API_PASSWORD); 
         try {
             const loginResponse = await loginCredencial(token);
             const responsePreliminar = await cadastrarAdmissaoPreliminar(gerarPreliminar, loginResponse.data.token);
@@ -555,12 +555,12 @@ test.describe.serial("preliminar API", { tag: ["@PRELIMINAR_API"] }, () => {
         const tipoColaborador = 1;
         const apiPreliminarHelpers = new ApiPreliminarHelpers();
         const gerarPreliminar = apiPreliminarHelpers.gerarItemPreliminarContribuinte(empresaId, tipoColaborador);
-        const token = gerarBasicToken("330|abc123", "496|SNmOmXK7QV8u9E2M8FmF2IaC1eCl8au39ieZKYDG");
+        const token = gerarBasicToken(process.env.API_USERNAME, process.env.API_PASSWORD); 
         try {
             const loginResponse = await loginCredencial(token);
             const responsePreliminar = await cadastrarAdmissaoPreliminar(gerarPreliminar, loginResponse.data.token);
             const preliminarAtualizar = apiPreliminarHelpers.gerarItemPreliminarContribuinteAtualizar(empresaId, responsePreliminar.data.retorno.id, tipoColaborador);
-            const response = await atualizarPreliminar(preliminarAtualizar, "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vYXBpLWF1dGgtaG1sLnNjaS5jb20uYnIvYXBpL3YxL2F1dGgvY3JlZGVuY2lhbC9sb2dpbiIsImlhdCI6MTc2MzM4MzA1MywiZXhwIjoxNzYzMzg2NjUzLCJuYmYiOjE3NjMzODMwNTMsImp0aSI6IlZpM0x6enZaOHpYQkRPYVgiLCJzdWIiOiI5NzM3MDMiLCJwcnYiOiJjNTIzYjFkZjdhMTZiMmViYmQzYzFjZDUxNDk4ZjUzNjhkODBjMDEwIiwidXN1YXJpbyI6eyJ0aXBvIjoyLCJ1c3VhcmlvSWQiOjk3MzcwMywiZGFkb3MiOnsiY2xpZW50ZUlkIjo4ODU2OSwiZW1wcmVzYXNWaW5jdWxhZGFzIjpbNDc3NDI1XSwiYWNlc3NvcyI6eyJyZWxhdG9yaW8iOnsiR0VUIjpbImNhdGVnb3JpYSIsInJlbGF0b3JpbyIsInB1YmxpY2Fkb3MiLCJtb2RvLXBhZ2FtZW50byJdLCJQT1NUIjpbInB1YmxpY2Fkb3MiXSwiUFVUIjpbInB1YmxpY2Fkb3MiXX0sImF0ZW5kaW1lbnRvIjp7IkdFVCI6WyJ1c3VhcmlvLWFkaWNpb25hbC1jbGllbnRlIiwic3RhdHVzIiwidHJhbWl0ZSIsInVzdWFyaW8tYWRpY2lvbmFsLWFkbWluIiwiZGVwYXJ0YW1lbnRvIiwiYXRlbmRpbWVudG8iLCJpbnRlcmFjYW8iLCJhbmV4byJdLCJQVVQiOlsiY29uY2x1aXIiLCJhbmFsaXNhciJdLCJQT1NUIjpbImludGVyYWNhbyJdfX19fSwiYWNjZXNzX3Rva2VuX2NsaWVudGVfaWQiOjMzMCwiYWNjZXNzX3Rva2VuX3BhcmNlaXJvX2lkIjoxMDcxLCJzaXN0ZW1hSWQiOjUyfQ.XI6zdigf02QvleEJwaOkRJYBlxV2SXpvGaXHZNoVLFI")
+            const response = await atualizarPreliminar(preliminarAtualizar, process.env.API_TOKEN_JWT)
             throw new Error("Esperava um erro, mas a requisição foi bem-sucedida.");
         } catch (error) {
             expect(error.response.status).toBe(401);
@@ -574,7 +574,7 @@ test.describe.serial("preliminar API", { tag: ["@PRELIMINAR_API"] }, () => {
         const tipoColaborador = 1;
         const apiPreliminarHelpers = new ApiPreliminarHelpers();
         const gerarPreliminar = apiPreliminarHelpers.gerarItemPreliminarContribuinte(empresaId, tipoColaborador);
-        const token = gerarBasicToken("330|abc123", "496|SNmOmXK7QV8u9E2M8FmF2IaC1eCl8au39ieZKYDG");
+        const token = gerarBasicToken(process.env.API_USERNAME, process.env.API_PASSWORD); 
         try {
             const loginResponse = await loginCredencial(token);
             const responsePreliminar = await cadastrarAdmissaoPreliminar(gerarPreliminar, loginResponse.data.token);
@@ -595,7 +595,7 @@ test.describe.serial("preliminar API", { tag: ["@PRELIMINAR_API"] }, () => {
         const tipoColaborador = 1;
         const apiPreliminarHelpers = new ApiPreliminarHelpers();
         const gerarPreliminar = apiPreliminarHelpers.gerarItemPreliminarContribuinte(empresaId, tipoColaborador);
-        const token = gerarBasicToken("330|abc123", "496|SNmOmXK7QV8u9E2M8FmF2IaC1eCl8au39ieZKYDG");
+        const token = gerarBasicToken(process.env.API_USERNAME, process.env.API_PASSWORD); 
         try {
             const loginResponse = await loginCredencial(token);
             const responsePreliminar = await cadastrarAdmissaoPreliminar(gerarPreliminar, loginResponse.data.token);
@@ -613,7 +613,7 @@ test.describe.serial("preliminar API", { tag: ["@PRELIMINAR_API"] }, () => {
         const idPreliminar = 123123; 
         const apiPreliminarHelpers = new ApiPreliminarHelpers();
         const preliminarDeletar = apiPreliminarHelpers.montarPayloadDeletarPreliminar(empresaId, idPreliminar);
-        const token = gerarBasicToken("330|abc123", "496|SNmOmXK7QV8u9E2M8FmF2IaC1eCl8au39ieZKYDG");
+        const token = gerarBasicToken(process.env.API_USERNAME, process.env.API_PASSWORD); 
         try {
             const loginResponse = await loginCredencial(token);
             const response = await deletarAdmissaoPreliminar(preliminarDeletar, loginResponse.data.token);
@@ -629,7 +629,7 @@ test.describe.serial("preliminar API", { tag: ["@PRELIMINAR_API"] }, () => {
         const idPreliminar = 9999999;
         const apiPreliminarHelpers = new ApiPreliminarHelpers();
         const preliminarDeletar = apiPreliminarHelpers.montarPayloadDeletarPreliminar(empresaId, idPreliminar);
-        const token = gerarBasicToken("330|abc123", "496|SNmOmXK7QV8u9E2M8FmF2IaC1eCl8au39ieZKYDG");
+        const token = gerarBasicToken(process.env.API_USERNAME, process.env.API_PASSWORD); 
         try {
             const loginResponse = await loginCredencial(token);
             const response = await deletarAdmissaoPreliminar(preliminarDeletar, loginResponse.data.token);
@@ -649,7 +649,7 @@ test.describe.serial("preliminar API", { tag: ["@PRELIMINAR_API"] }, () => {
         const apiPreliminarHelpers = new ApiPreliminarHelpers();
         const preliminarDeletar = apiPreliminarHelpers.montarPayloadDeletarPreliminar(empresaId, idPreliminar);
         try {    
-            const response = await deletarAdmissaoPreliminar(preliminarDeletar, "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vYXBpLWF1dGgtaG1sLnNjaS5jb20uYnIvYXBpL3YxL2F1dGgvY3JlZGVuY2lhbC9sb2dpbiIsImlhdCI6MTc2MzM4MzA1MywiZXhwIjoxNzYzMzg2NjUzLCJuYmYiOjE3NjMzODMwNTMsImp0aSI6IlZpM0x6enZaOHpYQkRPYVgiLCJzdWIiOiI5NzM3MDMiLCJwcnYiOiJjNTIzYjFkZjdhMTZiMmViYmQzYzFjZDUxNDk4ZjUzNjhkODBjMDEwIiwidXN1YXJpbyI6eyJ0aXBvIjoyLCJ1c3VhcmlvSWQiOjk3MzcwMywiZGFkb3MiOnsiY2xpZW50ZUlkIjo4ODU2OSwiZW1wcmVzYXNWaW5jdWxhZGFzIjpbNDc3NDI1XSwiYWNlc3NvcyI6eyJyZWxhdG9yaW8iOnsiR0VUIjpbImNhdGVnb3JpYSIsInJlbGF0b3JpbyIsInB1YmxpY2Fkb3MiLCJtb2RvLXBhZ2FtZW50byJdLCJQT1NUIjpbInB1YmxpY2Fkb3MiXSwiUFVUIjpbInB1YmxpY2Fkb3MiXX0sImF0ZW5kaW1lbnRvIjp7IkdFVCI6WyJ1c3VhcmlvLWFkaWNpb25hbC1jbGllbnRlIiwic3RhdHVzIiwidHJhbWl0ZSIsInVzdWFyaW8tYWRpY2lvbmFsLWFkbWluIiwiZGVwYXJ0YW1lbnRvIiwiYXRlbmRpbWVudG8iLCJpbnRlcmFjYW8iLCJhbmV4byJdLCJQVVQiOlsiY29uY2x1aXIiLCJhbmFsaXNhciJdLCJQT1NUIjpbImludGVyYWNhbyJdfX19fSwiYWNjZXNzX3Rva2VuX2NsaWVudGVfaWQiOjMzMCwiYWNjZXNzX3Rva2VuX3BhcmNlaXJvX2lkIjoxMDcxLCJzaXN0ZW1hSWQiOjUyfQ.XI6zdigf02QvleEJwaOkRJYBlxV2SXpvGaXHZNoVLFI");
+            const response = await deletarAdmissaoPreliminar(preliminarDeletar, process.env.API_TOKEN_JWT);
             throw new Error("Esperava um erro, mas a requisição foi bem-sucedida.");
         } catch (error) {
             expect(error.response.status).toBe(401);

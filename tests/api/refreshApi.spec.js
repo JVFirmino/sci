@@ -9,7 +9,7 @@ import { gerarBasicToken } from "../../src/utils/authUtils";
 test.describe.serial("refresh token API", { tag: ["@REFRESH_API"] }, () => {
 
     test("refresh token com sucesso", { tag: "@REFRESH_SUCESSO_API" }, async () => {
-        const token = gerarBasicToken(process.env.AUTH_USERNAME_VALIDO, process.env.AUTH_PASSWORD_VALIDO); 
+        const token = gerarBasicToken(process.env.API_USERNAME, process.env.API_PASSWORD);
         try {
             const loginResponse = await loginCredencial(token);
             const response = await refresh(loginResponse.data.token)
@@ -25,7 +25,7 @@ test.describe.serial("refresh token API", { tag: ["@REFRESH_API"] }, () => {
 
     test("refresh token cliente expirado", { tag: "@REFRESH_FALHA_API" }, async () => {
         try {
-            const response = await refresh(process.env.TOKEN_REFRESH_EXPIRADO);
+            const response = await refresh(process.env.API_TOKEN_JWT);
             throw new Error("Esperava um erro, mas a requisição foi bem-sucedida.");
         } catch (error) {
             expect(error.response.status).toBe(401)
@@ -35,7 +35,7 @@ test.describe.serial("refresh token API", { tag: ["@REFRESH_API"] }, () => {
     });
 
     test("refresh token blacklisted", { tag: "@REFRESH_FALHA_API" }, async () => {
-        const token = gerarBasicToken(process.env.AUTH_USERNAME_VALIDO, process.env.AUTH_PASSWORD_VALIDO);
+        const token = gerarBasicToken(process.env.API_USERNAME, process.env.API_PASSWORD);
         try {
             const loginResponse = await loginCredencial(token);
             await refresh(loginResponse.data.token)
