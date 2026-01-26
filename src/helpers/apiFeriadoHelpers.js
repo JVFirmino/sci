@@ -6,17 +6,21 @@ export class ApiFeriadoHelpers {
         return date.toLocaleDateString('en-CA');
     }
 
-    gerarItemFeriado(empresaId) {
+    gerarDataValida(){
         const dataInicial = new Date();
         dataInicial.setFullYear(dataInicial.getFullYear() + 3);
-
         const dataFinal = new Date();
         dataFinal.setFullYear(dataFinal.getFullYear() + 20);
-
         const dataAleatoria = this.formatDate(faker.date.between({ from: dataInicial, to: dataFinal }));
+
+        return dataAleatoria
+    }
+
+    gerarItemFeriado(empresaId) {
+        
         return {
             empresa_id: empresaId,
-            data: dataAleatoria,
+            data: this.gerarDataValida(),
             descricao: faker.lorem.words(3)
         };
     };

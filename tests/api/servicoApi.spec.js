@@ -342,6 +342,40 @@ test.describe.serial("serviço API", { tag: ["@SERVICO_API"] }, () => {
         }
     });
 
+    test("atualizar um serviço de uma empresa A igual a um serviço de empresa B", { tag: "@SERVICO_SUCESSO_API" }, async () => {
+        const empresaIdA = 900001;
+        const empresaIdB = 2;
+        const apiServicoHelpers = new ApiServicoHelpers();
+        const gerarServicoA = apiServicoHelpers.gerarServico(empresaIdA, false);
+        const gerarServicoB = apiServicoHelpers.gerarServico(empresaIdB, false);
+        const token = gerarBasicToken("330|abc123", "496|SNmOmXK7QV8u9E2M8FmF2IaC1eCl8au39ieZKYDG");
+        try {
+            const loginResponse = await loginCredencial(token);
+            const responseServicoA = await cadastrarServico(gerarServicoA, loginResponse.data.token);
+            const responseServicoB = await cadastrarServico(gerarServicoB, loginResponse.data.token);
+            const servicoA = responseServicoA.data.retorno[0];
+            const servicoB = responseServicoB.data.retorno[0];
+            const servicoAtualizar = apiServicoHelpers.gerarPayloadAtualizacao(servicoA, servicoB, { empresa_id: empresaIdB });
+            const response = await atualizarServico(servicoAtualizar, loginResponse.data.token);
+            expect(response.status).toBe(200);
+            expect(response.data).toHaveProperty("sucesso", true);
+            expect(response.data).toHaveProperty("mensagem", MENSAGENS.servicoApi.sucessoCadastroServico);
+            expect(response.data).toHaveProperty("retorno");
+
+             const { retorno } = response.data;
+            expect(retorno).toHaveProperty("tipo_servico_autonomo_id", servicoAtualizar.tipo_servico_autonomo_id);
+            expect(retorno).toHaveProperty("cliente_id", expect.anything());
+            expect(retorno).toHaveProperty("empresa_id", servicoAtualizar.empresa_id);
+            expect(retorno).toHaveProperty("cbo", servicoAtualizar.cbo);
+            expect(retorno).toHaveProperty("descricao_cbo", servicoAtualizar.descricao_cbo);
+            expect(retorno).toHaveProperty("categoria_esocial", servicoAtualizar.categoria_esocial);
+            expect(retorno).toHaveProperty("ativo", servicoAtualizar.ativo);
+        } catch (error) {
+            console.error("Erro ao cadastrar serviços:", error);
+            throw error;
+        }
+    });
+
     test("atualizar serviço para um já existente", { tag: "@SERVICO_FALHA_API" }, async () => {
         const empresaId = 900001;
         const apiServicoHelpers = new ApiServicoHelpers();
@@ -368,27 +402,6 @@ test.describe.serial("serviço API", { tag: ["@SERVICO_API"] }, () => {
         }
     });
 
-    test("atualizar serviço com empresa_id inválido", { tag: "@SERVICO_FALHA_API" }, async () => {
-        const empresaId = 900001;
-        const empresaIdInvalido = 9999999;
-        const apiServicoHelpers = new ApiServicoHelpers();
-        const gerarServico = apiServicoHelpers.gerarServico(empresaId, false);
-        const token = gerarBasicToken("330|abc123", "496|SNmOmXK7QV8u9E2M8FmF2IaC1eCl8au39ieZKYDG");
-        try {
-            const loginResponse = await loginCredencial(token);
-            const responseServico = await cadastrarServico(gerarServico, loginResponse.data.token);
-            const servicoAtualizar = apiServicoHelpers.atualizarServico(empresaIdInvalido, responseServico.data.retorno[0].tipo_servico_autonomo_id);
-            const response = await atualizarServico(servicoAtualizar, loginResponse.data.token);
-            throw new Error("Esperava um erro, mas a requisição foi bem-sucedida.");
-        } catch (error) {
-            expect(error.response.status).toBe(403);
-            expect(error.response.data).toHaveProperty("sucesso", false);
-            expect(error.response.data).toHaveProperty("mensagem", MENSAGENS.servicoApi.semPermissao);
-            expect(error.response.data).toHaveProperty("erros");
-            expect(error.response.data).toHaveProperty("retorno", {});
-        }
-    });
-
     test("atualizar serviço com id do serviço inválido", { tag: "@SERVICO_FALHA_API" }, async () => {
         const empresaId = 900001;
         const tipoServicoIdInvalido = 9999999;
@@ -406,6 +419,27 @@ test.describe.serial("serviço API", { tag: ["@SERVICO_API"] }, () => {
             expect(error.response.status).toBe(422);
             expect(error.response.data).toHaveProperty("sucesso", false);
             expect(error.response.data).toHaveProperty("mensagem", MENSAGENS.servicoApi.servicoIdNaoEncontrado);
+            expect(error.response.data).toHaveProperty("erros");
+            expect(error.response.data).toHaveProperty("retorno", {});
+        }
+    });
+
+    test("atualizar serviço com empresa_id inválido", { tag: "@SERVICO_FALHA_API" }, async () => {
+        const empresaId = 900001;
+        const empresaIdInvalido = 9999999;
+        const apiServicoHelpers = new ApiServicoHelpers();
+        const gerarServico = apiServicoHelpers.gerarServico(empresaId, false);
+        const token = gerarBasicToken("330|abc123", "496|SNmOmXK7QV8u9E2M8FmF2IaC1eCl8au39ieZKYDG");
+        try {
+            const loginResponse = await loginCredencial(token);
+            const responseServico = await cadastrarServico(gerarServico, loginResponse.data.token);
+            const servicoAtualizar = apiServicoHelpers.atualizarServico(empresaIdInvalido, responseServico.data.retorno[0].tipo_servico_autonomo_id);
+            const response = await atualizarServico(servicoAtualizar, loginResponse.data.token);
+            throw new Error("Esperava um erro, mas a requisição foi bem-sucedida.");
+        } catch (error) {
+            expect(error.response.status).toBe(403);
+            expect(error.response.data).toHaveProperty("sucesso", false);
+            expect(error.response.data).toHaveProperty("mensagem", MENSAGENS.servicoApi.semPermissao);
             expect(error.response.data).toHaveProperty("erros");
             expect(error.response.data).toHaveProperty("retorno", {});
         }

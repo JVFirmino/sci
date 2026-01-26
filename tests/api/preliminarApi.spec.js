@@ -529,7 +529,8 @@ test.describe.serial("preliminar API", { tag: ["@PRELIMINAR_API"] }, () => {
     });
 
     test("atualizar admissão preliminar com empresa_id inválido", { tag: "@PRELIMINAR_FALHA_AP" }, async () => {
-        const empresaId = 999999;
+        const empresaId = 900001;
+        const empresaIdInvalido = 9999999;
         const tipoContrato = 1;
         const apiPreliminarHelpers = new ApiPreliminarHelpers();
         const gerarPreliminar = apiPreliminarHelpers.gerarItemPreliminarEmpregado(empresaId, tipoContrato);
@@ -537,7 +538,7 @@ test.describe.serial("preliminar API", { tag: ["@PRELIMINAR_API"] }, () => {
         try {
             const loginResponse = await loginCredencial(token);
             const responsePreliminar = await cadastrarAdmissaoPreliminar(gerarPreliminar, loginResponse.data.token);
-            const preliminarAtualizar = apiPreliminarHelpers.gerarItemPreliminarEmpregadoAtualizar(empresaId, responsePreliminar.data.retorno.id, tipoContrato);
+            const preliminarAtualizar = apiPreliminarHelpers.gerarItemPreliminarEmpregadoAtualizar(empresaIdInvalido, responsePreliminar.data.retorno.id, tipoContrato);
             const response = await atualizarPreliminar(preliminarAtualizar, loginResponse.data.token)
             throw new Error("A requisição deveria ter falhado, mas foi bem-sucedida.");
         } catch (error) {

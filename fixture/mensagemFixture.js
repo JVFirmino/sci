@@ -34,6 +34,8 @@ export const MENSAGENS = {
         deletarFeriado: "Registro excluído com sucesso",
         feriadoNaoEncontrado: "Registro não encontrado ou já removido anteriormente",
         semPermissao: "Você não tem permissão para realizar esta ação.",
+        dataInvalida: "O campo data deve ser uma data válida",
+        dataInvalida2:"O campo dados.0.data deve ser uma data válida"
     },
     preliminar:{
         sucessoCadastroPreliminar: "Operação realizada com sucesso",
@@ -62,7 +64,7 @@ export const MENSAGENS = {
         expiradoToken: "Token has expired",
         deletarAutonomo: "Registro excluído com sucesso",
         autonomoNaoEncontrado: "Registro não encontrado ou já removido anteriormente",
-        autonomoNaoEncontrado: "Registro não encontrado ou já removido anteriormente",
+        autonomoIdNaoEncontrado: "O valor informado no campo autonomo id não foi encontrado",
         cpfJaUsado2: "O campo 'cpf' contém um valor único já usado em outro registro."
     }
 };

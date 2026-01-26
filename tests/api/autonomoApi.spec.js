@@ -194,7 +194,6 @@ test.describe.serial("autonomo API", { tag: ["@AUTONOMO_API"] }, () => {
         }
     });
 
-
     test("atualizar um autonomo", { tag: "@AUTONOMO_SUCESSO_API" }, async () => {
         const empresaId = 900001;
         const apiAutonomoHelpers = new ApiAutonomoHelpers(); 
@@ -214,7 +213,6 @@ test.describe.serial("autonomo API", { tag: ["@AUTONOMO_API"] }, () => {
             expect(Array.isArray(retorno)).toBe(true);
             expect(retorno).toHaveLength(1);
             const { autonomo } = retorno[0];
-
             expect(autonomo).toHaveProperty("autonomo_id", autonomoAtualizar.autonomo_id)
             expect(autonomo).toHaveProperty("empresa_id", autonomoAtualizar.empresa_id);
             expect(autonomo).toHaveProperty("cpf", autonomoAtualizar.cpf);
@@ -238,12 +236,11 @@ test.describe.serial("autonomo API", { tag: ["@AUTONOMO_API"] }, () => {
         const token = gerarBasicToken("330|abc123", "496|SNmOmXK7QV8u9E2M8FmF2IaC1eCl8au39ieZKYDG");
         try {
             const loginResponse = await loginCredencial(token);
-            const responseAutonomoA = await cadastrarAutonomo(gerarAutonomoA, loginResponse.data.token);
+            await cadastrarAutonomo(gerarAutonomoA, loginResponse.data.token);
             const responseAutonomoB = await cadastrarAutonomo(gerarAutonomoB, loginResponse.data.token);
-            const cloneAutonomo = structuredClone(gerarAutonomoA.dados[0]);
-            console.log(cloneAutonomo)
-            cloneAutonomo.dados[0].empresa_id = 2
-            const response = await atualizarAutonomo(cloneAutonomo, loginResponse.data.token);
+            const { empresa_id, autonomo_id, ...dados } = gerarAutonomoA.dados[0];
+            const autonomoAtualizar = apiAutonomoHelpers.atualizarAutonomo(empresaIdB, responseAutonomoB.data.retorno[0].autonomo.autonomo_id, dados);
+            const response = await atualizarAutonomo(autonomoAtualizar, loginResponse.data.token);
             expect(response.status).toBe(200);
             expect(response.data).toHaveProperty("sucesso", true);
             expect(response.data).toHaveProperty("mensagem", MENSAGENS.autonomo.sucessoCadastroAutonomo);
@@ -253,15 +250,14 @@ test.describe.serial("autonomo API", { tag: ["@AUTONOMO_API"] }, () => {
             expect(Array.isArray(retorno)).toBe(true);
             expect(retorno).toHaveLength(1);
             const { autonomo } = retorno[0];
-
-            expect(autonomo).toHaveProperty("autonomo_id", cloneAutonomo.autonomo_id)
-            expect(autonomo).toHaveProperty("empresa_id", cloneAutonomo.empresa_id);
-            expect(autonomo).toHaveProperty("cpf", cloneAutonomo.cpf);
-            expect(autonomo).toHaveProperty("nome", cloneAutonomo.nome);
-            expect(autonomo).toHaveProperty("nascimento_data", cloneAutonomo.nascimento_data);
-            expect(autonomo).toHaveProperty("status", Boolean(cloneAutonomo.status));
+            expect(autonomo).toHaveProperty("autonomo_id", autonomoAtualizar.autonomo_id)
+            expect(autonomo).toHaveProperty("empresa_id", autonomoAtualizar.empresa_id);
+            expect(autonomo).toHaveProperty("cpf", autonomoAtualizar.cpf);
+            expect(autonomo).toHaveProperty("nome", autonomoAtualizar.nome);
+            expect(autonomo).toHaveProperty("nascimento_data", autonomoAtualizar.nascimento_data);
+            expect(autonomo).toHaveProperty("status", Boolean(autonomoAtualizar.status));
             expect(autonomo).toHaveProperty("detalhe_autonomo")
-            expect(autonomo).toHaveProperty("autonomo_id", cloneAutonomo.autonomo_id);
+            expect(autonomo).toHaveProperty("autonomo_id", autonomoAtualizar.autonomo_id);
         }catch (error) {
             console.error("Erro ao realizar a requisição:", error);
             throw error; 
@@ -290,6 +286,66 @@ test.describe.serial("autonomo API", { tag: ["@AUTONOMO_API"] }, () => {
         }
     });
 
+    test("atualizar um autonomo com id do autonomo inválido", { tag: "@AUTONOMO_FALHA_API" }, async () => {
+        const empresaId = 900001;
+        const autonomoIdInvalido = 9999999;
+        const apiAutonomoHelpers = new ApiAutonomoHelpers();
+        const gerarAutonomo = apiAutonomoHelpers.gerarAutonomo(empresaId, false);
+        const token = gerarBasicToken("330|abc123", "496|SNmOmXK7QV8u9E2M8FmF2IaC1eCl8au39ieZKYDG");
+        try {
+            const loginResponse = await loginCredencial(token);
+            const responseAutonomo = await cadastrarAutonomo(gerarAutonomo, loginResponse.data.token);
+            const autonomoAtualizar = apiAutonomoHelpers.atualizarAutonomo(empresaId, autonomoIdInvalido);
+            const response = await atualizarAutonomo(autonomoAtualizar, loginResponse.data.token);
+            throw new Error("Esperava um erro, mas a requisição foi bem-sucedida.");
+        }
+        catch (error) {
+            expect(error.response.status).toBe(422);
+            expect(error.response.data).toHaveProperty("sucesso", false);
+            expect(error.response.data).toHaveProperty("mensagem", MENSAGENS.autonomo.autonomoIdNaoEncontrado);
+            expect(error.response.data).toHaveProperty("erros");
+            expect(error.response.data).toHaveProperty("retorno", {});
+        }
+    });
+
+    test("atualizar um autonomo com empresa_id inválido", { tag: "@AUTONOMO_FALHA_API" }, async () => {
+        const empresaId = 900001;
+        const empresaIdInvalido = 9999999;
+        const apiAutonomoHelpers = new ApiAutonomoHelpers();
+        const gerarAutonomo = apiAutonomoHelpers.gerarAutonomo(empresaId, false);
+        const token = gerarBasicToken("330|abc123", "496|SNmOmXK7QV8u9E2M8FmF2IaC1eCl8au39ieZKYDG");
+        try {
+            const loginResponse = await loginCredencial(token);
+            const responseAutonomo = await cadastrarAutonomo(gerarAutonomo, loginResponse.data.token);
+            const autonomoAtualizar = apiAutonomoHelpers.atualizarAutonomo(empresaIdInvalido, responseAutonomo.data.retorno[0].autonomo.autonomo_id);
+            const response = await atualizarAutonomo(autonomoAtualizar, loginResponse.data.token);
+            throw new Error("Esperava um erro, mas a requisição foi bem-sucedida.");
+        } catch (error) {
+            expect(error.response.status).toBe(403);
+            expect(error.response.data).toHaveProperty("sucesso", false);
+            expect(error.response.data).toHaveProperty("mensagem", MENSAGENS.autonomo.semPermissao);
+            expect(error.response.data).toHaveProperty("erros");
+            expect(error.response.data).toHaveProperty("retorno", {});
+        }
+    });
+
+    test("atualizar um autonomo com token expirado", { tag: "@AUTONOMO_FALHA_API" }, async () => {
+        const empresaId = 900001;
+        const apiAutonomoHelpers = new ApiAutonomoHelpers(); 
+        const gerarAutonomo = apiAutonomoHelpers.gerarAutonomo(empresaId, false);
+        const token = gerarBasicToken("330|abc123", "496|SNmOmXK7QV8u9E2M8FmF2IaC1eCl8au39ieZKYDG");
+        try {
+            const loginResponse = await loginCredencial(token);
+            const responseAutonomo = await cadastrarAutonomo(gerarAutonomo, loginResponse.data.token);
+            const autonomoAtualizar = apiAutonomoHelpers.atualizarAutonomo(empresaId, responseAutonomo.data.retorno[0].autonomo.autonomo_id);
+            await atualizarAutonomo(autonomoAtualizar, "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vYXBpLWF1dGgtaG1sLnNjaS5jb20uYnIvYXBpL3YxL2F1dGgvY3JlZGVuY2lhbC9sb2dpbiIsImlhdCI6MTc2MzM4MzA1MywiZXhwIjoxNzYzMzg2NjUzLCJuYmYiOjE3NjMzODMwNTMsImp0aSI6IlZpM0x6enZaOHpYQkRPYVgiLCJzdWIiOiI5NzM3MDMiLCJwcnYiOiJjNTIzYjFkZjdhMTZiMmViYmQzYzFjZDUxNDk4ZjUzNjhkODBjMDEwIiwidXN1YXJpbyI6eyJ0aXBvIjoyLCJ1c3VhcmlvSWQiOjk3MzcwMywiZGFkb3MiOnsiY2xpZW50ZUlkIjo4ODU2OSwiZW1wcmVzYXNWaW5jdWxhZGFzIjpbNDc3NDI1XSwiYWNlc3NvcyI6eyJyZWxhdG9yaW8iOnsiR0VUIjpbImNhdGVnb3JpYSIsInJlbGF0b3JpbyIsInB1YmxpY2Fkb3MiLCJtb2RvLXBhZ2FtZW50byJdLCJQT1NUIjpbInB1YmxpY2Fkb3MiXSwiUFVUIjpbInB1YmxpY2Fkb3MiXX0sImF0ZW5kaW1lbnRvIjp7IkdFVCI6WyJ1c3VhcmlvLWFkaWNpb25hbC1jbGllbnRlIiwic3RhdHVzIiwidHJhbWl0ZSIsInVzdWFyaW8tYWRpY2lvbmFsLWFkbWluIiwiZGVwYXJ0YW1lbnRvIiwiYXRlbmRpbWVudG8iLCJpbnRlcmFjYW8iLCJhbmV4byJdLCJQVVQiOlsiY29uY2x1aXIiLCJhbmFsaXNhciJdLCJQT1NUIjpbImludGVyYWNhbyJdfX19fSwiYWNjZXNzX3Rva2VuX2NsaWVudGVfaWQiOjMzMCwiYWNjZXNzX3Rva2VuX3BhcmNlaXJvX2lkIjoxMDcxLCJzaXN0ZW1hSWQiOjUyfQ.XI6zdigf02QvleEJwaOkRJYBlxV2SXpvGaXHZNoVLFI");
+            throw new Error("Esperava um erro, mas a requisição foi bem-sucedida.");
+        } catch (error) {
+            expect(error.response.status).toBe(401);
+            expect(error.response.data).toHaveProperty("error", MENSAGENS.feriadoApi.expiradoToken);
+        }
+    });
+                
 
 
     test("deletar um autonomo", { tag: "@AUTONOMO_SUCESSO_API" }, async () => {
@@ -330,7 +386,7 @@ test.describe.serial("autonomo API", { tag: ["@AUTONOMO_API"] }, () => {
         }
     });
 
-    test("deletar um autonomo inexistente", { tag: "@AUTONOMO_FALHA_API" }, async () => {
+    test("deletar um autonomo que não existe", { tag: "@AUTONOMO_FALHA_API" }, async () => {
         const empresaId = 900001;
         const autonomoInexistente = 2342342;
         const apiAutonomoHelpers = new ApiAutonomoHelpers(); 
