@@ -7,13 +7,15 @@ export class ApiFeriadoHelpers {
     }
 
     gerarDataValida(){
-        const dataInicial = new Date();
-        dataInicial.setFullYear(dataInicial.getFullYear() + 3);
-        const dataFinal = new Date();
-        dataFinal.setFullYear(dataFinal.getFullYear() + 20);
-        const dataAleatoria = this.formatDate(faker.date.between({ from: dataInicial, to: dataFinal }));
+         const hoje = new Date();
+        const anoMin = hoje.getFullYear() + 3;
+        const anoMax = hoje.getFullYear() + 20;
+        const ano = faker.number.int({ min: anoMin, max: anoMax });
+        const mes = faker.number.int({ min: 0, max: 11 });
+        const dia = faker.number.int({ min: 1, max: 28 });
+        const data = new Date(ano, mes, dia);
 
-        return dataAleatoria
+        return this.formatDate(data);
     }
 
     gerarItemFeriado(empresaId) {

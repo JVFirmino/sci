@@ -76,10 +76,13 @@ export class ApiPreliminarHelpers {
 
     gerarDataAdmissao() {
         const hoje = new Date();
-        const data = new Date(hoje);
-        data.setFullYear(hoje.getFullYear() - 5);
-        data.setMonth(hoje.getMonth() + 1);
-        data.setDate(faker.number.int({ min : 1, max : 27}))
+        const anoMin = hoje.getFullYear() - 5;
+        const anoMax = hoje.getFullYear();
+        const ano = faker.number.int({ min: anoMin, max: anoMax });
+        const mes = faker.number.int({ min: 0, max: 11 });
+        const dia = faker.number.int({ min: 1, max: 27 });
+        const data = new Date(ano, mes, dia);
+
         return this.formatDate(data);
     };
 
