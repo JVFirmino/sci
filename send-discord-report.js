@@ -2,22 +2,27 @@ import fs from 'fs';
 import axios from 'axios';
 import dotenv from "dotenv";
 
-dotenv.config();
+dotenv.config({ quiet: true });
 
 const webhookURL = process.env.DISCORD_WEBHOOK;
 const runId = process.env.GITHUB_RUN_ID;
 const repo = process.env.GITHUB_REPOSITORY;
 
 if (!webhookURL) {
-    console.error('DISCORD_WEBHOOK não definido!');
+    console.error('❌ DISCORD_WEBHOOK não definido!');
     process.exit(1);
+}
+
+if (!fs.existsSync('report.json')) {
+  console.log('⚠️ report.json não encontrado, pulando envio ao Discord');
+  process.exit(0);
 }
 
 let rawData;
 try {
     rawData = fs.readFileSync('report.json', 'utf-8');
 } catch (error) {
-    console.error('Erro ao ler o arquivo report.json:', error.message);
+    console.error('❌ Erro ao ler o arquivo report.json:', error.message);
     process.exit(1);
 }
 
@@ -25,7 +30,7 @@ let report;
 try {
     report = JSON.parse(rawData);
 } catch (error) {
-    console.error('Erro ao fazer parse do report.json:', error.message);
+    console.error('❌ Erro ao fazer parse do report.json:', error.message);
     process.exit(1);
 }
 
@@ -107,7 +112,7 @@ const payload = {
 
 axios.post(webhookURL, payload)
     .then(() => {
-        console.log('Mensagem enviada para o Discord com sucesso.');
+        console.log('✅ Mensagem enviada para o Discord com sucesso.');
     })
     .catch(error => {
         console.error('Erro ao enviar para o Discord:', error.message);

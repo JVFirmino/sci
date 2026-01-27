@@ -2,12 +2,20 @@ name: Playwright Tests
 
 on:
   schedule:
-    - cron: '30 2 * * 1-5'  # Segunda a sexta às 02:30 UTC
+    - cron: '30 2 * * 1-5'
   workflow_dispatch:
 
 jobs:
   test:
     runs-on: ubuntu-latest
+
+    env:
+      API_USERNAME: ${{ secrets.API_USERNAME }}
+      API_PASSWORD: ${{ secrets.API_PASSWORD }}
+      API_PASSWORD_INVALIDO: ${{ secrets.API_PASSWORD_INVALIDO }}
+      API_TOKEN_JWT: ${{ secrets.API_TOKEN_JWT }}
+      DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+
     steps:
       - uses: actions/checkout@v4
 
@@ -22,7 +30,7 @@ jobs:
       - name: Instalar navegadores Playwright
         run: npx playwright install --with-deps
 
-      - name: Rodar testes e gerar relatório JSON e HTML
+      - name: Rodar testes e gerar relatório
         run: npm run test:report
         continue-on-error: true
 
@@ -33,7 +41,7 @@ jobs:
           GITHUB_RUN_ID: ${{ github.run_id }}
           GITHUB_REPOSITORY: ${{ github.repository }}
 
-      - name: Upload do relatório HTML como artefato
+      - name: Upload do relatório HTML
         uses: actions/upload-artifact@v4
         with:
           name: playwright-html-report
