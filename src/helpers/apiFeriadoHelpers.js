@@ -7,7 +7,7 @@ export class ApiFeriadoHelpers {
     }
 
     gerarDataValida(){
-         const hoje = new Date();
+        const hoje = new Date();
         const anoMin = hoje.getFullYear() + 3;
         const anoMax = hoje.getFullYear() + 20;
         const ano = faker.number.int({ min: anoMin, max: anoMax });

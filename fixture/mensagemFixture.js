@@ -66,5 +66,14 @@ export const MENSAGENS = {
         autonomoNaoEncontrado: "Registro não encontrado ou já removido anteriormente",
         autonomoIdNaoEncontrado: "O valor informado no campo autonomo id não foi encontrado",
         cpfJaUsado2: "O campo 'cpf' contém um valor único já usado em outro registro."
+    },
+    empresa:{
+        empresaJaCadastradaCliente:"Já existe uma empresa cadastrada para este cliente com o documento informado.",
+        textoDocumentoCurto:"Texto muito curto",
+        textoDocumentoLongo:"Texto muito longo",
+        textoDocumentoInvalido:"Valor inválido",
+        tokenExpirado:"Acesso Negado, verifique a validade do token",
+        textoLongo:"Texto muito longo",
+        campoObrigatorio:"Campo obrigatório"
     }
 };

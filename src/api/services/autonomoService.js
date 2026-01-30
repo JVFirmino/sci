@@ -1,4 +1,4 @@
-import servicoClient from "../clients/rhNet.js ";
+import servicoClient from "../clients/rhNetClient.js";
 
 export const cadastrarAutonomo = (autonomoData, jwtToken) => servicoClient.post("/autonomo/autonomos", autonomoData, {
     headers:{
