@@ -31,7 +31,7 @@ jobs:
         run: npx playwright install --with-deps
 
       - name: Rodar testes e gerar relatório
-        run: npm run test:report
+        run: npm run test
         continue-on-error: true
 
       - name: Enviar resultado para o Discord
