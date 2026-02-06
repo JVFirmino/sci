@@ -3,8 +3,7 @@ import { ApiEmpresaHelpers } from "../../src/helpers/apiEmpresaHelpers";
 import { cadastrarEmpresa } from "../../src/api/services/empresaService";
 import { login } from "../../src/api/services/authLoginService";
 import { MENSAGENS } from "../../fixture/mensagemFixture";
-import { fa, faker } from "@faker-js/faker";
-import { Console } from "console";
+import { faker } from "@faker-js/faker";
 
 test.describe.serial("Empresa API", { tag: ["@EMPRESA_API"] }, () => {
 
