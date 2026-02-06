@@ -6,7 +6,7 @@ import { ApiPreliminarHelpers } from "../../src/helpers/apiPreliminarHelpers";
 import { gerarBasicToken } from "../../src/utils/authUtils";
 import { loginCredencial } from "../../src/api/services/authService";
 import { cadastrarAdmissaoPreliminar } from "../../src/api/services/preliminarService";
-import { ApiLiberarPreliminarHelpers } from "../../src/helpers/apiliberarPreliminarHelpers";
+import { ApiLiberarPreliminarHelpers } from "../../src/helpers/apiLiberarPreliminarHelpers";
 import { liberarPreliminar } from "../../src/api/services/liberarPreliminarService";
 import { MENSAGENS } from "../../fixture/mensagemFixture";
 
