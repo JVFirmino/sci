@@ -45,7 +45,7 @@ const passedTests = [];
 const failedTests = [];
 const skippedTests = [];
 
-const LIST_PASSED = true;
+const LIST_PASSED = false;
 const LIST_FAILED = true;
 const LIST_SKIPPED = true;
 
