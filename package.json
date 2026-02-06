@@ -4,9 +4,8 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "npx playwright test",
-    "test:report": "npx playwright test --reporter=json --output=report.json --reporter=html --retries=1",
-    "report": "npx playwright show-report",
+  "test": "npx playwright test",
+  "report": "npx playwright show-report",
     "login": "npx playwright test --grep @LOGIN --reporter html",
     "admissaoPreliminar": "npx playwright test --grep @ADMISSAO_PRELIMINAR --reporter html"
   },
