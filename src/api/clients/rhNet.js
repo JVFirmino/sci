@@ -9,4 +9,14 @@ const servicoClient = axios.create({
     },
 });
 
+servicoClient.interceptors.request.use(
+    async (config) => {
+        if (config.headers?.Authorization?.startsWith("Bearer ")) {
+            await new Promise(resolve => setTimeout(resolve, 2000));
+        }
+        return config;
+    },
+    (error) => Promise.reject(error)
+);
+
 export default servicoClient;
