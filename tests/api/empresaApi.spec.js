@@ -11,7 +11,6 @@ test.describe.serial("Empresa API", { tag: ["@EMPRESA_API"] }, () => {
    test("cadastrar empresa", { tags: ["@EMPRESA_SUCESSO_API"] }, async () => {
         const apiEmpresaHelpers = new ApiEmpresaHelpers();
         const gerarEmpresa = apiEmpresaHelpers.gerarEmpresa();  
-        console.log(gerarEmpresa);
         try {
             const loginResponse = await login("joao.garcia", "Mudar@12");
             const clienteId = decodificarJwt(loginResponse.data.token).usuario.dados.clienteId;
@@ -21,7 +20,6 @@ test.describe.serial("Empresa API", { tag: ["@EMPRESA_API"] }, () => {
             expect(response.data).toHaveProperty("cliente_id", clienteId);
             expect(response.data).toHaveProperty("documento", gerarEmpresa.documento.replace(/\D/g, ""));
             expect(response.data).toHaveProperty("nome", gerarEmpresa.nome);
-            console.log(response.data);
         } catch (error) {
             console.error("Erro ao realizar a requisição:", error);
             throw error; 
