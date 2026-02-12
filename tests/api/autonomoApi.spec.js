@@ -349,8 +349,6 @@ test.describe.serial("autonomo API", { tag: ["@AUTONOMO_API"] }, () => {
         }
     });
                 
-
-
     test("deletar um autonomo", { tag: "@AUTONOMO_SUCESSO_API" }, async () => {
         const empresaId = 900001;
         const apiAutonomoHelpers = new ApiAutonomoHelpers();  
@@ -359,7 +357,7 @@ test.describe.serial("autonomo API", { tag: ["@AUTONOMO_API"] }, () => {
         try {
             const loginResponse = await loginCredencial(token);
             const responseAutonomo = await cadastrarAutonomo(gerarAutonomo, loginResponse.data.token);
-            const autonomoDeletar = apiAutonomoHelpers.montarPayloadDeletarFeriado(empresaId, responseAutonomo.data.retorno[0].autonomo.autonomo_id);
+            const autonomoDeletar = apiAutonomoHelpers.deletarAutonomo(empresaId, responseAutonomo.data.retorno[0].autonomo.autonomo_id);
             const response = await deletarAutonomo(autonomoDeletar, loginResponse.data.token);
             expect(response.status).toBe(200);
             expect(response.data).toHaveProperty("sucesso", true);
@@ -379,7 +377,7 @@ test.describe.serial("autonomo API", { tag: ["@AUTONOMO_API"] }, () => {
         try {
             const loginResponse = await loginCredencial(token);
             const responseAutonomo = await cadastrarAutonomo(gerarAutonomo, loginResponse.data.token);
-            const autonomoDeletar = apiAutonomoHelpers.montarPayloadDeletarFeriado(2, responseAutonomo.data.retorno[0].autonomo.autonomo_id);
+            const autonomoDeletar = apiAutonomoHelpers.deletarAutonomo(2, responseAutonomo.data.retorno[0].autonomo.autonomo_id);
             const response = await deletarAutonomo(autonomoDeletar, loginResponse.data.token);
             expect(response.data).toHaveProperty("mensagem", MENSAGENS.autonomo.autonomoNaoEncontrado);
             
@@ -393,7 +391,7 @@ test.describe.serial("autonomo API", { tag: ["@AUTONOMO_API"] }, () => {
         const empresaId = 900001;
         const autonomoInexistente = 2342342;
         const apiAutonomoHelpers = new ApiAutonomoHelpers(); 
-        const autonomoDeletar = apiAutonomoHelpers.montarPayloadDeletarFeriado(empresaId, autonomoInexistente);
+        const autonomoDeletar = apiAutonomoHelpers.deletarAutonomo(empresaId, autonomoInexistente);
         const token = gerarBasicToken(process.env.API_USERNAME, process.env.API_PASSWORD);
         try {
             const loginResponse = await loginCredencial(token);
@@ -409,7 +407,7 @@ test.describe.serial("autonomo API", { tag: ["@AUTONOMO_API"] }, () => {
         const empresaId = 9999999;
         const autonomo = 2342342;
         const apiAutonomoHelpers = new ApiAutonomoHelpers(); 
-        const autonomoInvalido = apiAutonomoHelpers.montarPayloadDeletarFeriado(empresaId, autonomo);
+        const autonomoInvalido = apiAutonomoHelpers.deletarAutonomo(empresaId, autonomo);
         const token = gerarBasicToken(process.env.API_USERNAME, process.env.API_PASSWORD);
         try {
             const loginResponse = await loginCredencial(token);
@@ -428,7 +426,7 @@ test.describe.serial("autonomo API", { tag: ["@AUTONOMO_API"] }, () => {
         const empresaId = 900001;
         const autonomo = 2342342;
         const apiAutonomoHelpers = new ApiAutonomoHelpers(); 
-        const autonomoInvalido = apiAutonomoHelpers.montarPayloadDeletarFeriado(empresaId, autonomo);;
+        const autonomoInvalido = apiAutonomoHelpers.deletarAutonomo(empresaId, autonomo);;
         try {
             const response = await deletarAutonomo(autonomoInvalido, process.env.API_TOKEN_JWT);
             throw new Error("Esperava um erro, mas a requisição foi bem-sucedida.");

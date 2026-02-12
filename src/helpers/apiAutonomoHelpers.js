@@ -5,14 +5,14 @@ export class ApiAutonomoHelpers {
 
     status = [0, 1];
 
-    gerarAleatorio(lista){
-        const index = faker.number.int({ min: 0, max: lista.length -1 });
-        return lista[index]
-    }
-
     formatDate(date) {
         return date.toLocaleDateString('en-CA');
     };
+
+    gerarAleatorio(lista){
+        const index = faker.number.int({ min: 0, max: lista.length -1 });
+        return lista[index]
+    }; 
 
     gerarCpfComMascara() {
         return cpf.format(cpf.generate());
@@ -86,7 +86,7 @@ export class ApiAutonomoHelpers {
         };
     };
 
-    montarPayloadDeletarFeriado(empresaId, autonomo){
+    deletarAutonomo(empresaId, autonomo){
         return {
             autonomo_id: autonomo,
             empresa_id: empresaId

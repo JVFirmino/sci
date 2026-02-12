@@ -268,7 +268,7 @@ test.describe.serial("feriado API", { tag: ["@FERIADO_API"] }, () => {
         try {
             const loginResponse = await loginCredencial(token);
             const responseFeriado = await cadastrarFeriado(gerarFeriado, loginResponse.data.token);
-            const feriadoDeletar = apiFeriadoHelpers.montarPayloadDeletarFeriado(empresaId, responseFeriado.data.retorno[0].data);
+            const feriadoDeletar = apiFeriadoHelpers.deletarFeriado(empresaId, responseFeriado.data.retorno[0].data);
             const response = await deletarFeriado(feriadoDeletar, loginResponse.data.token);
             expect(response.status).toBe(200);
             expect(response.data).toHaveProperty("sucesso", true);
@@ -288,7 +288,7 @@ test.describe.serial("feriado API", { tag: ["@FERIADO_API"] }, () => {
         try {
             const loginResponse = await loginCredencial(token);
             const responseFeriado = await cadastrarFeriado(gerarFeriado, loginResponse.data.token);
-            const feriadoDeletar = apiFeriadoHelpers.montarPayloadDeletarFeriado(2, responseFeriado.data.retorno[0].data);
+            const feriadoDeletar = apiFeriadoHelpers.deletarFeriado(2, responseFeriado.data.retorno[0].data);
             const response = await deletarFeriado(feriadoDeletar, loginResponse.data.token);
             expect(response.data).toHaveProperty("mensagem", MENSAGENS.feriadoApi.feriadoNaoEncontrado);
             
@@ -302,7 +302,7 @@ test.describe.serial("feriado API", { tag: ["@FERIADO_API"] }, () => {
         const empresaId = 900001;
         const dataInexistente = "2099-12-31";
         const apiFeriadoHelpers = new ApiFeriadoHelpers(); 
-        const feriadoInexistente = apiFeriadoHelpers.montarPayloadDeletarFeriado(empresaId, dataInexistente);
+        const feriadoInexistente = apiFeriadoHelpers.deletarFeriado(empresaId, dataInexistente);
         const token = gerarBasicToken(process.env.API_USERNAME, process.env.API_PASSWORD);
         try {
             const loginResponse = await loginCredencial(token);
@@ -319,7 +319,7 @@ test.describe.serial("feriado API", { tag: ["@FERIADO_API"] }, () => {
         const empresaId = 9999999;
         const dataFeriado = "2099-09-25";
         const apiFeriadoHelpers = new ApiFeriadoHelpers(); 
-        const feriadoInvalido = apiFeriadoHelpers.montarPayloadDeletarFeriado(empresaId, dataFeriado);
+        const feriadoInvalido = apiFeriadoHelpers.deletarFeriado(empresaId, dataFeriado);
         const token = gerarBasicToken(process.env.API_USERNAME, process.env.API_PASSWORD);
         try {
             const loginResponse = await loginCredencial(token);
@@ -338,7 +338,7 @@ test.describe.serial("feriado API", { tag: ["@FERIADO_API"] }, () => {
         const empresaId = 900001;
         const dataFeriado = "2025-09-25";
         const apiFeriadoHelpers = new ApiFeriadoHelpers(); 
-        const feriadoInvalido = apiFeriadoHelpers.montarPayloadDeletarFeriado(empresaId, dataFeriado);
+        const feriadoInvalido = apiFeriadoHelpers.deletarFeriado(empresaId, dataFeriado);
         try {
             const response = await deletarFeriado(feriadoInvalido, process.env.API_TOKEN_JWT);
             throw new Error("Esperava um erro, mas a requisição foi bem-sucedida.");

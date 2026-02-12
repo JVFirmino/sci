@@ -80,7 +80,7 @@ export class ApiServicoHelpers {
         };
     };
 
-    gerarPayloadAtualizacao(servicoBaseA, servicoParaAtualizarB, overrides = {}) {
+    gerarServicoAtualizar(servicoBaseA, servicoParaAtualizarB, overrides = {}) {
         return {
             tipo_servico_autonomo_id: servicoParaAtualizarB.tipo_servico_autonomo_id,
             empresa_id: servicoBaseA.empresa_id,
@@ -92,7 +92,7 @@ export class ApiServicoHelpers {
         };
     };
 
-    montarPayloadDeletarServico(empresaId, tipoServicoId){
+    deletarServico(empresaId, tipoServicoId){
         return {
             empresa_id: empresaId,
             tipo_servico_autonomo_id: tipoServicoId

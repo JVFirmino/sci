@@ -578,7 +578,7 @@ test.describe.serial("preliminar API", { tag: ["@PRELIMINAR_API"] }, () => {
         try {
             const loginResponse = await loginCredencial(token);
             const responsePreliminar = await cadastrarAdmissaoPreliminar(gerarPreliminar, loginResponse.data.token);
-            const preliminarDeletar = apiPreliminarHelpers.montarPayloadDeletarPreliminar(empresaId, responsePreliminar.data.retorno.id);
+            const preliminarDeletar = apiPreliminarHelpers.deletarPreliminar(empresaId, responsePreliminar.data.retorno.id);
             const response = await deletarAdmissaoPreliminar(preliminarDeletar, loginResponse.data.token)
             expect(response.status).toBe(200);
             expect(response.data).toHaveProperty("sucesso", true);
@@ -599,7 +599,7 @@ test.describe.serial("preliminar API", { tag: ["@PRELIMINAR_API"] }, () => {
         try {
             const loginResponse = await loginCredencial(token);
             const responsePreliminar = await cadastrarAdmissaoPreliminar(gerarPreliminar, loginResponse.data.token);
-            const preliminarDeletar = apiPreliminarHelpers.montarPayloadDeletarPreliminar(2, responsePreliminar.data.retorno.id);
+            const preliminarDeletar = apiPreliminarHelpers.deletarPreliminar(2, responsePreliminar.data.retorno.id);
             const response = await deletarAdmissaoPreliminar(preliminarDeletar, loginResponse.data.token)
             expect(response.data).toHaveProperty("mensagem", MENSAGENS.preliminar.preliminarNaoEncontrado);
         } catch (error) {
@@ -612,7 +612,7 @@ test.describe.serial("preliminar API", { tag: ["@PRELIMINAR_API"] }, () => {
         const empresaId = 900001;
         const idPreliminar = 123123; 
         const apiPreliminarHelpers = new ApiPreliminarHelpers();
-        const preliminarDeletar = apiPreliminarHelpers.montarPayloadDeletarPreliminar(empresaId, idPreliminar);
+        const preliminarDeletar = apiPreliminarHelpers.deletarPreliminar(empresaId, idPreliminar);
         const token = gerarBasicToken(process.env.API_USERNAME, process.env.API_PASSWORD); 
         try {
             const loginResponse = await loginCredencial(token);
@@ -628,7 +628,7 @@ test.describe.serial("preliminar API", { tag: ["@PRELIMINAR_API"] }, () => {
         const empresaId = 9999999;
         const idPreliminar = 9999999;
         const apiPreliminarHelpers = new ApiPreliminarHelpers();
-        const preliminarDeletar = apiPreliminarHelpers.montarPayloadDeletarPreliminar(empresaId, idPreliminar);
+        const preliminarDeletar = apiPreliminarHelpers.deletarPreliminar(empresaId, idPreliminar);
         const token = gerarBasicToken(process.env.API_USERNAME, process.env.API_PASSWORD); 
         try {
             const loginResponse = await loginCredencial(token);
@@ -647,7 +647,7 @@ test.describe.serial("preliminar API", { tag: ["@PRELIMINAR_API"] }, () => {
         const empresaId = 900001;
         const idPreliminar = 221; 
         const apiPreliminarHelpers = new ApiPreliminarHelpers();
-        const preliminarDeletar = apiPreliminarHelpers.montarPayloadDeletarPreliminar(empresaId, idPreliminar);
+        const preliminarDeletar = apiPreliminarHelpers.deletarPreliminar(empresaId, idPreliminar);
         try {    
             const response = await deletarAdmissaoPreliminar(preliminarDeletar, process.env.API_TOKEN_JWT);
             throw new Error("Esperava um erro, mas a requisição foi bem-sucedida.");

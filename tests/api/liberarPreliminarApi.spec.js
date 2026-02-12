@@ -22,8 +22,8 @@ test.describe.serial("liberar preliminar API", { tag: ["@LIBERAR_PRELIMINAR_API"
         try {
             const loginResponse = await loginCredencial(token);
             const responsePreliminar = await cadastrarAdmissaoPreliminar(gerarPreliminar, loginResponse.data.token);
-            const payloadLiberarPreliminar  = apiLiberarPreliminarHelpers.gerarItemLiberar(responsePreliminar.data.retorno.id, empresaId);
-            const response = await liberarPreliminar(payloadLiberarPreliminar , loginResponse.data.token)
+            const liberacaoPreliminar  = apiLiberarPreliminarHelpers.gerarItemLiberar(responsePreliminar.data.retorno.id, empresaId);
+            const response = await liberarPreliminar(liberacaoPreliminar , loginResponse.data.token)
             expect(response.status).toBe(200);
             expect(response.data).toHaveProperty("sucesso", true);
             expect(response.data).toHaveProperty("mensagem", MENSAGENS.liberarAdmissaoPreliminar.sucessoLiberacao);
@@ -44,8 +44,8 @@ test.describe.serial("liberar preliminar API", { tag: ["@LIBERAR_PRELIMINAR_API"
         try {
             const loginResponse = await loginCredencial(token);
             const responsePreliminar = await cadastrarAdmissaoPreliminar(gerarPreliminar, loginResponse.data.token);
-            const payloadLiberarPreliminar  = apiLiberarPreliminarHelpers.gerarItemLiberar(responsePreliminar.data.retorno.id, empresaId);
-            const response = await liberarPreliminar(payloadLiberarPreliminar , loginResponse.data.token)
+            const liberacaoPreliminar  = apiLiberarPreliminarHelpers.gerarItemLiberar(responsePreliminar.data.retorno.id, empresaId);
+            const response = await liberarPreliminar(liberacaoPreliminar , loginResponse.data.token)
             expect(response.status).toBe(200);
             expect(response.data).toHaveProperty("sucesso", true);
             expect(response.data).toHaveProperty("mensagem", MENSAGENS.liberarAdmissaoPreliminar.sucessoLiberacao);
@@ -66,8 +66,8 @@ test.describe.serial("liberar preliminar API", { tag: ["@LIBERAR_PRELIMINAR_API"
         try {
             const loginResponse = await loginCredencial(token);
             const responsePreliminar = await cadastrarAdmissaoPreliminar(gerarPreliminar, loginResponse.data.token);
-            const payloadLiberarPreliminar  = apiLiberarPreliminarHelpers.gerarItemLiberar(responsePreliminar.data.retorno.id, empresaId, { observacao_liberacao: apiLiberarPreliminarHelpers.gerarTextoAleatorio(200) });
-            const response = await liberarPreliminar(payloadLiberarPreliminar , loginResponse.data.token)
+            const liberacaoPreliminar  = apiLiberarPreliminarHelpers.gerarItemLiberar(responsePreliminar.data.retorno.id, empresaId, { observacao_liberacao: apiLiberarPreliminarHelpers.gerarTextoAleatorio(200) });
+            const response = await liberarPreliminar(liberacaoPreliminar , loginResponse.data.token)
             expect(response.status).toBe(200);
             expect(response.data).toHaveProperty("sucesso", true);
             expect(response.data).toHaveProperty("mensagem", MENSAGENS.liberarAdmissaoPreliminar.sucessoLiberacao);
@@ -89,8 +89,8 @@ test.describe.serial("liberar preliminar API", { tag: ["@LIBERAR_PRELIMINAR_API"
         try {
             const loginResponse = await loginCredencial(token);
             const responsePreliminar = await cadastrarAdmissaoPreliminar(gerarPreliminar, loginResponse.data.token);
-            const payloadLiberarPreliminar  = apiLiberarPreliminarHelpers.gerarItemLiberar(responsePreliminar.data.retorno.id, 2);
-            const response = await liberarPreliminar(payloadLiberarPreliminar , loginResponse.data.token)
+            const liberacaoPreliminar  = apiLiberarPreliminarHelpers.gerarItemLiberar(responsePreliminar.data.retorno.id, 2);
+            const response = await liberarPreliminar(liberacaoPreliminar , loginResponse.data.token)
             throw new Error("A requisição deveria ter falhado, mas foi bem-sucedida.");
         }catch(error){
             expect(error.response.status).toBe(422)
@@ -111,8 +111,8 @@ test.describe.serial("liberar preliminar API", { tag: ["@LIBERAR_PRELIMINAR_API"
         try {
             const loginResponse = await loginCredencial(token);
             const responsePreliminar = await cadastrarAdmissaoPreliminar(gerarPreliminar, loginResponse.data.token);
-            const payloadLiberarPreliminar  = apiLiberarPreliminarHelpers.gerarItemLiberar(responsePreliminar.data.retorno.id, empresaId, { observacao_liberacao: apiLiberarPreliminarHelpers.gerarTextoAleatorio(201) });
-            const response = await liberarPreliminar(payloadLiberarPreliminar , loginResponse.data.token)
+            const liberacaoPreliminar  = apiLiberarPreliminarHelpers.gerarItemLiberar(responsePreliminar.data.retorno.id, empresaId, { observacao_liberacao: apiLiberarPreliminarHelpers.gerarTextoAleatorio(201) });
+            const response = await liberarPreliminar(liberacaoPreliminar , loginResponse.data.token)
             throw new Error("A requisição deveria ter falhado, mas foi bem-sucedida.");
         }catch(error){
             expect(error.response.status).toBe(422)
@@ -133,8 +133,8 @@ test.describe.serial("liberar preliminar API", { tag: ["@LIBERAR_PRELIMINAR_API"
         try {
             const loginResponse = await loginCredencial(token);
             const responsePreliminar = await cadastrarAdmissaoPreliminar(gerarPreliminar, loginResponse.data.token);
-            const payloadLiberarPreliminar  = apiLiberarPreliminarHelpers.gerarItemLiberar(responsePreliminar.data.retorno.id, 999999);
-            const response = await liberarPreliminar(payloadLiberarPreliminar , loginResponse.data.token)
+            const liberacaoPreliminar  = apiLiberarPreliminarHelpers.gerarItemLiberar(responsePreliminar.data.retorno.id, 999999);
+            const response = await liberarPreliminar(liberacaoPreliminar , loginResponse.data.token)
             throw new Error("A requisição deveria ter falhado, mas foi bem-sucedida.");
         }catch(error){
             expect(error.response.status).toBe(403);
@@ -155,8 +155,8 @@ test.describe.serial("liberar preliminar API", { tag: ["@LIBERAR_PRELIMINAR_API"
         try {
             const loginResponse = await loginCredencial(token);
             const responsePreliminar = await cadastrarAdmissaoPreliminar(gerarPreliminar, loginResponse.data.token);
-            const payloadLiberarPreliminar  = apiLiberarPreliminarHelpers.gerarItemLiberar(responsePreliminar.data.retorno.id, empresaId);
-            const response = await liberarPreliminar(payloadLiberarPreliminar, process.env.API_TOKEN_JWT);
+            const liberacaoPreliminar  = apiLiberarPreliminarHelpers.gerarItemLiberar(responsePreliminar.data.retorno.id, empresaId);
+            const response = await liberarPreliminar(liberacaoPreliminar, process.env.API_TOKEN_JWT);
             throw new Error("A requisição deveria ter falhado, mas foi bem-sucedida.");
         }catch(error){
             expect(error.response.status).toBe(401);

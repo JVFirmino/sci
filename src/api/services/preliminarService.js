@@ -1,4 +1,4 @@
-import servicoClient from "../clients/rhNet";
+import servicoClient from "../clients/rhNetClient.js";
 
 export const cadastrarAdmissaoPreliminar = (admissaoData, jwtToken) => servicoClient.post("/funcionario/preliminar", admissaoData, {
     headers:{

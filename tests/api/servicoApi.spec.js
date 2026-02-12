@@ -6,7 +6,7 @@ import { loginCredencial } from "../../src/api/services/authService";
 import { atualizarServico, cadastrarServico, deletarServico } from "../../src/api/services/servicoService";
 import { ApiServicoHelpers } from "../../src/helpers/apiServicoHelpers";
 import { MENSAGENS } from "../../fixture/mensagemFixture";
-import { gerarBasicToken } from "../../src/utils/authUtils";
+import { decodificarJwt, gerarBasicToken } from "../../src/utils/authUtils";
 import { faker } from "@faker-js/faker";
 
 test.describe.serial("serviço API", { tag: ["@SERVICO_API"] }, () => {
@@ -19,6 +19,7 @@ test.describe.serial("serviço API", { tag: ["@SERVICO_API"] }, () => {
         const token = gerarBasicToken(process.env.API_USERNAME, process.env.API_PASSWORD);
         try {
             const loginResponse = await loginCredencial(token);
+            const clienteId = decodificarJwt(loginResponse.data.token).usuario.dados.clienteId;
             const response = await cadastrarServico(gerarServicos, loginResponse.data.token);
             expect(response.status).toBe(200);
             expect(response.data).toHaveProperty("sucesso", true);
@@ -35,7 +36,7 @@ test.describe.serial("serviço API", { tag: ["@SERVICO_API"] }, () => {
                 expect(item).toHaveProperty("categoria_esocial", gerarServicos.dados[index].categoria_esocial);
                 expect(item).toHaveProperty("ativo", gerarServicos.dados[index].ativo);
                 expect(item).toHaveProperty("tipo_servico_autonomo_id", expect.anything());
-                expect(item).toHaveProperty("cliente_id", expect.anything());
+                expect(item).toHaveProperty("cliente_id", clienteId);
             });
         }catch (error) {
             console.error("Erro ao realizar a requisição:", error);
@@ -51,6 +52,7 @@ test.describe.serial("serviço API", { tag: ["@SERVICO_API"] }, () => {
         const token = gerarBasicToken(process.env.API_USERNAME, process.env.API_PASSWORD);
         try {
             const loginResponse = await loginCredencial(token);
+             const clienteId = decodificarJwt(loginResponse.data.token).usuario.dados.clienteId;
             const response = await cadastrarServico(gerarMultiplosServicos, loginResponse.data.token);
             expect(response.status).toBe(200);
             expect(response.data).toHaveProperty("sucesso", true);
@@ -67,7 +69,7 @@ test.describe.serial("serviço API", { tag: ["@SERVICO_API"] }, () => {
                 expect(item).toHaveProperty("categoria_esocial", gerarMultiplosServicos.dados[index].categoria_esocial);
                 expect(item).toHaveProperty("ativo", gerarMultiplosServicos.dados[index].ativo);
                 expect(item).toHaveProperty("tipo_servico_autonomo_id", expect.anything());
-                expect(item).toHaveProperty("cliente_id", expect.anything());
+                expect(item).toHaveProperty("cliente_id", clienteId);
             });
         }catch (error) {
             console.error("Erro ao realizar a requisição:", error);
@@ -83,6 +85,7 @@ test.describe.serial("serviço API", { tag: ["@SERVICO_API"] }, () => {
         const token = gerarBasicToken(process.env.API_USERNAME, process.env.API_PASSWORD);
         try {
             const loginResponse = await loginCredencial(token);
+             const clienteId = decodificarJwt(loginResponse.data.token).usuario.dados.clienteId;
             await cadastrarServico(gerarServico, loginResponse.data.token);
             const cloneServico = structuredClone(gerarServico);
             cloneServico.dados[0].cbo = `${faker.string.numeric(4)}-${faker.string.numeric(2)}`;
@@ -102,7 +105,7 @@ test.describe.serial("serviço API", { tag: ["@SERVICO_API"] }, () => {
                 expect(item).toHaveProperty("categoria_esocial", cloneServico.dados[index].categoria_esocial);
                 expect(item).toHaveProperty("ativo", cloneServico.dados[index].ativo);
                 expect(item).toHaveProperty("tipo_servico_autonomo_id", expect.anything());
-                expect(item).toHaveProperty("cliente_id", expect.anything());
+                expect(item).toHaveProperty("cliente_id", clienteId);
             });
         } catch (error) {
             console.error("Erro ao realizar a requisição:", error);
@@ -117,7 +120,8 @@ test.describe.serial("serviço API", { tag: ["@SERVICO_API"] }, () => {
         const gerarServico = apiServicoHelpers.gerarServico(empresaId, false);
         const token = gerarBasicToken(process.env.API_USERNAME, process.env.API_PASSWORD);
         try {
-            const loginResponse = await loginCredencial(token)
+            const loginResponse = await loginCredencial(token);
+            const clienteId = decodificarJwt(loginResponse.data.token).usuario.dados.clienteId;
             await cadastrarServico(gerarServico, loginResponse.data.token);
             const cloneServico = structuredClone(gerarServico);
             cloneServico.dados[0].categoria_esocial = `${apiServicoHelpers.gerarCategoriaEsocial()}`;
@@ -137,7 +141,7 @@ test.describe.serial("serviço API", { tag: ["@SERVICO_API"] }, () => {
                 expect(item).toHaveProperty("categoria_esocial", cloneServico.dados[index].categoria_esocial);
                 expect(item).toHaveProperty("ativo", cloneServico.dados[index].ativo);
                 expect(item).toHaveProperty("tipo_servico_autonomo_id", expect.anything());
-                expect(item).toHaveProperty("cliente_id", expect.anything());
+                expect(item).toHaveProperty("cliente_id", clienteId);
             });
         } catch (error) {
             console.error("Erro ao realizar a requisição:", error);
@@ -152,6 +156,7 @@ test.describe.serial("serviço API", { tag: ["@SERVICO_API"] }, () => {
         const token = gerarBasicToken(process.env.API_USERNAME, process.env.API_PASSWORD);
         try {
             const loginResponse = await loginCredencial(token);
+            const clienteId = decodificarJwt(loginResponse.data.token).usuario.dados.clienteId;
             const response = await cadastrarServico(gerarMesmoServicoParaEmpresas, loginResponse.data.token);
             expect(response.status).toBe(200);
             expect(response.data).toHaveProperty("sucesso", true);
@@ -168,7 +173,7 @@ test.describe.serial("serviço API", { tag: ["@SERVICO_API"] }, () => {
                 expect(item).toHaveProperty("categoria_esocial", gerarMesmoServicoParaEmpresas.dados[index].categoria_esocial);
                 expect(item).toHaveProperty("ativo", gerarMesmoServicoParaEmpresas.dados[index].ativo);
                 expect(item).toHaveProperty("tipo_servico_autonomo_id", expect.anything());
-                expect(item).toHaveProperty("cliente_id", expect.anything());
+                expect(item).toHaveProperty("cliente_id", clienteId);
             });
         }catch (error) {
             console.error("Erro ao realizar a requisição:", error);
@@ -252,6 +257,7 @@ test.describe.serial("serviço API", { tag: ["@SERVICO_API"] }, () => {
         const token = gerarBasicToken(process.env.API_USERNAME, process.env.API_PASSWORD);
         try {
             const loginResponse = await loginCredencial(token);
+            const clienteId = decodificarJwt(loginResponse.data.token).usuario.dados.clienteId;
             const responseServico = await cadastrarServico(gerarServico, loginResponse.data.token);
             const servicoAtualizar = apiServicoHelpers.atualizarServico(empresaId, responseServico.data.retorno[0].tipo_servico_autonomo_id);
             const response = await atualizarServico(servicoAtualizar, loginResponse.data.token);
@@ -262,7 +268,7 @@ test.describe.serial("serviço API", { tag: ["@SERVICO_API"] }, () => {
 
             const { retorno } = response.data;
             expect(retorno).toHaveProperty("tipo_servico_autonomo_id", servicoAtualizar.tipo_servico_autonomo_id);
-            expect(retorno).toHaveProperty("cliente_id", expect.anything());
+            expect(retorno).toHaveProperty("cliente_id", clienteId);
             expect(retorno).toHaveProperty("empresa_id", servicoAtualizar.empresa_id);
             expect(retorno).toHaveProperty("cbo", servicoAtualizar.cbo);
             expect(retorno).toHaveProperty("descricao_cbo", servicoAtualizar.descricao_cbo);
@@ -282,12 +288,13 @@ test.describe.serial("serviço API", { tag: ["@SERVICO_API"] }, () => {
         const token = gerarBasicToken(process.env.API_USERNAME, process.env.API_PASSWORD);
         try {
             const loginResponse = await loginCredencial(token);
+            const clienteId = decodificarJwt(loginResponse.data.token).usuario.dados.clienteId;
             const responseServicoA = await cadastrarServico(gerarServicoA, loginResponse.data.token);
             const responseServicoB = await cadastrarServico(gerarServicoB, loginResponse.data.token);
             const servicoA = responseServicoA.data.retorno[0];
             const servicoB = responseServicoB.data.retorno[0];
 
-            const servicoAtualizar = apiServicoHelpers.gerarPayloadAtualizacao(servicoA, servicoB, { cbo: `${faker.string.numeric(4)}-${faker.string.numeric(2)}` });
+            const servicoAtualizar = apiServicoHelpers.gerarServicoAtualizar(servicoA, servicoB, { cbo: `${faker.string.numeric(4)}-${faker.string.numeric(2)}` });
             const response = await atualizarServico(servicoAtualizar, loginResponse.data.token);
             expect(response.status).toBe(200);
             expect(response.data).toHaveProperty("sucesso", true);
@@ -296,7 +303,7 @@ test.describe.serial("serviço API", { tag: ["@SERVICO_API"] }, () => {
 
             const { retorno } = response.data;
             expect(retorno).toHaveProperty("tipo_servico_autonomo_id", servicoAtualizar.tipo_servico_autonomo_id);
-            expect(retorno).toHaveProperty("cliente_id", expect.anything());
+            expect(retorno).toHaveProperty("cliente_id", clienteId);
             expect(retorno).toHaveProperty("empresa_id", servicoAtualizar.empresa_id);
             expect(retorno).toHaveProperty("cbo", servicoAtualizar.cbo);
             expect(retorno).toHaveProperty("descricao_cbo", servicoAtualizar.descricao_cbo);
@@ -316,12 +323,13 @@ test.describe.serial("serviço API", { tag: ["@SERVICO_API"] }, () => {
         const token = gerarBasicToken(process.env.API_USERNAME, process.env.API_PASSWORD);
         try {
             const loginResponse = await loginCredencial(token);
+            const clienteId = decodificarJwt(loginResponse.data.token).usuario.dados.clienteId;
             const responseServicoA = await cadastrarServico(gerarServicoA, loginResponse.data.token);
             const responseServicoB = await cadastrarServico(gerarServicoB, loginResponse.data.token);
             const servicoA = responseServicoA.data.retorno[0];
             const servicoB = responseServicoB.data.retorno[0];
 
-            const servicoAtualizar = apiServicoHelpers.gerarPayloadAtualizacao(servicoA, servicoB, { categoria_esocial: `${apiServicoHelpers.gerarCategoriaEsocial()}` });
+            const servicoAtualizar = apiServicoHelpers.gerarServicoAtualizar(servicoA, servicoB, { categoria_esocial: `${apiServicoHelpers.gerarCategoriaEsocial()}` });
             const response = await atualizarServico(servicoAtualizar, loginResponse.data.token);
             expect(response.status).toBe(200);
             expect(response.data).toHaveProperty("sucesso", true);
@@ -330,7 +338,7 @@ test.describe.serial("serviço API", { tag: ["@SERVICO_API"] }, () => {
 
             const { retorno } = response.data;
             expect(retorno).toHaveProperty("tipo_servico_autonomo_id", servicoAtualizar.tipo_servico_autonomo_id);
-            expect(retorno).toHaveProperty("cliente_id", expect.anything());
+            expect(retorno).toHaveProperty("cliente_id", clienteId);
             expect(retorno).toHaveProperty("empresa_id", servicoAtualizar.empresa_id);
             expect(retorno).toHaveProperty("cbo", servicoAtualizar.cbo);
             expect(retorno).toHaveProperty("descricao_cbo", servicoAtualizar.descricao_cbo);
@@ -351,20 +359,21 @@ test.describe.serial("serviço API", { tag: ["@SERVICO_API"] }, () => {
         const token = gerarBasicToken(process.env.API_USERNAME, process.env.API_PASSWORD);
         try {
             const loginResponse = await loginCredencial(token);
+            const clienteId = decodificarJwt(loginResponse.data.token).usuario.dados.clienteId;
             const responseServicoA = await cadastrarServico(gerarServicoA, loginResponse.data.token);
             const responseServicoB = await cadastrarServico(gerarServicoB, loginResponse.data.token);
             const servicoA = responseServicoA.data.retorno[0];
             const servicoB = responseServicoB.data.retorno[0];
-            const servicoAtualizar = apiServicoHelpers.gerarPayloadAtualizacao(servicoA, servicoB, { empresa_id: empresaIdB });
+            const servicoAtualizar = apiServicoHelpers.gerarServicoAtualizar(servicoA, servicoB, { empresa_id: empresaIdB });
             const response = await atualizarServico(servicoAtualizar, loginResponse.data.token);
             expect(response.status).toBe(200);
             expect(response.data).toHaveProperty("sucesso", true);
             expect(response.data).toHaveProperty("mensagem", MENSAGENS.servicoApi.sucessoCadastroServico);
             expect(response.data).toHaveProperty("retorno");
 
-             const { retorno } = response.data;
+            const { retorno } = response.data;
             expect(retorno).toHaveProperty("tipo_servico_autonomo_id", servicoAtualizar.tipo_servico_autonomo_id);
-            expect(retorno).toHaveProperty("cliente_id", expect.anything());
+            expect(retorno).toHaveProperty("cliente_id", clienteId);
             expect(retorno).toHaveProperty("empresa_id", servicoAtualizar.empresa_id);
             expect(retorno).toHaveProperty("cbo", servicoAtualizar.cbo);
             expect(retorno).toHaveProperty("descricao_cbo", servicoAtualizar.descricao_cbo);
@@ -390,7 +399,7 @@ test.describe.serial("serviço API", { tag: ["@SERVICO_API"] }, () => {
             const servicoA = responseServicoA.data.retorno[0];
             const servicoB = responseServicoB.data.retorno[0];
 
-            const servicoAtualizar = apiServicoHelpers.gerarPayloadAtualizacao(servicoA, servicoB);
+            const servicoAtualizar = apiServicoHelpers.gerarServicoAtualizar(servicoA, servicoB);
             const response = await atualizarServico(servicoAtualizar, loginResponse.data.token);
             throw new Error("Esperava um erro, mas a requisição foi bem-sucedida.");
         } catch (error) {
@@ -471,7 +480,7 @@ test.describe.serial("serviço API", { tag: ["@SERVICO_API"] }, () => {
         try {
             const loginResponse = await loginCredencial(token);
             const responseServico = await cadastrarServico(gerarServico, loginResponse.data.token);
-            const servicoDeletar = apiServicoHelpers.montarPayloadDeletarServico(empresaId, responseServico.data.retorno[0].tipo_servico_autonomo_id);
+            const servicoDeletar = apiServicoHelpers.deletarServico(empresaId, responseServico.data.retorno[0].tipo_servico_autonomo_id);
             const response = await deletarServico(servicoDeletar, loginResponse.data.token);
             expect(response.status).toBe(200);
             expect(response.data).toHaveProperty("sucesso", true);
@@ -491,7 +500,7 @@ test.describe.serial("serviço API", { tag: ["@SERVICO_API"] }, () => {
         try {
             const loginResponse = await loginCredencial(token);
             const responseServico = await cadastrarServico(gerarServico, loginResponse.data.token);
-            const servicoDeletar = apiServicoHelpers.montarPayloadDeletarServico(2, responseServico.data.retorno[0].tipo_servico_autonomo_id);
+            const servicoDeletar = apiServicoHelpers.deletarServico(2, responseServico.data.retorno[0].tipo_servico_autonomo_id);
             const response = await deletarServico(servicoDeletar, loginResponse.data.token);
             expect(response.data).toHaveProperty("mensagem", MENSAGENS.servicoApi.servicoNaoEncontrado);
         } catch (error) {
@@ -504,7 +513,7 @@ test.describe.serial("serviço API", { tag: ["@SERVICO_API"] }, () => {
         const empresaId = 900001;
         const tipoServicoId = 9999999; 
         const apiServicoHelpers = new ApiServicoHelpers();
-        const servicoDeletar = apiServicoHelpers.montarPayloadDeletarServico(empresaId, tipoServicoId);
+        const servicoDeletar = apiServicoHelpers.deletarServico(empresaId, tipoServicoId);
         const token = gerarBasicToken(process.env.API_USERNAME, process.env.API_PASSWORD);
         try {
             const loginResponse = await loginCredencial(token);
@@ -520,7 +529,7 @@ test.describe.serial("serviço API", { tag: ["@SERVICO_API"] }, () => {
         const empresaId = 9999999;
         const tipoServicoId = 9999999;
         const apiServicoHelpers = new ApiServicoHelpers();
-        const servicoDeletar = apiServicoHelpers.montarPayloadDeletarServico(empresaId, tipoServicoId);
+        const servicoDeletar = apiServicoHelpers.deletarServico(empresaId, tipoServicoId);
         const token = gerarBasicToken(process.env.API_USERNAME, process.env.API_PASSWORD);
         try {
             const loginResponse = await loginCredencial(token);
@@ -539,7 +548,7 @@ test.describe.serial("serviço API", { tag: ["@SERVICO_API"] }, () => {
         const empresaId = 900001;
         const tipoServicoId = 9999999; 
         const apiServicoHelpers = new ApiServicoHelpers();
-        const servicoDeletar = apiServicoHelpers.montarPayloadDeletarServico(empresaId, tipoServicoId);
+        const servicoDeletar = apiServicoHelpers.deletarServico(empresaId, tipoServicoId);
         try {    
             const response = await deletarServico(servicoDeletar, process.env.API_TOKEN_JWT);
             throw new Error("Esperava um erro, mas a requisição foi bem-sucedida.");

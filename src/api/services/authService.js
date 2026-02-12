@@ -11,3 +11,8 @@ export const refresh = (jwtToken) => authClient.post("/auth/refresh", "", {
         "Authorization": `Bearer ${jwtToken}`
     },
 });
+
+export const login = (login, senha) => authClient.post("/auth/login", { 
+    login: login, 
+    senha: senha 
+});

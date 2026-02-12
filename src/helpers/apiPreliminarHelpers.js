@@ -126,7 +126,6 @@ export class ApiPreliminarHelpers {
         };
     };
 
-
     gerarItemPreliminarContribuinteAtualizar(empresaId, preliminarId, tipoColaborador, overrides = {}) {
         return {
             id: preliminarId,
@@ -162,13 +161,12 @@ export class ApiPreliminarHelpers {
         };
     };
 
-    montarPayloadDeletarPreliminar(empresaId, idPreliminar){
+    deletarPreliminar(empresaId, idPreliminar){
         return {
             empresa_id: empresaId,
             id: idPreliminar
         };
     };
-
 }
 
 
