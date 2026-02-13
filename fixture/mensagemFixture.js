@@ -72,6 +72,9 @@ export const MENSAGENS = {
         documentoValorInvalido:"Valor inválido",
         tokenExpirado:"Acesso Negado, verifique a validade do token",
         textoLongo:"Texto muito longo",
-        campoObrigatorio:"Campo obrigatório"
+        campoObrigatorio:"Campo obrigatório",
+        acessoNegado:"Acesso negado para o usuário",
+        deletarEmpresa: "Empresa excluída com sucesso.",
+        empresaNaoEncontrada: "Empresa não encontrada"
     }
 };

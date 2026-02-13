@@ -5,3 +5,12 @@ export const cadastrarEmpresa = (empresaData, jwtToken) => facialClient.post("/e
         "Authorization": `Bearer ${jwtToken}`,
     }
 });
+
+export const deletarEmpresa = (cnpj, jwtToken) => facialClient.delete(`/empresa/${cnpj}`, {
+    headers: {
+        "Authorization": `Bearer ${jwtToken}`,
+        "accept": "application/json"
+    }
+});
+
+
