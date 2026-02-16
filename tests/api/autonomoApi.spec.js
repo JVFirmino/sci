@@ -45,7 +45,7 @@ test.describe.serial("autonomo API", { tag: ["@AUTONOMO_API"] }, () => {
         }
     });
 
-     test("cadastrar mais de um autonomo", { tag: "@AUTONOMO_SUCESSO_API" }, async () => {
+    test("cadastrar mais de um autonomo", { tag: "@AUTONOMO_SUCESSO_API" }, async () => {
         const empresaId = 900001;
         const quantidade = 2;
         const apiAutonomoHelpers = new ApiAutonomoHelpers();

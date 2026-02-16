@@ -132,15 +132,15 @@ test.describe.serial("Empresa API", { tag: ["@EMPRESA_API"] }, () => {
 
     test("cadastrar empresa sem os campos obrigatórios", { tags: "@EMPRESA_FALHA_API" }, async () => {
         const gerarEmpresa = {};
-       try {
-           const loginResponse = await login("joao.garcia", "Mudar@12");
-           const response = await cadastrarEmpresa(gerarEmpresa, loginResponse.data.token);
-           throw new Error("Esperava um erro, mas a requisição foi bem-sucedida.");
-       } catch (error) {
-           expect(error.response.status).toBe(422);
-           expect(error.response.data.detail[0]).toHaveProperty("msg", MENSAGENS.empresa.campoObrigatorio);
-           expect(error.response.data.detail[1]).toHaveProperty("msg", MENSAGENS.empresa.campoObrigatorio);
-       }
+        try {
+            const loginResponse = await login("joao.garcia", "Mudar@12");
+            const response = await cadastrarEmpresa(gerarEmpresa, loginResponse.data.token);
+            throw new Error("Esperava um erro, mas a requisição foi bem-sucedida.");
+        } catch (error) {
+            expect(error.response.status).toBe(422);
+            expect(error.response.data.detail[0]).toHaveProperty("msg", MENSAGENS.empresa.campoObrigatorio);
+            expect(error.response.data.detail[1]).toHaveProperty("msg", MENSAGENS.empresa.campoObrigatorio);
+        }
     });
 
     test("cadastrar empresa com token expirado", { tags: "@EMPRESA_FALHA_API" }, async () => {
@@ -153,7 +153,7 @@ test.describe.serial("Empresa API", { tag: ["@EMPRESA_API"] }, () => {
             expect(error.response.status).toBe(401);
             expect(error.response.data.detail[0]).toHaveProperty("msg", MENSAGENS.empresa.tokenExpirado);
         }
-   });
+    });
 
     test("buscar empresa", { tags: "@EMPRESA_SUCESSO_API" }, async () => {
         const apiEmpresaHelpers = new ApiEmpresaHelpers();

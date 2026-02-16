@@ -12,7 +12,7 @@ const facialClient = axios.create({
 facialClient.interceptors.request.use(
     async (config) => {
         if (config.headers?.Authorization?.startsWith("Bearer ")) {
-            await new Promise(resolve => setTimeout(resolve, 6000));
+            await new Promise(resolve => setTimeout(resolve, 8000));
         }
         return config;
     },

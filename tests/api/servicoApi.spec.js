@@ -52,7 +52,7 @@ test.describe.serial("serviço API", { tag: ["@SERVICO_API"] }, () => {
         const token = gerarBasicToken(process.env.API_USERNAME, process.env.API_PASSWORD);
         try {
             const loginResponse = await loginCredencial(token);
-             const clienteId = decodificarJwt(loginResponse.data.token).usuario.dados.clienteId;
+            const clienteId = decodificarJwt(loginResponse.data.token).usuario.dados.clienteId;
             const response = await cadastrarServico(gerarMultiplosServicos, loginResponse.data.token);
             expect(response.status).toBe(200);
             expect(response.data).toHaveProperty("sucesso", true);
@@ -85,7 +85,7 @@ test.describe.serial("serviço API", { tag: ["@SERVICO_API"] }, () => {
         const token = gerarBasicToken(process.env.API_USERNAME, process.env.API_PASSWORD);
         try {
             const loginResponse = await loginCredencial(token);
-             const clienteId = decodificarJwt(loginResponse.data.token).usuario.dados.clienteId;
+            const clienteId = decodificarJwt(loginResponse.data.token).usuario.dados.clienteId;
             await cadastrarServico(gerarServico, loginResponse.data.token);
             const cloneServico = structuredClone(gerarServico);
             cloneServico.dados[0].cbo = `${faker.string.numeric(4)}-${faker.string.numeric(2)}`;
