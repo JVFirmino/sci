@@ -241,7 +241,7 @@ test.describe.serial("autonomo API", { tag: ["@AUTONOMO_API"] }, () => {
             const loginResponse = await loginCredencial(token);
             await cadastrarAutonomo(gerarAutonomoA, loginResponse.data.token);
             const responseAutonomoB = await cadastrarAutonomo(gerarAutonomoB, loginResponse.data.token);
-            const { empresa_id, autonomo_id, ...dados } = gerarAutonomoA.dados[0];
+            const { empresa_id, ...dados } = gerarAutonomoA.dados[0];
             const autonomoAtualizar = apiAutonomoHelpers.atualizarAutonomo(empresaIdB, responseAutonomoB.data.retorno[0].autonomo.autonomo_id, dados);
             const response = await atualizarAutonomo(autonomoAtualizar, loginResponse.data.token);
             expect(response.status).toBe(200);
