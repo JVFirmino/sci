@@ -49,6 +49,9 @@ const LIST_PASSED = false;
 const LIST_FAILED = true;
 const LIST_SKIPPED = true;
 
+let totalDuration = 0;
+const modules = {};
+
 report.suites.forEach(suite => {
     suite.suites.forEach(subSuite => {
         subSuite.specs.forEach(spec => {
