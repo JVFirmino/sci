@@ -1,67 +1,45 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>SCI - Quality Dashboard</title>
+    <title>SCI - Dashboard de Testes</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-        body { font-family: Arial; text-align: center; background:#f4f6f9; }
-        h1 { margin-top:40px; }
-        .score { font-size:48px; font-weight:bold; margin:20px; }
-        canvas { max-width: 900px; margin:40px auto; }
-    </style>
+    <link rel="stylesheet" href="dashboard.css">
 </head>
 <body>
 
-<h1>SCI - Quality Dashboard</h1>
-<div class="score" id="qualityScore">Carregando...</div>
+    <h1><img src="https://www.sci.com.br/arquivo/banner/114/14845082.png" alt="Logo SCI"> Dashboards de Testes - RH NET Social</h1>
 
-<canvas id="trendChart"></canvas>
+    <div class="dashboard">
 
-<script>
-fetch('./data/history.json')
-    .then(res => res.json())
-    .then(data => {
+        <div class="card">
+            <h2>Visão Geral da Qualidade</h2>
+            <canvas id="overviewChart"></canvas>
+            <p id="qualityScore"></p>
+        </div>
 
-        if (!data.length) {
-            document.getElementById('qualityScore').innerText = "Sem dados ainda.";
-            return;
-        }
+        <div class="card">
+            <h2>📈 Evolução da Estabilidade</h2>
+            <canvas id="trendChart"></canvas>
+        </div>
 
-        const last7 = data.slice(-7);
+        <div class="card">
+            <h2>🧩 Qualidade por Módulo</h2>
+            <canvas id="moduleChart"></canvas>
+        </div>
 
-        const total = last7.reduce((acc, d) => acc + d.total, 0);
-        const passed = last7.reduce((acc, d) => acc + d.passed, 0);
+        <div class="card">
+            <h2>🚨 Falhas Recentes</h2>
+            <canvas id="recentFailuresChart"></canvas>
+        </div>
 
-        const rate = ((passed / total) * 100).toFixed(2);
+        <div class="card">
+            <h2>⏱ Performance da Automação</h2>
+            <canvas id="durationChart"></canvas>
+        </div>
 
-        const scoreEl = document.getElementById('qualityScore');
+    </div>
 
-        let color = "green";
-        if (rate < 95) color = "orange";
-        if (rate < 85) color = "red";
-
-        scoreEl.innerHTML = `${rate}% Stability (7 dias)`;
-        scoreEl.style.color = color;
-
-        const labels = data.map(d => d.date);
-        const passRates = data.map(d => ((d.passed / d.total) * 100).toFixed(2));
-
-        new Chart(document.getElementById('trendChart'), {
-            type: 'line',
-            data: {
-                labels: labels,
-                datasets: [{
-                    label: 'Pass Rate (%)',
-                    data: passRates,
-                    borderColor: 'blue',
-                    fill: false,
-                    tension: 0.2
-                }]
-            }
-        });
-    });
-</script>
-
+<script type="module" src="./dashboard.js"></script>
 </body>
 </html>

@@ -14,8 +14,8 @@ if (!webhookURL) {
 }
 
 if (!fs.existsSync('report.json')) {
-  console.log('⚠️ report.json não encontrado, pulando envio ao Discord');
-  process.exit(0);
+    console.log('⚠️ report.json não encontrado, pulando envio ao Discord');
+    process.exit(0);
 }
 
 let rawData;
@@ -75,6 +75,15 @@ report.suites.forEach(suite => {
                 summary.skipped++;
                 skippedTests.push(`- ${testName}`);
             }
+
+            totalDuration += result?.duration || 0;
+
+            const tags = test?.annotations?.map(a => a.type === 'tag' ? a.description : null).filter(Boolean) || ['Sem Tag'];
+            const moduleName = tags[0];
+
+            if (!modules[moduleName]) modules[moduleName] = { total: 0, passed: 0 };
+            modules[moduleName].total++;
+            if (result.status === 'passed') modules[moduleName].passed++;
         });
     });
 });
@@ -99,7 +108,9 @@ const newEntry = {
     total: summary.total,
     passed: summary.passed,
     failed: summary.failed,
-    skipped: summary.skipped
+    skipped: summary.skipped,
+    duration: Math.round(totalDuration / 1000), 
+    modules
 };
 
 history = history.filter(entry => entry.date !== today);
@@ -111,7 +122,7 @@ history = history.slice(-60);
 fs.writeFileSync(historyPath, JSON.stringify(history, null, 2));
 console.log('📊 Histórico do dashboard atualizado.');
 
-let content = `📋 **Relatório Diário dos Testes RH NET Social**
+let content = `📋 **Status Diário dos Testes RH NET Social**
 
 🧪 Total: ${summary.total}
 ✅ Passaram: ${summary.passed}
@@ -131,14 +142,13 @@ if (LIST_SKIPPED && skippedTests.length > 0) {
     content += `\n**🚫 Testes ignorados**\n${skippedTests.join('\n')}`;
 }
 
+const pageLink = 'https://jvfirmino.github.io/sci/dashboard/index.html';
+content += `\n🌐 [Dashboard Histórico de Testes - RH NET Social](${pageLink})`;
+
 if (runId && repo) {
     const baseLink = `https://github.com/${repo}/actions/runs/${runId}`;
-    content += `\n\n🗂️ [Relatório HTML interativo](${baseLink})`;
+    content += `🗂️ [Relatório Diário de Testes - RH NET Social](${baseLink})`;
 }
-
-const pageLink = 'https://jvfirmino.github.io/sci/dashboard/index.html';
-content += `\n\n🌐 [Dashboard Executivo](${pageLink})`;
-
 
 const payload = {
     username: 'SCI Report 🤖',
