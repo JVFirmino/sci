@@ -79,6 +79,38 @@ report.suites.forEach(suite => {
     });
 });
 
+const historyPath = './dashboard/data/history.json';
+
+let history = [];
+
+if (fs.existsSync(historyPath)) {
+    try {
+        history = JSON.parse(fs.readFileSync(historyPath, 'utf-8'));
+    } catch (error) {
+        console.log('Erro ao ler history.json, recriando...');
+        history = [];
+    }
+}
+
+const today = new Date().toISOString().split('T')[0];
+
+const newEntry = {
+    date: today,
+    total: summary.total,
+    passed: summary.passed,
+    failed: summary.failed,
+    skipped: summary.skipped
+};
+
+history = history.filter(entry => entry.date !== today);
+
+history.push(newEntry);
+
+history = history.slice(-60);
+
+fs.writeFileSync(historyPath, JSON.stringify(history, null, 2));
+console.log('📊 Histórico do dashboard atualizado.');
+
 let content = `📋 **Relatório Diário dos Testes RH NET Social**
 
 🧪 Total: ${summary.total}
@@ -103,6 +135,10 @@ if (runId && repo) {
     const baseLink = `https://github.com/${repo}/actions/runs/${runId}`;
     content += `\n\n🗂️ [Relatório HTML interativo](${baseLink})`;
 }
+
+// const pageLink = 'https://seu-usuario.github.io/sci/';
+// content += `\n\n🌐 [Dashboard Executivo](${pageLink})`;
+
 
 const payload = {
     username: 'SCI Report 🤖',

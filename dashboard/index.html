@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>SCI - Quality Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { font-family: Arial; text-align: center; background:#f4f6f9; }
+        h1 { margin-top:40px; }
+        .score { font-size:48px; font-weight:bold; margin:20px; }
+        canvas { max-width: 900px; margin:40px auto; }
+    </style>
+</head>
+<body>
+
+<h1>SCI - Quality Dashboard</h1>
+<div class="score" id="qualityScore">Carregando...</div>
+
+<canvas id="trendChart"></canvas>
+
+<script>
+fetch('./data/history.json')
+    .then(res => res.json())
+    .then(data => {
+
+        if (!data.length) {
+            document.getElementById('qualityScore').innerText = "Sem dados ainda.";
+            return;
+        }
+
+        const last7 = data.slice(-7);
+
+        const total = last7.reduce((acc, d) => acc + d.total, 0);
+        const passed = last7.reduce((acc, d) => acc + d.passed, 0);
+
+        const rate = ((passed / total) * 100).toFixed(2);
+
+        const scoreEl = document.getElementById('qualityScore');
+
+        let color = "green";
+        if (rate < 95) color = "orange";
+        if (rate < 85) color = "red";
+
+        scoreEl.innerHTML = `${rate}% Stability (7 dias)`;
+        scoreEl.style.color = color;
+
+        const labels = data.map(d => d.date);
+        const passRates = data.map(d => ((d.passed / d.total) * 100).toFixed(2));
+
+        new Chart(document.getElementById('trendChart'), {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Pass Rate (%)',
+                    data: passRates,
+                    borderColor: 'blue',
+                    fill: false,
+                    tension: 0.2
+                }]
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
