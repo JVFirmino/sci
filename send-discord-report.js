@@ -80,9 +80,18 @@ report.suites.forEach(suite => {
             }
 
             totalDuration += result?.duration || 0;
+            
+            let moduleName = 'Sem Tag';
 
-            const tags = test?.annotations?.map(a => a.type === 'tag' ? a.description : null).filter(Boolean);
-            const moduleName = (tags && tags.length > 0) ? tags[0] : 'Sem Tag';
+            if (test?.annotations && test.annotations.length > 0) {
+                const tagAnnotation = test.annotations.find(a => a.type === 'tag');
+                if (tagAnnotation?.description) moduleName = tagAnnotation.description;
+            }
+
+            if (moduleName === 'Sem Tag') {
+                const match = spec.title.match(/@(\w+)/);
+                if (match) moduleName = match[1];
+            }
 
             if (!modules[moduleName]) modules[moduleName] = { total: 0, passed: 0 };
             modules[moduleName].total++;
