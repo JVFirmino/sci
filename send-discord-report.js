@@ -136,8 +136,8 @@ if (runId && repo) {
     content += `\n\n🗂️ [Relatório HTML interativo](${baseLink})`;
 }
 
-// const pageLink = 'https://seu-usuario.github.io/sci/';
-// content += `\n\n🌐 [Dashboard Executivo](${pageLink})`;
+const pageLink = 'https://jvfirmino.github.io/sci/dashboard/index.html';
+content += `\n\n🌐 [Dashboard Executivo](${pageLink})`;
 
 
 const payload = {
