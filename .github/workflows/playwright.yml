@@ -42,12 +42,15 @@ jobs:
           GITHUB_REPOSITORY: ${{ github.repository }}
 
       - name: Commit dashboard history
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
+          git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git
           git add dashboard/data/history.json
           git commit -m "update dashboard history" || echo "Sem mudanças"
-          git push
+          git push origin HEAD:${{ github.ref }}
 
       - name: Upload do relatório HTML
         uses: actions/upload-artifact@v4
