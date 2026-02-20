@@ -1,15 +1,15 @@
 [
   {
     "date": "2026-02-20",
-    "total": 3,
-    "passed": 3,
+    "total": 7,
+    "passed": 7,
     "failed": 0,
     "skipped": 0,
-    "duration": 4,
+    "duration": 10,
     "modules": {
       "Sem Tag": {
-        "total": 3,
-        "passed": 3
+        "total": 7,
+        "passed": 7
       }
     }
   }
