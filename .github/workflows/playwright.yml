@@ -9,6 +9,10 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
+    # ⚡ Permissão de escrita para que o GITHUB_TOKEN consiga dar push
+    permissions:
+      contents: write
+
     env:
       API_USERNAME: ${{ secrets.API_USERNAME }}
       API_PASSWORD: ${{ secrets.API_PASSWORD }}
@@ -47,10 +51,12 @@ jobs:
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
+          # autentica usando token
           git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git
           git add dashboard/data/history.json
           git commit -m "update dashboard history" || echo "Sem mudanças"
-          git push origin HEAD:${{ github.ref }}
+          # ⚡ Push direto na branch do workflow (testepage)
+          git push origin HEAD:testepage
 
       - name: Upload do relatório HTML
         uses: actions/upload-artifact@v4
