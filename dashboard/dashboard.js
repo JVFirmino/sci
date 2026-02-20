@@ -13,6 +13,7 @@ async function loadDashboard() {
         }
 
         const last = data[data.length - 1];
+        console.log(last)
 
         renderOverview(last);
         renderTrendChart(data);
@@ -58,6 +59,7 @@ function renderModuleChart(last) {
 
     const rates = labels.map(name => {
         const m = modules[name];
+        console.log(m)
         return ((m.passed / m.total) * 100).toFixed(2);
     });
 

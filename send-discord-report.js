@@ -81,8 +81,8 @@ report.suites.forEach(suite => {
 
             totalDuration += result?.duration || 0;
 
-            const tags = test?.annotations?.map(a => a.type === 'tag' ? a.description : null).filter(Boolean) || ['Sem Tag'];
-            const moduleName = tags[0];
+            const tags = test?.annotations?.map(a => a.type === 'tag' ? a.description : null).filter(Boolean);
+            const moduleName = (tags && tags.length > 0) ? tags[0] : 'Sem Tag';
 
             if (!modules[moduleName]) modules[moduleName] = { total: 0, passed: 0 };
             modules[moduleName].total++;
@@ -150,7 +150,7 @@ content += `\n🌐 [Dashboard Histórico de Testes - RH NET Social](${pageLink})
 
 if (runId && repo) {
     const baseLink = `https://github.com/${repo}/actions/runs/${runId}`;
-    content += `🗂️ [Relatório Diário de Testes - RH NET Social](${baseLink})`;
+    content += `\n🗂️ [Relatório Diário de Testes - RH NET Social](${baseLink})`;
 }
 
 const payload = {
