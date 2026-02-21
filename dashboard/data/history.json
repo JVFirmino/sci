@@ -1,17 +1,1 @@
-[
-  {
-    "date": "2026-02-21",
-    "total": 7,
-    "passed": 7,
-    "failed": 0,
-    "skipped": 0,
-    "duration": 6,
-    "modules": {
-      "Sem Tag": {
-        "total": 7,
-        "passed": 7,
-        "failed": 0
-      }
-    }
-  }
-]
+[]

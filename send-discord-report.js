@@ -54,23 +54,10 @@ const modules = {};
 
 report.suites.forEach(suite => {
     suite.suites.forEach(subSuite => {
-        let moduleName = 'Sem Tag';
-        
-        if (subSuite.metadata && subSuite.metadata.tags) {
-            moduleName = subSuite.metadata.tags[0]; 
-        } else if (subSuite.specs?.[0]?.tests?.[0]?.annotations) {
-            const suiteTag = subSuite.specs[0].tests[0].annotations.find(a => a.type === 'tag');
-            if (suiteTag) moduleName = suiteTag.description;
-        }
-
-        if (moduleName === 'Sem Tag' || !moduleName) {
-            const match = subSuite.title.match(/@(\w+)/);
-            if (match) moduleName = `@${match[1]}`;
-        }
-
         subSuite.specs.forEach(spec => {
             const test = spec.tests[0];
             const result = test?.results?.at(-1);
+
             const testName = `${spec.title} (${subSuite.title})`;
 
             if (!result) {
@@ -80,7 +67,6 @@ report.suites.forEach(suite => {
             }
 
             summary.total++;
-
             if (result.status === 'passed') {
                 summary.passed++;
                 passedTests.push(`- ${testName}`);
@@ -92,18 +78,16 @@ report.suites.forEach(suite => {
                 skippedTests.push(`- ${testName}`);
             }
 
-            totalDuration += result?.duration || 0;
+            totalDuration += result.duration || 0;
 
-            if (!modules[moduleName]) {
-                modules[moduleName] = { total: 0, passed: 0, failed: 0 };
+            let moduleName = 'Sem Tag';
+            if (spec.tags && spec.tags.length > 0) {
+                moduleName = '@' + spec.tags[0];
             }
-            
+
+            if (!modules[moduleName]) modules[moduleName] = { total: 0, passed: 0 };
             modules[moduleName].total++;
-            if (result.status === 'passed') {
-                modules[moduleName].passed++;
-            } else if (result.status === 'failed') {
-                modules[moduleName].failed++;
-            }
+            if (result.status === 'passed') modules[moduleName].passed++;
         });
     });
 });
