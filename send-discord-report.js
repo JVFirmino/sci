@@ -54,6 +54,14 @@ const modules = {};
 
 report.suites.forEach(suite => {
     suite.suites.forEach(subSuite => {
+        let moduleName = 'Sem Tag';
+        if (subSuite?.title) {
+        const suiteTag = subSuite.title.match(/@(\w+)/);
+        if (suiteTag) moduleName = suiteTag[1];
+        }
+
+        if (!modules[moduleName]) modules[moduleName] = { total: 0, passed: 0 };
+
         subSuite.specs.forEach(spec => {
             const test = spec.tests[0];
             const result = test?.results?.at(-1);
@@ -71,6 +79,7 @@ report.suites.forEach(suite => {
             if (result.status === 'passed') {
                 summary.passed++;
                 passedTests.push(`- ${testName}`);
+                modules[moduleName].passed++;
             } else if (result.status === 'failed') {
                 summary.failed++;
                 failedTests.push(`- ${testName}`);
@@ -79,23 +88,8 @@ report.suites.forEach(suite => {
                 skippedTests.push(`- ${testName}`);
             }
 
-            totalDuration += result?.duration || 0;
-            
-            let moduleName = 'Sem Tag';
-
-            if (test?.annotations && test.annotations.length > 0) {
-                const tagAnnotation = test.annotations.find(a => a.type === 'tag');
-                if (tagAnnotation?.description) moduleName = tagAnnotation.description;
-            }
-
-            if (moduleName === 'Sem Tag') {
-                const match = spec.title.match(/@(\w+)/);
-                if (match) moduleName = match[1];
-            }
-
-            if (!modules[moduleName]) modules[moduleName] = { total: 0, passed: 0 };
             modules[moduleName].total++;
-            if (result.status === 'passed') modules[moduleName].passed++;
+            totalDuration += result?.duration || 0;
         });
     });
 });
