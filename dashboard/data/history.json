@@ -12,5 +12,19 @@
         "passed": 7
       }
     }
+  },
+  {
+    "date": "2026-02-21",
+    "total": 7,
+    "passed": 7,
+    "failed": 0,
+    "skipped": 0,
+    "duration": 10,
+    "modules": {
+      "Sem Tag": {
+        "total": 7,
+        "passed": 7
+      }
+    }
   }
 ]
