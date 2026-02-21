@@ -53,47 +53,52 @@ let totalDuration = 0;
 const modules = {};
 
 report.suites.forEach(suite => {
-    suite.suites.forEach(subSuite => {
-        let moduleName = 'Sem Tag';
-        if (subSuite?.title) {
-        const suiteTag = subSuite.title.match(/@(\w+)/);
-        if (suiteTag) moduleName = suiteTag[1];
+    // pega a tag do describe
+    let moduleName = 'Sem Tag';
+    if (suite.annotations && suite.annotations.length > 0) {
+        const tag = suite.annotations.find(a => a.type === 'tag');
+        if (tag?.description) moduleName = tag.description;
+    } else {
+        const match = suite.title.match(/@(\w+)/);
+        if (match) moduleName = `@${match[1]}`;
+    }
+
+    suite.specs.forEach(spec => {
+        const test = spec.tests[0];
+        const result = test?.results?.at(-1);
+
+        const testName = `${spec.title} (${suite.title})`;
+
+        if (!result) {
+            summary.skipped++;
+            skippedTests.push(`- ${testName}`);
+            modules[moduleName] = modules[moduleName] || { total: 0, passed: 0 };
+            modules[moduleName].total++;
+            return;
         }
 
-        if (!modules[moduleName]) modules[moduleName] = { total: 0, passed: 0 };
-
-        subSuite.specs.forEach(spec => {
-            const test = spec.tests[0];
-            const result = test?.results?.at(-1);
-
-            const testName = `${spec.title} (${subSuite.title})`;
-
-            if (!result) {
-                summary.skipped++;
-                skippedTests.push(`- ${testName}`);
-                return;
-            }
-
-            summary.total++;
-
-            if (result.status === 'passed') {
-                summary.passed++;
-                passedTests.push(`- ${testName}`);
-                modules[moduleName].passed++;
-            } else if (result.status === 'failed') {
-                summary.failed++;
-                failedTests.push(`- ${testName}`);
-            } else {
-                summary.skipped++;
-                skippedTests.push(`- ${testName}`);
-            }
-
+        summary.total++;
+        if (result.status === 'passed') {
+            summary.passed++;
+            passedTests.push(`- ${testName}`);
+            modules[moduleName] = modules[moduleName] || { total: 0, passed: 0 };
             modules[moduleName].total++;
-            totalDuration += result?.duration || 0;
-        });
+            modules[moduleName].passed++;
+        } else if (result.status === 'failed') {
+            summary.failed++;
+            failedTests.push(`- ${testName}`);
+            modules[moduleName] = modules[moduleName] || { total: 0, passed: 0 };
+            modules[moduleName].total++;
+        } else {
+            summary.skipped++;
+            skippedTests.push(`- ${testName}`);
+            modules[moduleName] = modules[moduleName] || { total: 0, passed: 0 };
+            modules[moduleName].total++;
+        }
+
+        totalDuration += result?.duration || 0;
     });
 });
-
 const historyPath = './dashboard/data/history.json';
 
 let history = [];
