@@ -55,8 +55,14 @@ jobs:
           git commit -m "update dashboard history" || echo "Sem mudanças"
           git push origin HEAD:main
 
+      - name: Zipar relatório HTML do Playwright
+        run: |
+          if [ -d playwright-report ]; then
+            zip -r playwright-report.zip playwright-report
+          fi
+
       - name: Upload do relatório HTML
         uses: actions/upload-artifact@v4
         with:
           name: playwright-html-report
-          path: playwright-report
+          path: playwright-report.zip
