@@ -16,5 +16,23 @@
         "passed": 4
       }
     }
+  },
+  {
+    "date": "2026-02-22",
+    "total": 7,
+    "passed": 7,
+    "failed": 0,
+    "skipped": 0,
+    "duration": 12,
+    "modules": {
+      "@LOGIN_API": {
+        "total": 3,
+        "passed": 3
+      },
+      "@REFRESH_API": {
+        "total": 4,
+        "passed": 4
+      }
+    }
   }
 ]
