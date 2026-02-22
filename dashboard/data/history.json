@@ -19,19 +19,43 @@
   },
   {
     "date": "2026-02-22",
-    "total": 7,
-    "passed": 7,
-    "failed": 0,
-    "skipped": 0,
-    "duration": 12,
+    "total": 122,
+    "passed": 97,
+    "failed": 1,
+    "skipped": 24,
+    "duration": 519,
     "modules": {
+      "@AUTONOMO_API": {
+        "total": 18,
+        "passed": 18
+      },
+      "@EMPRESA_API": {
+        "total": 26,
+        "passed": 1
+      },
+      "@FERIADO_API": {
+        "total": 17,
+        "passed": 17
+      },
+      "@LIBERAR_PRELIMINAR_API": {
+        "total": 7,
+        "passed": 7
+      },
       "@LOGIN_API": {
         "total": 3,
         "passed": 3
       },
+      "@PRELIMINAR_API": {
+        "total": 25,
+        "passed": 25
+      },
       "@REFRESH_API": {
         "total": 4,
         "passed": 4
+      },
+      "@SERVICO_API": {
+        "total": 22,
+        "passed": 22
       }
     }
   }
