@@ -356,10 +356,10 @@
   {
     "date": "2026-03-04",
     "total": 122,
-    "passed": 116,
-    "failed": 1,
-    "skipped": 5,
-    "duration": 917,
+    "passed": 122,
+    "failed": 0,
+    "skipped": 0,
+    "duration": 1107,
     "modules": {
       "@AUTONOMO_API": {
         "total": 18,
@@ -371,7 +371,7 @@
       },
       "@FERIADO_API": {
         "total": 17,
-        "passed": 11
+        "passed": 17
       },
       "@LIBERAR_PRELIMINAR_API": {
         "total": 7,
